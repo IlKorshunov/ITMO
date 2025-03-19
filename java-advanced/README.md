@@ -2,22 +2,22 @@
 
 ## Аннотация
 
-* **Обход файлов**. [*Walk*](java-solutions/info/kgeorgiy/ja/korshuov/walk/)
-* **Множество на массиве**. [*SortedSet*](java-solutions/info/kgeorgiy/ja/korshuov/arrayset/)
-* **Студенты**. [*StudentQuery*](java-solutions/info/kgeorgiy/ja/korshuov/student)
-* **Implementor**. [*InterfaceImplementor*](java-solutions/info/kgeorgiy/ja/korshuov/implementor)
-* **Jar Implementor**. [*InterfaceJarImplementor*](java-solutions/info/kgeorgiy/ja/korshuov/implementor)
-* **Javadoc**. [*Javadoc*](java-solutions/info/kgeorgiy/ja/korshuov/implementor)
-* **Итеративный параллелизм**. [*scalar*](java-solutions/info/kgeorgiy/ja/korshuov/iterative)
-* **Параллельный запуск**. [*scalar*](java-solutions/info/kgeorgiy/ja/korshuov/iterative)
-* **Web Crawler**. [*easy*](java-solutions/info/kgeorgiy/ja/korshuov/crawler)
-* **HelloUDP**. [*easy*](java-solutions/info/kgeorgiy/ja/korshuov/hello)
-* **Физические лица**. [*easy*](java-solutions/info/kgeorgiy/ja/korshuov/bank)
-* **Статистика текста**. [*easy*](java-solutions/info/kgeorgiy/ja/korshuov/i18n)
+* **Обход файлов**. [*Walk*](java-solutions/info/kgeorgiy/ja/korshunov/walk/)
+* **Множество на массиве**. [*SortedSet*](java-solutions/info/kgeorgiy/ja/korshunov/arrayset/)
+* **Студенты**. [*StudentQuery*](java-solutions/info/kgeorgiy/ja/korshunov/student)
+* **Implementor**. [*InterfaceImplementor*](java-solutions/info/kgeorgiy/ja/korshunov/implementor)
+* **Jar Implementor**. [*InterfaceJarImplementor*](java-solutions/info/kgeorgiy/ja/korshunov/implementor)
+* **Javadoc**. [*Javadoc*](java-solutions/info/kgeorgiy/ja/korshunov/implementor)
+* **Итеративный параллелизм**. [*scalar*](java-solutions/info/kgeorgiy/ja/korshunov/iterative)
+* **Параллельный запуск**. [*scalar*](java-solutions/info/kgeorgiy/ja/korshunov/iterative)
+* **Web Crawler**. [*easy*](java-solutions/info/kgeorgiy/ja/korshunov/crawler)
+* **HelloUDP**. [*easy*](java-solutions/info/kgeorgiy/ja/korshunov/hello)
+* **Физические лица**. [*easy*](java-solutions/info/kgeorgiy/ja/korshunov/bank)
+* **Статистика текста**. [*easy*](java-solutions/info/kgeorgiy/ja/korshunov/i18n)
 
 ## Условия к заданиям
 
-### Обход файлов [*Walk*](java-solutions/info/kgeorgiy/ja/korshuov/walk/)
+### Обход файлов [*Walk*](java-solutions/info/kgeorgiy/ja/korshunov/walk/)
 
 1. Разработайте класс `Walk`, осуществляющий подсчет хеш-сумм файлов.
     1. Формат запуска:
@@ -74,7 +74,7 @@
     * Проверяется исходный код задания.
     * Весь код должен находиться в пакете `info.kgeorgiy.ja.фамилия.walk`.
 
-### Множество на массиве [*SortedSet*](java-solutions/info/kgeorgiy/ja/korshuov/arrayset/)
+### Множество на массиве [*SortedSet*](java-solutions/info/kgeorgiy/ja/korshunov/arrayset/)
 
 1. Разработайте класс `ArraySet`, реализующий неизменяемое упорядоченное множество.
     * Класс `ArraySet` должен реализовывать интерфейс [SortedSet](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/SortedSet.html) (простой вариант) или [NavigableSet](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/NavigableSet.html) (сложный вариант).
@@ -83,7 +83,7 @@
     * Применение стандартных коллекций.
     * Избавление от повторяющегося кода.
 
-### Студенты [*StudentQuery*](java-solutions/info/kgeorgiy/ja/korshuov/student)
+### Студенты [*StudentQuery*](java-solutions/info/kgeorgiy/ja/korshunov/student)
 
 1. Разработайте класс `StudentDB`, осуществляющий поиск по базе данных студентов.
     * Класс `StudentDB` должен реализовывать интерфейс `StudentQuery` (простой вариант) или `GroupQuery` (сложный вариант).
@@ -92,7 +92,7 @@
     * применение лямбда-выражений и потоков;
     * избавление от повторяющегося кода.
 
-### Implementor [*InterfaceImplementor*](java-solutions/info/kgeorgiy/ja/korshuov/implementor)
+### Implementor [*InterfaceImplementor*](java-solutions/info/kgeorgiy/ja/korshunov/implementor)
 
 1. Реализуйте класс Implementor, генерирующий реализации классов и интерфейсов.
     * Аргумент командной строки: полное имя класса/интерфейса, для которого требуется сгенерировать реализацию.
@@ -106,7 +106,7 @@
     * *Сложный* — `Implementor` должен уметь реализовывать и классы, и интерфейсы. Поддержка generics не требуется.
     * *Бонусный* — `Implementor` должен уметь реализовывать generic-классы и интерфейсы. Сгенерированный код должен иметь корректные параметры типов и не порождать UncheckedWarning.
 
-### Jar Implementor [*InterfaceJarImplementor*](java-solutions/info/kgeorgiy/ja/korshuov/implementor)
+### Jar Implementor [*InterfaceJarImplementor*](java-solutions/info/kgeorgiy/ja/korshunov/implementor)
 
 1. Создайте `.jar`-файл, содержащий скомпилированный `Implementor` и сопутствующие классы.
     * Созданный `.jar`-файл должен запускаться командой `java -jar`.
@@ -117,7 +117,7 @@
     * запускаемый `.jar`-файл.
 4. **Сложный вариант**. Решение должно быть модуляризовано.
 
-### Javadoc [*Javadoc*](java-solutions/info/kgeorgiy/ja/korshuov/implementor/)
+### Javadoc [*Javadoc*](java-solutions/info/kgeorgiy/ja/korshunov/implementor/)
 
 1. Документируйте класс `Implementor` и сопутствующие классы с применением Javadoc.
     * Должны быть документированы все классы и все члены классов, в том числе `private`.
@@ -127,7 +127,7 @@
     * скрипт для генерации документации;
     * сгенерированная документация.
 
-### Итеративный параллелизм [*scalar*](java-solutions/info/kgeorgiy/ja/korshuov/concurrent/)
+### Итеративный параллелизм [*scalar*](java-solutions/info/kgeorgiy/ja/korshunov/concurrent/)
 
 1. Реализуйте класс `IterativeParallelism`, который будет обрабатывать списки в несколько потоков.
 2. В простом варианте должны быть реализованы следующие методы:
@@ -144,7 +144,7 @@
 5. Не следует рассчитывать на то, что переданные компараторы, предикаты и функции работают быстро.
 6. При выполнении задания **нельзя** использовать *Concurrency Utilities*.
 
-### Параллельный запуск [*scalar*](java-solutions/info/kgeorgiy/ja/korshuov/concurrent/)
+### Параллельный запуск [*scalar*](java-solutions/info/kgeorgiy/ja/korshunov/concurrent/)
 
 1. Напишите класс `ParallelMapperImpl`, реализующий интерфейс `ParallelMapper`.
 
@@ -172,7 +172,7 @@
     * При наличии `ParallelMapper` сам `IterativeParallelism` новые потоки создавать не должен.
     * Должна быть возможность одновременного запуска и работы нескольких клиентов, использующих один `ParallelMapper`.
 
-### Web Crawler [*easy*](java-solutions/info/kgeorgiy/ja/korshuov/crawler/)
+### Web Crawler [*easy*](java-solutions/info/kgeorgiy/ja/korshunov/crawler/)
 
 1. Напишите потокобезопасный класс `WebCrawler`, который будет рекурсивно обходить сайты.
     1. Класс `WebCrawler` должен иметь конструктор
@@ -233,7 +233,7 @@
     3. *Бонусная* — сделать параллельный обход в ширину.
 3. Задание подразумевает активное использование *Concurrency Utilities*, в частности, в решении не должно быть «велосипедов», аналогичных/легко сводящихся к классам из *Concurrency Utilities*.
 
-### HelloUDP [*easy*](java-solutions/info/kgeorgiy/ja/korshuov/hello/)
+### HelloUDP [*easy*](java-solutions/info/kgeorgiy/ja/korshunov/hello/)
 
 1. Реализуйте клиент и сервер, взаимодействующие по UDP.
 2. Класс `HelloUDPClient` должен отправлять запросы на сервер, принимать результаты и выводить их на консоль.
@@ -253,7 +253,7 @@
     * Несмотря на то, что текущий способ получения ответа по запросу очень прост, сервер должен быть рассчитан на ситуацию, когда этот процесс может требовать много ресурсов и времени.
     * Если сервер не успевает обрабатывать запросы, прием запросов может быть временно приостановлен.
 
-### Физические лица [*easy*](java-solutions/info/kgeorgiy/ja/korshuov/bank/)
+### Физические лица [*easy*](java-solutions/info/kgeorgiy/ja/korshunov/bank/)
 
 1. Добавьте к банковскому приложению возможность работы с физическими лицами.
     1. У физического лица (`Person`) можно запросить имя, фамилию и номер паспорта.
@@ -291,7 +291,7 @@
 5. Обратите внимание на выделение общего кода старой и новой реализации.
 6. *Бонусный вариант*. Клиент и сервер могут перед началом работы выделить `O(число потоков)` памяти. Выделять дополнительную память во время работы запрещено.
 
-### Статистика текста [*easy*](java-solutions/info/kgeorgiy/ja/korshuov/i18n/)
+### Статистика текста [*easy*](java-solutions/info/kgeorgiy/ja/korshunov/i18n/)
 
 1. Создайте приложение `TextStatistics`, анализирующее тексты на различных языках.
     1. Аргументы командной строки:
