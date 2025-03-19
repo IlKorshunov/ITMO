@@ -1,0 +1,175 @@
+Summary Statistics
+Number of sentences: 30.
+Number of words: 117.
+Number of numbers: 37.
+Number of sums: 3.
+Number of dates: 3.
+Sentence Statistics
+Number of sentences: 30 (30 different).
+Shortest sentence: "The analyzed file "input.txt".".
+Longest sentence: "Number of numbers: 37.".
+Shortest sentence length: 13 ("Number of dates: 3.").
+Longest sentence length: 109 ("GK: If you put a real sentence here, the process will not match").
+Average sentence length: 37.333.
+Word Statistics
+Number of words: 117 (48 different).
+Shortest word: "GK".
+Longest word: "languages".
+Shortest word length: 1 ("s").
+Longest word length: 15 ("stabilize").
+Average word length: 6.641.
+Number Statistics
+Number of numbers: 37 (22 different).
+Smallest number: -12345.67.
+Largest number: 12345.67.
+Average number: 208.847.
+Sum Statistics
+Number of sums: 3 (3 different).
+Smallest sum: £100.00.
+Largest sum: £345.67.
+Average sum: £222.83.
+Date Statistics
+Number of dates: 3 (3 different).
+Earliest date: 17 May 2024.
+Latest date: 30 May 2024.
+Average date: 23 May 2024.
+Summary Statistics
+Number of sentences: 30.
+Number of words: 117.
+Number of numbers: 37.
+Number of sums: 3.
+Number of dates: 3.
+Sentence Statistics
+Number of sentences: 30 (30 different).
+Shortest sentence: "The analyzed file "input.txt".".
+Longest sentence: "Number of numbers: 37.".
+Shortest sentence length: 13 ("Number of dates: 3.").
+Longest sentence length: 109 ("GK: If you put a real sentence here, the process will not match").
+Average sentence length: 37.333.
+Word Statistics
+Number of words: 117 (48 different).
+Shortest word: "GK".
+Longest word: "languages".
+Shortest word length: 1 ("s").
+Longest word length: 15 ("stabilize").
+Average word length: 6.641.
+Number Statistics
+Number of numbers: 37 (22 different).
+Smallest number: -12345.67.
+Largest number: 12345.67.
+Average number: 208.847.
+Sum Statistics
+Number of sums: 3 (3 different).
+Smallest sum: £150.00.
+Largest sum: £420.75.
+Average sum: £295.25.
+Date Statistics
+Number of dates: 3 (3 different).
+Earliest date: 1 June 2024.
+Latest date: 15 June 2024.
+Average date: 7 June 2024.
+Summary Statistics
+Number of sentences: 30.
+Number of words: 117.
+Number of numbers: 37.
+Number of sums: 3.
+Number of dates: 3.
+Sentence Statistics
+Number of sentences: 30 (30 different).
+Shortest sentence: "The analyzed file "input.txt".".
+Longest sentence: "Number of numbers: 37.".
+Shortest sentence length: 13 ("Number of dates: 3.").
+Longest sentence length: 109 ("GK: If you put a real sentence here, the process will not match").
+Average sentence length: 37.333.
+Word Statistics
+Number of words: 117 (48 different).
+Shortest word: "GK".
+Longest word: "languages".
+Shortest word length: 1 ("s").
+Longest word length: 15 ("stabilize").
+Average word length: 6.641.
+Number Statistics
+Number of numbers: 37 (22 different).
+Smallest number: -12345.67.
+Largest number: 12345.67.
+Average number: 208.847.
+Sum Statistics
+Number of sums: 3 (3 different).
+Smallest sum: £75.50.
+Largest sum: £500.00.
+Average sum: £218.17.
+Date Statistics
+Number of dates: 3 (3 different).
+Earliest date: 10 July 2024.
+Latest date: 25 July 2024.
+Average date: 17 July 2024.
+Summary Statistics
+Number of sentences: 30.
+Number of words: 117.
+Number of numbers: 37.
+Number of sums: 3.
+Number of dates: 3.
+Sentence Statistics
+Number of sentences: 30 (30 different).
+Shortest sentence: "The analyzed file "input.txt".".
+Longest sentence: "Number of numbers: 37.".
+Shortest sentence length: 13 ("Number of dates: 3.").
+Longest sentence length: 109 ("GK: If you put a real sentence here, the process will not match").
+Average sentence length: 37.333.
+Word Statistics
+Number of words: 117 (48 different).
+Shortest word: "GK".
+Longest word: "languages".
+Shortest word length: 1 ("s").
+Longest word length: 15 ("stabilize").
+Average word length: 6.641.
+Number Statistics
+Number of numbers: 37 (22 different).
+Smallest number: -12345.67.
+Largest number: 12345.67.
+Average number: 208.847.
+Sum Statistics
+Number of sums: 3 (3 different).
+Smallest sum: £200.00.
+Largest sum: £350.00.
+Average sum: £275.00.
+Date Statistics
+Number of dates: 3 (3 different).
+Earliest date: 5 August 2024.
+Latest date: 20 August 2024.
+Average date: 12 August 2024.
+Summary Statistics
+Number of sentences: 30.
+Number of words: 117.
+Number of numbers: 37.
+Number of sums: 3.
+Number of dates: 3.
+Sentence Statistics
+Number of sentences: 30 (30 different).
+Shortest sentence: "The analyzed file "input.txt".".
+Longest sentence: "Number of numbers: 37.".
+Shortest sentence length: 13 ("Number of dates: 3.").
+Longest sentence length: 109 ("GK: If you put a real sentence here, the process will not match").
+Average sentence length: 37.333.
+Word Statistics
+Number of words: 117 (48 different).
+Shortest word: "GK".
+Longest word: "languages".
+Shortest word length: 1 ("s").
+Longest word length: 15 ("stabilize").
+Average word length: 6.641.
+Number Statistics
+Number of numbers: 37 (22 different).
+Smallest number: -12345.67.
+Largest number: 12345.67.
+Average number: 208.847.
+Sum Statistics
+Number of sums: 3 (3 different).
+Smallest sum: £125.00.
+Largest sum: £475.50.
+Average sum: £300.17.
+Date Statistics
+Number of dates: 3 (3 different).
+Earliest date: 15 September 2024.
+Latest date: 30 September 2024.
+Average date: 22 September 2024.

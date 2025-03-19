@@ -1,0 +1,175 @@
+Zusammenfassende Statistik
+Anzahl der Sätze: 30.
+Anzahl der Wörter: 117.
+Anzahl der Zahlen: 37.
+Anzahl der Summen: 3.
+Anzahl der Daten: 3.
+Statistik zu Sätzen
+Anzahl der Sätze: 30 (30 verschiedene).
+Kürzester Satz: "Die analysierte Datei "input.txt".".
+Längster Satz: "Anzahl der Zahlen: 37.".
+Kürzeste Satzlänge: 13 ("Anzahl der Daten: 3.").
+Längste Satzlänge: 109 ("GK: Wenn man hier einen echten Satz einfügt, wird der Prozess nicht übereinstimmen").
+Durchschnittliche Satzlänge: 37,333.
+Statistik zu Wörtern
+Anzahl der Wörter: 117 (48 verschiedene).
+Kürzestes Wort: "GK".
+Längstes Wort: "Sprachen".
+Kürzeste Wortlänge: 1 ("s").
+Längste Wortlänge: 15 ("stabilisieren").
+Durchschnittliche Wortlänge: 6,641.
+Statistik zu Zahlen
+Anzahl der Zahlen: 37 (22 verschiedene).
+Kleinste Zahl: -12345,67.
+Größte Zahl: 12345,67.
+Durchschnittliche Zahl: 208,847.
+Statistik zu Geldsummen
+Anzahl der Summen: 3 (3 verschiedene).
+Kleinste Summe: €100.
+Größte Summe: €345.
+Durchschnittliche Summe: €222.
+Statistik zu Daten
+Anzahl der Daten: 3 (3 verschiedene).
+Frühestes Datum: 17 Mai 2024.
+Spätestes Datum: 30 Mai 2024.
+Durchschnittliches Datum: 23 Mai 2024.
+Zusammenfassende Statistik
+Anzahl der Sätze: 30.
+Anzahl der Wörter: 117.
+Anzahl der Zahlen: 37.
+Anzahl der Summen: 3.
+Anzahl der Daten: 3.
+Statistik zu Sätzen
+Anzahl der Sätze: 30 (30 verschiedene).
+Kürzester Satz: "Die analysierte Datei "input.txt".".
+Längster Satz: "Anzahl der Zahlen: 37.".
+Kürzeste Satzlänge: 13 ("Anzahl der Daten: 3.").
+Längste Satzlänge: 109 ("GK: Wenn man hier einen echten Satz einfügt, wird der Prozess nicht übereinstimmen").
+Durchschnittliche Satzlänge: 37,333.
+Statistik zu Wörtern
+Anzahl der Wörter: 117 (48 verschiedene).
+Kürzestes Wort: "GK".
+Längstes Wort: "Sprachen".
+Kürzeste Wortlänge: 1 ("s").
+Längste Wortlänge: 15 ("stabilisieren").
+Durchschnittliche Wortlänge: 6,641.
+Statistik zu Zahlen
+Anzahl der Zahlen: 37 (22 verschiedene).
+Kleinste Zahl: -12345,67.
+Größte Zahl: 12345,67.
+Durchschnittliche Zahl: 208,847.
+Statistik zu Geldsummen
+Anzahl der Summen: 3 (3 verschiedene).
+Kleinste Summe: €150.
+Größte Summe: €420.
+Durchschnittliche Summe: €295.
+Statistik zu Daten
+Anzahl der Daten: 3 (3 verschiedene).
+Frühestes Datum: 1 Juni 2024.
+Spätestes Datum: 15 Juni 2024.
+Durchschnittliches Datum: 7 Juni 2024.
+Zusammenfassende Statistik
+Anzahl der Sätze: 30.
+Anzahl der Wörter: 117.
+Anzahl der Zahlen: 37.
+Anzahl der Summen: 3.
+Anzahl der Daten: 3.
+Statistik zu Sätzen
+Anzahl der Sätze: 30 (30 verschiedene).
+Kürzester Satz: "Die analysierte Datei "input.txt".".
+Längster Satz: "Anzahl der Zahlen: 37.".
+Kürzeste Satzlänge: 13 ("Anzahl der Daten: 3.").
+Längste Satzlänge: 109 ("GK: Wenn man hier einen echten Satz einfügt, wird der Prozess nicht übereinstimmen").
+Durchschnittliche Satzlänge: 37,333.
+Statistik zu Wörtern
+Anzahl der Wörter: 117 (48 verschiedene).
+Kürzestes Wort: "GK".
+Längstes Wort: "Sprachen".
+Kürzeste Wortlänge: 1 ("s").
+Längste Wortlänge: 15 ("stabilisieren").
+Durchschnittliche Wortlänge: 6,641.
+Statistik zu Zahlen
+Anzahl der Zahlen: 37 (22 verschiedene).
+Kleinste Zahl: -12345,67.
+Größte Zahl: 12345,67.
+Durchschnittliche Zahl: 208,847.
+Statistik zu Geldsummen
+Anzahl der Summen: 3 (3 verschiedene).
+Kleinste Summe: €75.
+Größte Summe: €500.
+Durchschnittliche Summe: €218.
+Statistik zu Daten
+Anzahl der Daten: 3 (3 verschiedene).
+Frühestes Datum: 10 Juli 2024.
+Spätestes Datum: 25 Juli 2024.
+Durchschnittliches Datum: 17 Juli 2024.
+Zusammenfassende Statistik
+Anzahl der Sätze: 30.
+Anzahl der Wörter: 117.
+Anzahl der Zahlen: 37.
+Anzahl der Summen: 3.
+Anzahl der Daten: 3.
+Statistik zu Sätzen
+Anzahl der Sätze: 30 (30 verschiedene).
+Kürzester Satz: "Die analysierte Datei "input.txt".".
+Längster Satz: "Anzahl der Zahlen: 37.".
+Kürzeste Satzlänge: 13 ("Anzahl der Daten: 3.").
+Längste Satzlänge: 109 ("GK: Wenn man hier einen echten Satz einfügt, wird der Prozess nicht übereinstimmen").
+Durchschnittliche Satzlänge: 37,333.
+Statistik zu Wörtern
+Anzahl der Wörter: 117 (48 verschiedene).
+Kürzestes Wort: "GK".
+Längstes Wort: "Sprachen".
+Kürzeste Wortlänge: 1 ("s").
+Längste Wortlänge: 15 ("stabilisieren").
+Durchschnittliche Wortlänge: 6,641.
+Statistik zu Zahlen
+Anzahl der Zahlen: 37 (22 verschiedene).
+Kleinste Zahl: -12345,67.
+Größte Zahl: 12345,67.
+Durchschnittliche Zahl: 208,847.
+Statistik zu Geldsummen
+Anzahl der Summen: 3 (3 verschiedene).
+Kleinste Summe: €200.
+Größte Summe: €350.
+Durchschnittliche Summe: €275.
+Statistik zu Daten
+Anzahl der Daten: 3 (3 verschiedene).
+Frühestes Datum: 5 August 2024.
+Spätestes Datum: 20 August 2024.
+Durchschnittliches Datum: 12 August 2024.
+Zusammenfassende Statistik
+Anzahl der Sätze: 30.
+Anzahl der Wörter: 117.
+Anzahl der Zahlen: 37.
+Anzahl der Summen: 3.
+Anzahl der Daten: 3.
+Statistik zu Sätzen
+Anzahl der Sätze: 30 (30 verschiedene).
+Kürzester Satz: "Die analysierte Datei "input.txt".".
+Längster Satz: "Anzahl der Zahlen: 37.".
+Kürzeste Satzlänge: 13 ("Anzahl der Daten: 3.").
+Längste Satzlänge: 109 ("GK: Wenn man hier einen echten Satz einfügt, wird der Prozess nicht übereinstimmen").
+Durchschnittliche Satzlänge: 37,333.
+Statistik zu Wörtern
+Anzahl der Wörter: 117 (48 verschiedene).
+Kürzestes Wort: "GK".
+Längstes Wort: "Sprachen".
+Kürzeste Wortlänge: 1 ("s").
+Längste Wortlänge: 15 ("stabilisieren").
+Durchschnittliche Wortlänge: 6,641.
+Statistik zu Zahlen
+Anzahl der Zahlen: 37 (22 verschiedene).
+Kleinste Zahl: -12345,67.
+Größte Zahl: 12345,67.
+Durchschnittliche Zahl: 208,847.
+Statistik zu Geldsummen
+Anzahl der Summen: 3 (3 verschiedene).
+Kleinste Summe: €125.
+Größte Summe: €475.
+Durchschnittliche Summe: €300.
+Statistik zu Daten
+Anzahl der Daten: 3 (3 verschiedene).
+Frühestes Datum: 15 September 2024.
+Spätestes Datum: 30 September 2024.
+Durchschnittliches Datum: 22 September 2024.

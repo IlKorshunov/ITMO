@@ -1,0 +1,35 @@
+Summary statistics
+    Number of sentences : 3.
+    Number of words : 24.
+    Number of numbers : 8.
+    Number of amounts : 5.
+    Number of dates : 1.
+Sentence statistics
+    Number of sentences: 3 (3 unique).
+    Minimum sentence: "31".
+    Maximum sentence: "64".
+    Average sentence length: "47.33".
+    Minimum sentence length: "My budget for the day was £100.".
+    Maximum sentence length: "16 June 2020, I bought 3 books for £15 each, spending £45 total.".
+Word statistics
+    Number of words: 24 (19 unique).
+    Minimum word: "1".
+    Maximum word: "8".
+    Average word length: "3.50".
+    Minimum word length: "a".
+    Maximum word length: "spending".
+Number statistics
+    Number of numbers: 8 (8 unique).
+    Minimum number: "3.0".
+    Maximum number: "2020.0".
+    Average number: "278.63".
+Amount statistics
+    Number of amounts: 5 (5 unique).
+    Minimum amount: "10.0".
+    Maximum amount: "100.0".
+    Average amount: "38.00".
+Date statistics
+    Number of dates: 1 (1 unique).
+    Minimum date: "1.5922548E12".
+    Maximum date: "1.5922548E12".
+    Average date: "1592254800000.00".

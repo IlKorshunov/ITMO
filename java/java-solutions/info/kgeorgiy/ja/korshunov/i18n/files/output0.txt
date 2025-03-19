@@ -1,0 +1,11 @@
+Summary statistics  
+    Number of sentences : null. 
+    Number of words : null. 
+    Number of numbers : null. 
+    Number of amounts : null. 
+    Number of dates : 1. 
+nullnullnullnullDate statistics
+    Number of dates: 1 (1 unique).
+    Minimum date: "1.5922548E12".
+    Maximum date: "1.5922548E12".
+    Average date: "1592254800000.00".
