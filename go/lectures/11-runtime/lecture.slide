@@ -1,0 +1,49 @@
+Go Runtime Internals
+
+Короткий Фёдор
+
+* Go runtime
+
+- Compiler
+- GC
+- Scheduler
+
+* Compiler
+
+- Inlining
+- Escape Analysis `-m=1` `-m=2`
+- Bound Check Elimination
+- Call ABI
+- ASM
+
+* GC
+
+- Finalizer
+- Knobs `GOGC`
+- sync.Pool
+- STW
+- Mark Assist
+- Write Barrier
+- Stack Growth
+
+* Scheduler
+
+- G, M, P model
+- Global Run Queue, Local Run Queue
+- Knobs `GOMAXPROCS`
+- cgo & system call
+- runtime.LockOsThread
+
+* runtime
+
+- stacktraces
+- mem stats
+- runtime/debug
+- gc stats
+
+* Tools
+
+- delve
+- gdb
+- runtime/pprof
+- net/http/pprof

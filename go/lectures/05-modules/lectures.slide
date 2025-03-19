@@ -1,0 +1,481 @@
+Modules
+Лекция 5
+
+Арсений Балобанов
+
+* Modules
+
+  # go mod init github.com/verytable/hello
+  go: creating new go.mod: module github.com/verytable/hello
+  # cat go.mod
+  module github.com/verytable/hello
+
+  go 1.22.0
+
+- *package* — набор исходных файлов из одной директории, которые компилируются вместе
+- *module* — набор пакетов, которые релизятся вместе
+- github.com/verytable/hello — *module*path*, префикс всех пакетов модуля
+
+* Modules
+
+- *import*path* — строчка для импорта пакета
+
+Например, в модуле `github.com/google/go-cmp` есть директория `cmp/`.
+
+import path пакета `cmp` будет `github.com/google/go-cmp/cmp`.
+
+* Modules
+
+  # cat hello.go
+  package main
+  
+  import "fmt"
+  
+  func main() {
+  	fmt.Println("Hello, world!")
+  }
+
+Install binary.
+
+  # go env -w GOBIN=/tmp/bin
+  # go install .
+  # /tmp/bin/hello
+  Hello, world!
+  # go env -u GOBIN
+
+* Modules
+
+  # mkdir -p morestrings
+  # cat morestrings/reverse.go
+  package morestrings
+  
+  func ReverseRunes(s string) string {
+  	r := []rune(s)
+  	for i, j := 0, len(r)-1; i < len(r)/2; i, j = i+1, j-1 {
+  		r[i], r[j] = r[j], r[i]
+  	}
+  	return string(r)
+  }
+
+* Modules
+
+  # go build ./morestrings  // в репозитории ничего не изменится
+
+- *go*env*GOCACHE* — внутренний кэш `go`build`
+
+Команда go кэширует выходные данные сборки для повторного использования в будущих сборках.
+
+`go`help`cache` для деталей.
+
+* Modules
+
+Используем subpackage
+
+  # cat hello.go
+  package main
+  
+  import (
+  	"fmt"
+  
+  	"github.com/verytable/hello/morestrings"
+  )
+  
+  func main() {
+  	fmt.Println(morestrings.ReverseRunes("!oG ,olleH"))
+  }
+
+  # go install github.com/verytable/hello
+  # hello
+  Hello, Go!
+
+* Modules
+
+Добавляем внешнюю зависимость
+
+  # cat hello.go
+  package main
+  
+  import (
+  	"fmt"
+  
+  	"github.com/google/go-cmp/cmp"
+  	"github.com/verytable/hello/morestrings"
+  )
+  
+  func main() {
+  	fmt.Println(morestrings.ReverseRunes("!oG ,olleH"))
+  	fmt.Println(cmp.Diff("Hello World", "Hello Go"))
+  }
+
+* Modules
+
+  # go mod tidy
+  go: finding module for package github.com/google/go-cmp/cmp
+  go: found github.com/google/go-cmp/cmp in github.com/google/go-cmp v0.6.0
+  # go install
+  # hello
+  Hello, Go!
+    string(
+  - 	"Hello World",
+  + 	"Hello Go",
+    )
+
+Внешние зависимости хранятся in go.mod.
+
+  # cat go.mod
+  module github.com/verytable/hello
+
+  go 1.22.0
+
+  require github.com/google/go-cmp v0.6.0
+
+* Modules
+
+- *go*mod*tidy* makes sure go.mod matches the source code in the module
+
+`go`mod`help`tidy` для подробностей.
+
+* Modules
+
+Исходный код модулей хранится в *$GOPATH/pkg/mod*.
+
+  # tree -L 2 $GOPATH/pkg/mod/github.com/google
+  ...
+  ├── go-cmp@v0.5.9
+  │   ├── cmp
+  │   ├── CONTRIBUTING.md
+  │   ├── go.mod
+  │   ├── LICENSE
+  │   └── README.md
+  ├── go-cmp@v0.6.0
+  │   ├── cmp
+  │   ├── CONTRIBUTING.md
+  │   ├── go.mod
+  │   ├── LICENSE
+  │   └── README.md
+  ...
+
+* Modules
+
+- *go*clean* — чистит системные директории
+
+`go`clean`-modcache` удаляет *все* модули из *$GOPATH/pkg/mod*.
+
+`go`clean`-cache` удаляет объекты из *GOCACHE*.
+
+* Modules
+
+Установить другую версию пакета.
+
+  # go get github.com/google/go-cmp/cmp@v0.5.5
+  go: downloading github.com/google/go-cmp v0.5.5
+  go: downgraded github.com/google/go-cmp v0.6.0 => v0.5.5
+
+Обновить модули.
+
+  # go mod tidy
+  go: downloading golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543
+
+  # cat go.mod
+  module github.com/verytable/hello
+
+  go 1.22.0
+
+  require github.com/google/go-cmp v0.5.5
+
+* Modules
+
+  # go list -m -f {{.Path}}{{.Version}} all
+  github.com/verytable/hello
+  github.com/google/go-cmpv0.5.5
+  golang.org/x/xerrorsv0.0.0-20191204190536-9bdfabe68543
+
+Format options.
+
+  type Module struct {
+      Path      string       // module path
+      Version   string       // module version
+      Versions  []string     // available module versions (with -versions)
+      Replace   *Module      // replaced by this module
+      Time      *time.Time   // time version was created
+      Update    *Module      // available update, if any (with -u)
+      Main      bool         // is this the main module?
+      Indirect  bool         // is this module only an indirect dependency of main module?
+      Dir       string       // directory holding files for this module, if any
+      GoMod     string       // path to go.mod file used when loading this module, if any
+      GoVersion string       // go version used in module
+      Retracted string       // retraction information, if any (with -retracted or -u)
+      Error     *ModuleError // error loading module
+  }
+
+* Modules
+
+- *go.sum* — хранит хэши модулей
+
+  # cat go.sum
+  github.com/google/go-cmp v0.5.5 h1:Khx7svrCpmxxtHBq5j2mp/xVjsi8hQMfNLvJFAlrGgU=
+  github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
+  golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 h1:E7g+9GITq07hpfrRu66IVDexMakfv52eLZ2CXBWiKr4=
+  golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
+
+* Modules
+
+- *go*mod*graph* — печатает граф зависимостей модулей
+
+  # go mod graph
+  github.com/verytable/hello github.com/google/go-cmp@v0.5.5
+  github.com/verytable/hello go@1.22.0
+  github.com/google/go-cmp@v0.5.5 golang.org/x/xerrors@v0.0.0-20191204190536-9bdfabe68543
+  go@1.22.0 toolchain@go1.22.0
+
+* Modules
+
+- *go*mod*why* — показывает кратчайший по импортам путь до пакета
+
+  # go mod why golang.org/x/xerrors
+  # golang.org/x/xerrors
+  github.com/verytable/hello
+  github.com/google/go-cmp/cmp
+  github.com/google/go-cmp/cmp.test
+  github.com/google/go-cmp/cmp/cmpopts
+  golang.org/x/xerrors
+
+* Modules
+
+- *go*mod*vendor* — копирует зависимости модуля в директорию `./vendor`
+
+Vendor dependencies.
+
+  # go mod vendor
+  # tree -L 3 ./vendor
+  ./vendor
+  ├── github.com
+  │   └── google
+  │       └── go-cmp
+  └── modules.txt
+
+* Modules
+
+  # cat vendor/modules.txt 
+  # github.com/google/go-cmp v0.5.5
+  ## explicit
+  github.com/google/go-cmp/cmp
+  github.com/google/go-cmp/cmp/internal/diff
+  github.com/google/go-cmp/cmp/internal/flags
+  github.com/google/go-cmp/cmp/internal/function
+  github.com/google/go-cmp/cmp/internal/value
+
+* Modules
+
+Indirect зависимости
+
+  # go mod init github.com/verytable/world
+  go: creating new go.mod: module github.com/verytable/world
+	
+  # cat sum.go
+  package world
+  
+  import _ "github.com/jackc/pgx/v5"
+  
+  func Sum(a, b int) int {
+    return a + b
+  }
+
+* Modules
+
+Indirect зависимости
+
+  # go mod tidy
+  ...
+  
+  # cat go.mod
+  module github.com/verytable/world
+  
+  go 1.22.0
+  
+  require github.com/jackc/pgx/v5 v5.5.5
+  
+  require (
+    github.com/jackc/pgpassfile v1.0.0 // indirect
+    github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
+    golang.org/x/crypto v0.17.0 // indirect
+    golang.org/x/text v0.14.0 // indirect
+  )
+
+* Modules
+
+Как импортировать пакет из локального модуля
+
+  # cat hello.go 
+  package main
+  
+  import (
+    "fmt"
+
+    "github.com/google/go-cmp/cmp"
+    "github.com/verytable/hello/morestrings"
+    "github.com/verytable/world"
+  )
+
+  func main() {
+    fmt.Println(morestrings.ReverseRunes("!oG ,olleH"))
+    fmt.Println(cmp.Diff("Hello World", "Hello Go"))
+  
+    fmt.Println(world.Sum(1, 2))
+  }
+
+* Modules
+
+Как импортировать пакет из локального модуля
+	
+  # go install .
+  main.go:8:2: no required module provides package github.com/verytable/world; to add it:
+    go get github.com/verytable/world
+	
+  # go get github.com/verytable/world
+  go: module github.com/verytable/world: git ls-remote -q origin in /home/verytable/go/pkg/mod/cache/vcs/8d15fd58d5b540d58dc97582a5a11fe29782f4416e9628e0183c4ea4f8c7cdcd: exit status 128:
+    fatal: could not read Username for 'https://github.com': terminal prompts disabled
+  Confirm the import path was entered correctly.
+
+* Modules
+
+- *go*mod*edit* — вносит правки в go.mod
+
+  # go mod edit -replace github.com/verytable/world=/tmp/world
+  # cat go.mod
+  module github.com/verytable/hello
+
+  go 1.22.0
+  
+  require github.com/google/go-cmp v0.5.5
+  
+  replace github.com/verytable/world => /tmp/world
+
+* Modules
+
+  # go get ./...
+  go: added github.com/jackc/pgpassfile v1.0.0
+  go: added github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a
+  go: added github.com/jackc/pgx/v5 v5.5.5
+  go: added github.com/verytable/world v0.0.0-00010101000000-000000000000
+  go: added golang.org/x/crypto v0.17.0
+  go: added golang.org/x/text v0.14.0
+	
+  # go run .
+  Hello, Go!
+    string(
+  - 	"Hello World",
+  + 	"Hello Go",
+    )
+  
+  3
+
+* Modules
+
+Выложить свой пакет в открытый доступ.
+
+  # git init
+  # git add .
+  # git commit
+  # git push
+  # go get github.com/verytable/hello@v0.0.0-20240303255101-161cd47e91fd
+	
+  # git tag v0.0.1
+  # git push v0.0.1
+  # go get github.com/verytable/hello@v0.0.1
+
+* Modules
+
+Semantic versioning
+
+.image versions.png _ 700
+
+* Modules
+
+v2 and beyond
+
+.link https://github.com/googleapis/gax-go Отдельная директория
+
+  ├── go.mod
+  ├── package.go
+  └── v2
+      ├── go.mod
+      └── package.go
+
+.link https://github.com/go-yaml/yaml Git ветки
+
+  main == v0/v1
+  ├── go.mod
+  └── package.go
+
+  v2 == v2
+  ├── go.mod
+  └── package.go
+
+* Modules
+
+Module proxy
+
+  # curl https://proxy.golang.org/github.com/google/go-cmp/@v/list
+  v0.5.8
+  v0.5.5
+  v0.6.0
+	
+  # curl https://proxy.golang.org/github.com/google/go-cmp/@v/v0.5.5.info
+  {"Version":"v0.5.5","Time":"2021-03-03T20:48:37Z"}
+	
+  # curl https://proxy.golang.org/github.com/google/go-cmp/@latest
+  {"Version":"v0.6.0",
+   "Time":"2023-08-31T17:32:40Z",
+   "Origin":{"VCS":"git","URL":"https://github.com/google/go-cmp","Ref":"refs/tags/v0.6.0", ...}}
+	
+  # curl https://proxy.golang.org/github.com/google/go-cmp/@v/v0.6.0.mod
+  module github.com/google/go-cmp
+  
+  go 1.13
+	
+  # curl -O https://proxy.golang.org/github.com/google/go-cmp/@v/v0.6.0.zip
+
+* Modules
+
+Module proxy
+
+  # go get -x github.com/google/go-cmp/cmp
+  get https://proxy.golang.org/github.com/@v/list
+  get https://proxy.golang.org/github.com/google/go-cmp/@v/list
+  get https://proxy.golang.org/github.com/google/go-cmp/cmp/@v/list
+  get https://proxy.golang.org/github.com/google/@v/list
+  get https://proxy.golang.org/github.com/google/go-cmp/cmp/@v/list: 404 Not Found (0.622s)
+  get https://proxy.golang.org/github.com/google/@v/list: 404 Not Found (0.622s)
+  get https://proxy.golang.org/github.com/@v/list: 404 Not Found (0.622s)
+  get https://proxy.golang.org/github.com/google/go-cmp/@v/list: 200 OK (0.638s)
+  go: added github.com/google/go-cmp v0.6.0
+
+* Modules
+
+Vanity import
+
+Исходный код лежит на [[https://github.com/uber-go/atomic][https://github.com/uber-go/atomic]], однако импорт другой
+
+  import "go.uber.org/atomic"
+
+Команда *go*get* внутри делает http запрос к [[https://go.uber.org]]
+
+  # curl https://go.uber.org/atomic\?go-get\=1
+  <!DOCTYPE html>
+  <html>
+      <head>
+          <meta name="go-import" content="go.uber.org/atomic git https://github.com/uber-go/atomic">
+          <meta name="go-source" content="go.uber.org/atomic https://github.com/uber-go/atomic https://github.com/uber-go/atomic/tree/master{/dir} https://github.com/uber-go/atomic/tree/master{/dir}/{file}#L{line}">
+          <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/go.uber.org/atomic">
+      </head>
+      <body>
+          Nothing to see here. Please <a href="https://pkg.go.dev/go.uber.org/atomic">move along</a>.
+      </body>
+  </html>
+
+* Ссылки:
+
+.link https://golang.org/cmd/go/ — go cmd
+.link https://www.youtube.com/watch?v=F8nrpe0XWRg — ▶️ Go with Versions, Russ Cox
+.link https://play-with-go.dev/ — play-with-go

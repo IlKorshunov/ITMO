@@ -1,0 +1,237 @@
+database/sql
+Лекция 7
+
+Синельников Илья
+
+* Способы работы с базами данных
+
+- database/sql - любые SQL базы данных
+- всё остальное
+
+* database/sql
+
+- абстракция для работы с SQL базами данных
+- набор интерфейсов для написания драйверов
+- нет продвинутых возможностей (например, батчинг)
+- драйверы часто имеют расширенный API
+
+.code sql/driver.go /^type Driver/,/^}/
+.code sql/driver.go /^type QueryerContext/,/^}/
+
+* Подключение - database/sql
+
+.code open/sql.go
+
+* Подключение - на прямую
+
+.code open/pgx.go
+
+* Основные сущности
+
+- DB - connection pool к базе
+- Rows - результат запроса
+- Row - одна строка из результата запроса
+- Null* - типы для работы с Null значениями
+- Tx - транзакция
+- Conn - одно подключение к базе
+- Stmt - подготовленый запрос
+
+* Проверка доступности
+
+.code alive/ping.go /^func IsItAliveQuestionMark/,/^}/
+
+* Запрос с получением результатов
+
+.code query/query.go /^func Query/,/^}/
+
+* Запрос с получением одного результата
+
+.code query/queryrow.go /^func QueryRow/,/^}/
+
+* Запрос без результатов
+
+.code exec/exec.go /^func Exec/,/^}/
+
+Возвращаемый тип
+.code exec/result.go /^type Result/,/^}/
+
+* Именованые аргументы
+- реализуются на уровне драйвера
+
+.code named/named.go /^type NamedArg/,/^}/
+
+* Именованые аргументы - использование
+
+.code named/insert.go /^func Insert/,/^}/
+
+* Nulls
+
+.code nulls/nulls.go /^type NullString/,/^}/
+
+* Null в аргументах
+
+.code nulls/insert.go /^func Insert/,/^}/
+
+Передаём значения
+.code nulls/insert.go /^func DoStuff/,/^}/
+
+* Null в результатах
+.code nulls/rows.go /^func Results/,/^}/
+
+* Работа с конкретным подключением к БД
+
+.code conn/conn.go /^func Conn/,/^}/
+
+* Работа с транзакциями
+
+.code tx/tx.go /^func Begin/,/^}/
+
+* Prepared Statements
+
+Плюсы:
+
+- решают проблему sql-injection
+- производительность
+
+Минусы:
+
+- удобство
+- производительность
+- несовместимы с некоторыми режимами работы пулеров коннектов
+
+* Prepare
+
+.code prepare/prepare.go /^func Prepare/,/^}/
+
+* Настройка *sql.DB
+
+- func (db *DB) SetConnMaxIdleTime(d time.Duration)
+- func (db *DB) SetConnMaxLifetime(d time.Duration)
+- func (db *DB) SetMaxIdleConns(n int)
+- func (db *DB) SetMaxOpenConns(n int)
+
+* Статистика *sql.DB
+
+- func (db *DB) Stats() DBStats
+
+.code conf/stats.go /^type DBStats/,/^}
+
+* Подводные камни при работе с database/sql
+
+* Основные типы граблей
+
+- неосвобождение ресурсов
+- дедлоки
+- нюансы каждого отдельного драйвера
+
+* Context - вечные запросы
+
+.code resources/ctx.go /^func NoContext/,/^}/
+
+* Запросы - неосвобождение ресурсов
+
+.code resources/rows.go /^func RowsExhaust/,/^}/
+
+* Коннекты - неосвобождение ресурсов
+
+.code resources/conn.go /^func ConnExhaust/,/^}/
+
+* Транзакции - неосвобождение ресурсов
+
+.code resources/tx.go /^func TxExhaust/,/^}/
+
+* Транзакции - исчерпание ресурсов приводящее к deadlock
+
+.code resources/tx.go /^func TxDeadlock/,/^}/
+
+* Запросы - исчерпание ресурсов приводящее к deadlock
+
+.code resources/queries.go /^func QueryDeadlock/,/^}/
+
+* Запросы - deadlock - fix 1
+
+.code resources/queries.go /^func QueryDeadlockFixOne/,/^}/
+
+* Запросы - deadlock - fix 2
+
+.code resources/queries.go /^func QueryDeadlockFixTwo/,/^}/
+
+* Удобства и расширения
+
+* github.com/jmoiron/sqlx
+
+- drop-in replacement для database/sql
+- добавляет множество вспомогательных методов
+- реализует именованные аргументы
+
+* sqlx - подключение
+
+.code sqlx/open.go
+
+* sqlx - StructScan
+
+  func (r *Rows) StructScan(dest interface{}) error
+
+  func (r *Row) StructScan(dest interface{}) error
+
+  func StructScan(rows rowsi, dest interface{}) error
+
+  type rowsi interface {
+      Close() error
+      Columns() ([]string, error)
+      Err() error
+      Next() bool
+      Scan(...interface{}) error
+  }
+
+* sqlx - StructScan на практике
+
+.code sqlx/structscan.go /^func Example/,/^}/
+
+* sqlx - именованые аргументы
+
+- работают для любого драйвера
+- тоже защищают от SQL-injection
+
+.code sqlx/named.go /^func Insert/,/^}/
+
+* golang.yandex/hasql
+
+- удобная работа с многохостовыми кластерами
+- поддерживает database/sql и sqlx
+
+* hasql - подключение и использование
+
+.code hasql/open.go /^func Open/,/^}/
+
+* Нетипичные драйверы
+
+* Нетипичные драйверы - github.com/DATA-DOG/go-sqlmock
+
+.play -edit sqlmock/sqlmock_test.go /^func TestSelect/,/^}/
+
+* Нетипичные драйверы - github.com/ClickHouse/clickhouse-go
+
+.code clickhouse/clickhouse.go /^func Example/,/^}/
+
+* Не-SQL драйверы - Redis
+
+.code redis/redis.go /^func Example/,/^}/
+
+* ORM
+
+- github.com/jinzhu/gorm
+- github.com/go-pg/pg
+
+* Популярные базы данных и их драйверы
+
+Совместимые с database/sql:
+
+.link https://github.com/jackc/pgx - PostgreSQL
+.link https://github.com/go-sql-driver/mysql - MySQL
+.link https://github.com/ClickHouse/clickhouse-go - ClickHouse
+
+Другие:
+
+.link https://github.com/go-redis/redis - Redis
+.link https://github.com/mongodb/mongo-go-driver - MongoDB

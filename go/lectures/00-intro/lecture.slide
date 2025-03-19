@@ -1,0 +1,277 @@
+Введение
+Лекция 1
+
+Фёдор Короткий
+
+* Добро пожаловать
+
+- Вы пришли на курс по Go
+
+.image gopher.png _ 400
+
+* Ссылки
+
+.link https://github.com/slon/shad-go Репозиторий
+.link https://t.me/joinchat/BjrYSxdPJGtJdd1pae08Zg Чат курса в телеграме
+[[https://p.go.manytask.org]] - эти слайды.
+
+* Что нас ждёт?
+
+- 12+ занятий
+- Семинарские задания после каждой лекции. *Дедлайн*10*дней.*
+- 4 _больших_ домашних задания. *Дедлайн*3*недели.*
+- Критерий оценки: *В*LMS* (>N домашек и >X% за семинары).
+
+* Hello world
+
+.play -edit helloworld/helloworld.go
+
+* Go
+
+Concurrent
+
+Garbage Collected
+
+Systems
+
+Language
+
+* История
+
+- 2009 go public announcement
+- 2012 go 1.0
+- 2008 github launch
+- 2011 C++11
+- 2011 pip initial release
+- 2010 npm first release
+- 2009 nodejs first release
+- 2008 python3
+- 2006 rust project started
+- 2015 rust 1.0
+
+* Современный мир
+
+- Море библиотек. Большие деревья зависимостей.
+: Нам нужен язык, который будет помогать контролировать сложность at large.
+- Архитектура построена вокруг сервисов, которые общаются по сети.
+: Скорее вам придётся писать stateless сервис. Stateful сервисы общаются с базой данных по сети.
+- Многоядерные процессоры даже в телефонах.
+
+* Скорость разработки
+
+- Компиляция занимает много времени
+- Инструменты замедляются
+- Число зависимостей постоянно растёт
+- Ноутбуки не становятся быстрее
+- Проекты продолжают расти
+
+* Цели Go
+
+- Эффективность статической типизации. Удобство динамической типизации.
+- Type-safe и memory-safe.
+- Хорошая поддержка многопоточности.
+- Эффективный сборщик мусора, без пауз.
+- Быстрая компиляция.
+- Эффективная работа с большими объемами кода.
+
+* Compilation Demo
+
+  # 1 пакет за 200 ms
+  time go build -a -v math
+
+  # 84 пакета за 7 секунд
+  time go build -a -v github.com/golang/protobuf/...
+
+.image compiling.png
+
+* Принципы дизайна
+
+Небольшое число ортогональных фич.
+
+Простой синтаксис (понятный для людей *и* машин).
+
+Простая система типов. Объектно ориентированный, но без наследования.
+
+* Hello World
+
+.play -edit helloworld/helloworld.go
+
+: Как запустить. В презентации и в CLI.
+: Что такое пакет.
+: Импорты. fmt - стандартная библиотека.
+: Пакет main.
+: Автоматическое форматирование.
+: goimports
+
+* echo
+
+.play -edit echo/echo.go
+
+: Слайсы. s[n:m], s[i], len(s).
+: var создаёт переменную. Инициализация zero value.
+
+* For loop
+
+Полная форма.
+
+    for initialization; condition; post {
+        // statements
+    }
+
+Как while.
+
+    for condition {
+        // statements
+    }
+
+Бесконечный цикл.
+
+    for {
+        // statements
+    }
+
+* echo2
+
+.play -edit echo2/echo2.go
+
+* Range
+
+Полная форма.
+
+    for i, v := range slice {
+        // ...
+    }
+
+Только индекс.
+
+    for i := range slice {
+        // ...
+    }
+
+Индекс не используется.
+
+    for _, v := range slice {
+        // ...
+    }
+
+* Переменные
+
+    s := ""
+    var s string
+    var s = ""
+    var s string = ""
+
+.link https://go.dev/blog/declaration-syntax Почему тип пишется после названия переменной
+
+* uniq
+
+.play -edit uniq/uniq.go
+
+: map. Создаётся через make(). Значения инициализируются нулём. Ключ должен иметь ==.
+: Итерация по map.
+: bufio.Scanner.
+: Printf.
+
+* Printf
+
+  %d         decimal integer
+  %x, %o, %b integer in hexade cimal, octal, binary
+  %f, %g, %e floating-point number: 3.141593 3.141592653589793 3.141593e+00
+  %t         boolean: true or false
+  %c         rune (Unicode code point)
+  %s         string
+  %q         quoted string "abc" or rune 'c'
+  %v         any value in a natural format
+  %T         type of any value
+  %%         literal percent sign (no operand)
+
+Функции форматирования заканчиваются на `f`. `fmt.Errorf`, `log.Printf`. 
+
+* urlfetch
+
+.code urlfetch/urlfetch.go /func main/,/^}/
+
+* fetchall
+
+.code fetchall/fetchall.go /func main/,/^}/
+
+* fetchall
+
+.code fetchall/fetchall.go /func fetch/,/^}/
+
+* webserver
+
+.code web/web.go
+
+* counter
+
+.code counter/counter.go  /var/,
+
+* switch
+
+  switch coinflip() {
+  case "heads":
+      heads++
+  case "tails":
+      tails++
+  default:
+      fmt.Println("landed on edge!")
+  }
+
+_tagless_ switch.
+
+  func Signum(x int) int {
+      switch {
+      case x > 0:
+          return +1
+      default:
+          return 0
+      case x < 0:
+          return -1
+      }
+  }
+
+* Other
+
+Struct
+
+  type Point struct {
+      X, Y int
+  }
+  var p Point
+
+Pointers
+
+  var s string
+  p := &s
+  s2 := *p
+
+  var p Point
+  p.X = 1
+
+  var pp *Point
+  pp.X = 1
+
+* The Go Programming Language
+
+.image book.jpg
+
+Всего 400 страниц.
+
+* Документация
+
+.link https://golang.org/doc/effective_go.html Effective Go
+.link https://golang.org/pkg/ Документация стандартной библиотеки
+.link https://golang.org/doc/faq Go FAQ
+.link https://github.com/golang/go/wiki/CodeReviewComments Code Review Comments
+
+* Семинар
+
+- Установка go
+- Репозиторий курса
+- Сборка, запуск тестов
+- goimports, gofmt
+- Настройка IDE. (emacs, goland, vscode)
+- Запуск тестов из IDE
+- Запуск линтера
+- Сдача заданий
