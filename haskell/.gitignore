@@ -1,0 +1,7 @@
+.vscode/
+.github/
+*.cabal
+*.yaml
+.stack-work/
+**/test/
+stack.yaml.lock
