@@ -1,0 +1,164 @@
+[
+  [ 'https://example.com/page', 1 ],
+  [ 'https://www.iana.org/domains/example', 2 ],
+  [ 'http://pti.icann.org', 3 ],
+  [ 'http://www.icann.org/', 3 ],
+  [ 'https://www.icann.org/privacy/policy', 3 ],
+  [ 'https://www.icann.org/privacy/tos', 3 ],
+  [ 'https://www.cloudflare.com/5xx-error-landing', 4 ],
+  [
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
+    4
+  ],
+  [
+    'https://account.icann.org/authorize?redirect_uri=https://www.icann.org/oauth&amp;client_id=0oa9o9k9rp8VUcyJL2p7&amp;nonce=6f5398ba-8a62-4370-99a8-e00d981b692d&amp;state=https://www.icann.org/',
+    4
+  ],
+  [
+    'https://account.icann.org/registeraccount?redirect_uri=https://www.icann.org/oauth&amp;client_id=0oa9o9k9rp8VUcyJL2p7&amp;nonce=6f5398ba-8a62-4370-99a8-e00d981b692d&amp;state=https://www.icann.org/',
+    4
+  ],
+  [ 'https://www.icann.org/history', 4 ],
+  [ 'https://info.icann.org/LP---Regional-Newsletter.html', 4 ],
+  [ 'https://subscribe.icann.org/', 4 ],
+  [
+    'https://www.icann.org/resources/pages/regional-reports-2021-2021-08-24-en',
+    4
+  ],
+  [
+    'https://www.icann.org/en/public-comment?sort-param=upcoming-date&amp;sort-direction=asc&amp;upcoming-sort-param=upcoming-date&amp;upcoming-sort-direction=desc&amp;open-sort-param=open-closed-date&amp;open-sort-direction=asc&amp;pending-sort-param=pending-report-due-date&amp;pending-sort-direction=desc',
+    4
+  ],
+  [
+    'https://www.icann.org/en/public-comment/upcoming-proceedings?sort-param=upcoming-date&amp;sort-direction=asc&amp;page=1',
+    4
+  ],
+  [
+    'https://www.icann.org/en/public-comment/closed-proceedings?page=1&amp;sort-param=closed-date&amp;sort-direction=desc',
+    4
+  ],
+  [ 'https://www.icann.org/en/public-comment/about', 4 ],
+  [
+    'https://www.icann.org/en/public-comment/other-public-consultations',
+    4
+  ],
+  [ 'https://icann.org/en/board-activities-and-meetings', 4 ],
+  [ 'https://www.icann.org/complaints-office', 4 ],
+  [
+    'https://www.icann.org/resources/pages/domain-name-registrants-2017-06-20-en',
+    4
+  ],
+  [ 'https://www.iana.org/', 4 ],
+  [ 'https://www.icann.org/en/icann-acronyms-and-terms', 4 ],
+  [ 'https://newgtldprogram.icann.org/', 4 ],
+  [ 'https://pti.icann.org/', 4 ],
+  [ 'https://opendata.icann.org/', 4 ],
+  [ 'https://www.icann.org/compliance/complaint', 4 ],
+  [ 'https://www.icann.org/technology', 4 ],
+  [ 'https://www.icann.org/careers', 4 ],
+  [ 'http://www.iana.org/dnssec', 4 ],
+  [ 'http://stats.research.icann.org/dns/tld_report/', 4 ],
+  [ 'https://www.iana.org/dnssec/ceremonies', 4 ],
+  [
+    'http://gnso.icann.org/en/group-activities/inactive/2012/improvements',
+    4
+  ],
+  [ 'https://lists.icann.org/hyperkitty/list/ecadmin@icann.org/', 4 ],
+  [ 'http://aoctracking.icann.org/', 4 ],
+  [ 'https://gac.icann.org', 4 ],
+  [ 'https://atlarge.icann.org/', 4 ],
+  [ 'https://aso.icann.org/', 4 ],
+  [ 'https://ccnso.icann.org/', 4 ],
+  [ 'https://gnso.icann.org/en/', 4 ],
+  [ 'https://www.icann.org/nomcom', 4 ],
+  [ 'https://www.icann.org/csc', 4 ],
+  [ 'https://www.icann.org/rzerc', 4 ],
+  [ 'https://features.icann.org/compliance', 4 ],
+  [ 'https://www.icann.org/registrar-library', 4 ],
+  [
+    'https://www.icann.org/en/system/files/files/registrar-billing-faq-21dec21-en.pdf',
+    4
+  ],
+  [
+    'https://www.icann.org/registrar-reports/accreditation-qualified-list.html',
+    4
+  ],
+  [ 'https://meetings.icann.org/en/calendar ', 4 ],
+  [ 'https://newgtlds.icann.org/en/', 4 ],
+  [
+    'https://newgtlds.icann.org/en/announcements-and-media/case-studies ',
+    4
+  ],
+  [
+    'https://www.icann.org/resources/registries/gtlds/v1/newgtlds.csv',
+    4
+  ],
+  [ 'https://newgtlds.icann.org/en/about/trademark-clearinghouse ', 4 ],
+  [ 'http://www.iana.org/domains/root/db', 4 ],
+  [ 'https://www.icann.org/public-comments/archive', 4 ],
+  [ 'https://www.icann.org/en/help/name-collision/report-problems', 4 ],
+  [
+    'https://www.icann.org/resources/pages/terms-of-service-2020-06-12-ar',
+    4
+  ],
+  [
+    'https://www.icann.org/resources/pages/terms-of-service-2020-06-12-es',
+    4
+  ],
+  [
+    'https://www.icann.org/resources/pages/terms-of-service-2020-06-12-fr',
+    4
+  ],
+  [
+    'https://www.icann.org/resources/pages/terms-of-service-2020-06-12-pt',
+    4
+  ],
+  [
+    'https://www.icann.org/resources/pages/terms-of-service-2020-06-12-ru',
+    4
+  ],
+  [
+    'https://www.icann.org/resources/pages/terms-of-service-2020-06-12-zh',
+    4
+  ],
+  [ 'https://www.youtube.com/icannnews', 4 ],
+  [ 'https://www.twitter.com/icann', 4 ],
+  [ 'https://www.linkedin.com/company/icann', 4 ],
+  [ 'http://www.flickr.com/photos/icann', 4 ],
+  [ 'https://www.facebook.com/icannorg', 4 ],
+  [ 'https://www.icann.org/resources/pages/global-newsletter', 4 ],
+  [ 'https://community.icann.org', 4 ],
+  [ 'https://www.icann.org/blog', 4 ],
+  [ 'http://learn.icann.org/', 4 ],
+  [ 'https://www.icann.org/resources/pages/groups-2012-02-06-en', 4 ],
+  [ 'https://www.icann.org/presidentsandceo-corner', 4 ],
+  [ 'https://www.icann.org/dprd', 4 ],
+  [ 'https://lookup.icann.org/', 4 ],
+  [ 'https://rdrs.icann.org/', 4 ],
+  [ 'https://www.icann.org/privacy', 4 ],
+  [ 'https://www.icann.org/privacy/cookies', 4 ],
+  [
+    'https://www.icann.org/resources/pages/privacy-policy-2021-03-05-ar',
+    4
+  ],
+  [
+    'https://www.icann.org/resources/pages/privacy-policy-2021-03-05-es',
+    4
+  ],
+  [
+    'https://www.icann.org/resources/pages/privacy-policy-2021-03-05-fr',
+    4
+  ],
+  [
+    'https://www.icann.org/resources/pages/privacy-policy-2021-03-05-pt',
+    4
+  ],
+  [
+    'https://www.icann.org/resources/pages/privacy-policy-2021-03-05-ru',
+    4
+  ],
+  [
+    'https://www.icann.org/resources/pages/privacy-policy-2021-03-05-zh',
+    4
+  ]
+]

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HW1</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .hidden {
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      .visible {
+        opacity: 1;
+        transition: opacity 0.5s ease;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header
+      style="
+        background-color: aquamarine;
+        font-size: 26px;
+        margin: 0;
+        font-weight: bold;
+        text-align: center;
+      "
+    >
+      О себе
+    </header>
+
+    <div class="container">
+      <div class="content">
+        <h2>Содержание</h2>
+        <nav>
+          <ol>
+            <li>
+              <a href="#" onclick="toggleBlock('info')"
+                >Контактная информация</a
+              >
+            </li>
+            <li>
+              <a href="#" onclick="toggleBlock('biography')">Биография</a>
+            </li>
+            <li><a href="#" onclick="toggleBlock('stack')">Стек</a></li>
+            <li><a href="#" onclick="toggleBlock('button')">Кнопочка!</a></li>
+            <li>
+              <a href="#" onclick="toggleBlock('explosion')">Изображение</a>
+            </li>
+            <li><a href="#" onclick="toggleBlock('marketing')">Реклама!</a></li>
+            <li><a href="#" onclick="toggleBlock('quote')">Цитата</a></li>
+          </ol>
+        </nav>
+      </div>
+
+      <div id="quote" class="quote hidden">
+        <h3>Цитата дня</h3>
+        <blockquote>
+          ”<em
+            >Просыпался в 6 часов, перебудил всех; но от лени не встал и проспал
+            до 9.</em
+          >”
+        </blockquote>
+      </div>
+
+      <div id="marketing" class="advertisement hidden">
+        <h3>Реклама</h3>
+        <p><i>Здесь могла быть ваша реклама</i></p>
+      </div>
+
+      <div id="info" class="info hidden">
+        <div class="text-container">
+          <h2 style="text-align: center">Контактная информация</h2>
+          <dl class="into_h">
+            <dt><strong>ФИО:</strong></dt>
+            <dd>Коршунов Илья Константинович</dd>
+            <dt><strong>Возраст:</strong></dt>
+            <dd>20 лет</dd>
+            <dt><strong>Телефон:</strong></dt>
+            <dd>8-929-637-75-25</dd>
+            <dt><strong>Tg:</strong></dt>
+            <dd>
+              <a href="https://t.me/engharin" target="_blank"
+                >https://t.me/engharin</a
+              >
+            </dd>
+          </dl>
+        </div>
+        <div class="photo">
+          <img src="images/photo.jpg" alt="Мое фото" width="800" height="600" />
+        </div>
+      </div>
+
+      <div id="biography" class="biography hidden">
+        <ul class="table1">
+            <li>Родился в г.Братск Иркутской области</li>
+            <li>В 15 лет переехал в Петербург</li>
+            <li>Учусь в университете ИТМО на программе ПМИ</li>
+            <li>Хобби:
+              <ul>
+                <li>Настольный теннис 🏓</li>
+                <li>Театр 🎭</li>
+              </ul>
+            </li>
+          </ul>          
+      </div>
+
+      <div id="stack" class="stack hidden">
+        <h2>Стек</h2>
+        <table style="background-color: wheat">
+          <tr>
+            <th>Язык</th>
+            <th>Навыки</th>
+          </tr>
+          <tr>
+            <td>Java</td>
+            <td>
+              - Spring Framework<br />
+              - Maven/Gradle
+            </td>
+          </tr>
+          <tr>
+            <td>Go</td>
+            <td>net/http</td>
+          </tr>
+          <tr>
+            <td>Python</td>
+            <td>
+              - Rest Api<br />
+              - Pandas/NumPy<br />
+            </td>
+          </tr>
+          <tr>
+            <td>Android</td>
+            <td>
+              - Android SDK<br />
+              - Jetpack Compose<br />
+              - Retrofit
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <button class="fancy-button hidden" id="button"><i>Кнопочка!</i></button>
+      <figure class="explosion hidden" id="explosion">
+        <img src="images/explosion.gif" width="400" height="200" alt="Взрыв" />
+        <figcaption style="text-align: center">Анимация взрыва</figcaption>
+      </figure>
+    </div>
+
+    <footer
+      style="
+        background-color: brown;
+        text-align: center;
+        padding: 10px;
+        color: greenyellow;
+      "
+    >
+      &copy; Copyright Hogwarts
+    </footer>
+
+    <script>
+      function toggleBlock(blockId) {
+        const block = document.getElementById(blockId);
+        if (block.classList.contains("visible")) {
+          block.classList.remove("visible");
+          block.classList.add("hidden");
+        } else {
+          block.classList.remove("hidden");
+          block.classList.add("visible");
+        }
+      }
+    </script>
+  </body>
+</html>

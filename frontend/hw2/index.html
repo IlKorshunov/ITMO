@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>HW2</title>
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        @font-face {
+            font-family: "Edu";
+            src: url("fonts/EduAUVICWANTDots-Medium.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: "Lato";
+            src: url("fonts/Lato-Thin.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: "Roboto";
+            src: url("fonts/Roboto-Thin.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .font-edu {
+            font-family: "Edu";
+        }
+
+        .font-lato {
+            font-family: "Lato";
+        }
+
+        .font-roboto {
+            font-family: "Roboto";
+        }
+
+        #f1:checked~.allNews {
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        #f2:checked~.allNews {
+            font-family: "Franklin Gothic Medium", "Arial Narrow", Arial,
+                sans-serif;
+        }
+
+        #f3:checked~.allNews {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <header>Вечерний Пророк</header>
+    <div class="wrapper">
+        <div class="container">
+            <div class="page">
+                <div class="content">
+                    <h2 style="text-align: center; position: relative">
+                        <em>В сегодняшних новостях</em>
+                    </h2>
+                </div>
+
+                <div class="allNews">
+                    <div class="news1">
+                        <p>
+                            <span class="customletter">С</span>еверус Снегг был
+                            официально назначен директором Хогвартса. Это
+                            назначение вызвало
+                            <span class="highlight">бурные обсуждения</span> в
+                            волшебном сообществе. Снегг, известный своей строгой
+                            дисциплиной и непримиримым характером, уже начал
+                            вносить изменения в школу.
+                        </p>
+                        <p>
+                            Во время своей первой речи перед учениками и
+                            учителями он подчеркнул важность порядка и
+                            дисциплины в новом учебном году. Многие учащиеся,
+                            особенно из факультета Гриффиндор, воспринимают
+                            назначение Снегга с осторожностью.
+                        </p>
+                        <p>
+                            Хогвартс всегда был школой, где царила атмосфера
+                            свободы и творчества, но с приходом нового директора
+                            многие ожидают изменений. Тем не менее, профессор
+                            МакГонагалл заявила, что все преподаватели готовы
+                            поддержать нового руководителя в его задачах.
+                        </p>
+                        <p>
+                            Школа, начиная с нового учебного года, столкнется с
+                            новым стилем управления, но все надеются, что это
+                            пойдет на пользу как ученикам, так и учителям.
+                        </p>
+                        <p>
+                            По словам источников, Снегг уже начал вводить свои
+                            реформы, включая ужесточение правил поведения на
+                            уроках. Многие студенты выразили беспокойство по
+                            поводу новых правил, но директор заверил всех, что
+                            это сделано для их же блага.
+                        </p>
+
+                        <figure class="Snape">
+                            <img src="images/snape.gif" alt="Северус Снегг в кабинете директора" class="photo" />
+                            <figcaption style="text-align: center">
+                                Снейп думает о сбежавшем Блэке
+                            </figcaption>
+                        </figure>
+                    </div>
+
+                    <div class="middle">
+                        <h3 style="text-align: center">Учителя этого года</h3>
+                        <div class="row">
+                            <figure>
+                                <img src="images/dambldor.jpg" alt="Дамблдор" class="teacher" />
+                                <figcaption style="text-align: center">
+                                    Дамблдор
+                                </figcaption>
+                            </figure>
+
+                            <figure>
+                                <img src="images/hagrid.jpg" alt="Хагрид" class="teacher" />
+                                <figcaption style="text-align: center">
+                                    Хагрид
+                                </figcaption>
+                            </figure>
+                        </div>
+
+                        <div style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            ">
+                            <p style="
+                                    writing-mode: vertical-lr;
+                                    text-orientation: upright;
+                                ">
+                                <a href="https://stihi.ru/diary/pshenko/2013-12-01" style="text-decoration: none">
+                                    Любимое<br />
+                                    стихотворение<br />
+                                    профессора<br />
+                                    Дамблдора
+                                </a>
+                            </p>
+                        </div>
+
+                        <div class="row">
+                            <figure>
+                                <img src="images/horace.jpg" alt="Гораций" class="teacher" />
+                                <figcaption style="text-align: center">
+                                    Гораций
+                                </figcaption>
+                            </figure>
+
+                            <figure>
+                                <img src="images/rimus.jpg" alt="Римус" class="teacher" />
+                                <figcaption style="text-align: center">
+                                    Римус
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </div>
+
+                    <div class="news2">
+                        <div class="news2-part1">
+                            <p>
+                                <span class="customletter">С</span>ириус Блэк,
+                                один из самых опасных преступников волшебного
+                                мира, сбежал из строго охраняемой тюрьмы
+                                Азкабан. Этот побег стал настоящей сенсацией,
+                                так как за всю историю Азкабана еще никому не
+                                удавалось выбраться оттуда. Блэк, обвиненный в
+                                соучастии с Темным Лордом, исчез при загадочных
+                                обстоятельствах.
+                            </p>
+                            <figure class="Sirius">
+                                <img src="images/screaming.gif" alt="Сириус Блек сбежал" class="photo1" />
+                                <figcaption style="text-align: center">
+                                    Сириус Блек
+                                </figcaption>
+                            </figure>
+                        </div>
+
+                        <div class="news2-part2">
+                            <p>
+                                Министерство магии официально объявило тревогу и
+                                начало розыск беглеца. Магические патрули
+                                прочесывают каждый уголок волшебного мира в
+                                поисках зацепок. Несмотря на все усилия
+                                Министерства, Блэк остается на свободе.
+                                <span class="quote">"Его поимка — это вопрос времени,"</span>
+                                — заявил глава отдела по контролю за магическими
+                                существами.
+                            </p>
+                            <p>
+                                Происшествие вызвало
+                                <span class="highlight">волну обсуждений</span>
+                                в обществе волшебников. Некоторые задаются
+                                вопросом: если Азкабан уже не может удержать
+                                преступников, то насколько безопасен магический
+                                мир? Многие семьи опасаются за свою
+                                безопасность, особенно после слухов, что Сириус
+                                Блэк может охотиться за Гарри Поттером.
+                            </p>
+                            <!-- <p>
+                                Пока волшебный мир живет в напряжении, все
+                                надеются, что Сириус Блэк будет пойман до того,
+                                как нанесёт серьёзный вред. Поиски продолжаются,
+                                но будущее остается туманным.
+                            </p> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="for_footer">
+                <div class="font">
+                    <p><strong>Выберите шрифт</strong></p>
+                    <label for="f1"><input type="radio" name="pickFont" id="f1" checked />
+                        Times New Roman</label>
+                    <label for="f2"><input type="radio" name="pickFont" id="f2" /> Franklin
+                        Gothic Medium</label>
+                    <label for="f3"><input type="radio" name="pickFont" id="f3" />
+                        Arial</label>
+                </div>
+
+                <div class="controls">
+                    <p><strong>Размер шрифта</strong></p>
+                    <label for="smallFont"><input type="radio" name="font" id="smallFont" checked />
+                        -</label>
+                    <label for="largeFont"><input type="radio" name="font" id="largeFont" />
+                        +</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const smallFont = document.getElementById("smallFont");
+        const largeFont = document.getElementById("largeFont");
+        const fontEdu = document.getElementById("f1");
+        const fontLato = document.getElementById("f2");
+        const fontRoboto = document.getElementById("f3");
+        const allNews = document.querySelector(".allNews");
+
+        smallFont.addEventListener("change", function () {
+            allNews.className = "allNews small-font";
+            updateHeight();
+        });
+
+        largeFont.addEventListener("change", function () {
+            allNews.className = "allNews large-font";
+            updateHeight();
+        });
+
+        fontEdu.addEventListener("change", function () {
+            allNews.classList.remove("font-lato", "font-roboto");
+            allNews.classList.add("font-edu");
+            updateHeight();
+        });
+
+        fontLato.addEventListener("change", function () {
+            allNews.classList.remove("font-edu", "font-roboto");
+            allNews.classList.add("font-lato");
+            updateHeight();
+        });
+
+        fontRoboto.addEventListener("change", function () {
+            allNews.classList.remove("font-edu", "font-lato");
+            allNews.classList.add("font-roboto");
+            updateHeight();
+        });
+
+        function updateHeight() {
+            const news1 = document.querySelector(".news1");
+            const allNews = document.querySelector(".allNews");
+
+            if (news1 && allNews) {
+                const news1Height = news1.offsetHeight;
+                allNews.style.setProperty(
+                    "--height",
+                    `${news1Height + 10}px`
+                );
+            }
+        }
+
+        window.addEventListener("load", updateHeight);
+        window.addEventListener("resize", updateHeight);
+    </script>
+</body>
+
+</html>
