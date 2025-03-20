@@ -1,7 +1,6 @@
 Homework #0
 ===========
 
-[Classroom link](https://classroom.github.com/a/RQRAJcno)
 
 Task 1
 ------
