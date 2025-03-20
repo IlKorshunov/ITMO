@@ -1,0 +1,718 @@
+##############
+section Данные
+##############
+
+data Faculties
+    FacultyId, FacultyName, DeanId
+    1        , 'ФИТиП'    , 8     
+    2        , 'ФПИКТ'    , 9     
+
+data Groups
+    GroupId, GroupName, GroupFacultyId
+    1      , 'M3435'  , 1             
+    2      , 'M3439'  , 1             
+    3      , 'M3238'  , 1             
+    4      , 'M3239'  , 1             
+    5      , 'P3132'  , 2             
+
+data Students
+    StudentId, StudentName       , GroupId
+    1        , 'Иванов И.И.'     , 1      
+    2        , 'Петров П.П.'     , 1      
+    3        , 'Петров П.П.'     , 2      
+    4        , 'Сидров С.С.'     , 2      
+    5        , 'Неизвестный Н.Н.', 3      
+    6        , 'Безымянный Б.Б'  , 4      
+    7        , 'Пик Н.Н.'        , 5      
+
+data Courses
+    CourseId, CourseName             
+    1       , 'Базы данных'          
+    2       , 'Управление проектами' 
+    3       , 'ППО'                  
+    4       , 'Теория информации'    
+    6       , 'Дискретная математика'
+    7       , 'Технологии Java'      
+
+data Lecturers
+    LecturerId, LecturerName    , LecturerFacultyId
+    1         , 'Корнеев Г.А.'  , 1                
+    2         , 'Будин Н.А.'    , 1                
+    3         , 'Кузнецова Е.М.', 1                
+    4         , 'Киракозов А.Х.', 1                
+    6         , 'Трофимюк Г.А.' , 1                
+    7         , 'Беляев Е.А.'   , 1                
+    8         , 'Станкевич А.С.', 1                
+    9         , 'Кустарев П.В.' , 2                
+
+data Plan
+    GroupId, CourseId, LecturerId
+    1      , 1       , 2         
+    2      , 1       , 1         
+    1      , 2       , 3         
+    1      , 3       , 4         
+    2      , 3       , 4         
+    2      , 4       , 6         
+    1      , 4       , 7         
+    2      , 4       , 7         
+    4      , 6       , 8         
+    1      , 7       , 1         
+    2      , 7       , 1         
+    3      , 7       , 1         
+    4      , 7       , 1         
+    5      , 2       , 9         
+
+data Marks
+    StudentId, CourseId, Mark
+    1        , 1       , 5   
+    2        , 1       , 4   
+    3        , 1       , 3   
+    2        , 2       , 3   
+    3        , 2       , 4   
+    4        , 2       , 5   
+    7        , 1       , 5   
+    8        , 1       , 5   
+    7        , 7       , 5   
+    8        , 7       , 5   
+    5        , 7       , 5   
+    6        , 7       , 5   
+    3        , 3       , 3   
+    7        , 2       , 5   
+
+#########################################################
+section Составьте выражения реляционной алгебры и
+        соответствующие SQL-запросы, позволяющие получать
+#########################################################
+
+#####################################
+subsection 01. Информацию о студентах
+
+comment 01.1. С заданным идентификатором
+              (StudentId, StudentName, GroupId по :StudentId)
+
+set-var :StudentId = 1
+
+print-ra π{StudentId, StudentName, GroupId}(σ{StudentId = :StudentId}(Students ⋈ Groups))
+    # StudentId, StudentName  , GroupId
+    # 1        , 'Иванов И.И.', 1      
+
+print-sql 
+  SELECT Students.StudentId, Students.StudentName, Groups.GroupId
+FROM Students
+NATURAL JOIN Groups
+WHERE Students.StudentId = :StudentId;
+    # StudentId, StudentName  , GroupId
+    # '1'      , 'Иванов И.И.', '1'    
+
+comment 01.2. С заданным ФИО
+              (StudentId, StudentName, GroupId по :StudentName)
+
+set-var :StudentName = 'Иванов И.И.'
+
+print-ra π{StudentId, StudentName, GroupId}(σ{StudentName = :StudentName}(Students ⋈ Groups))
+    # StudentId, StudentName  , GroupId
+    # 1        , 'Иванов И.И.', 1      
+
+print-sql 
+  SELECT Students.StudentId, Students.StudentName, Groups.GroupId
+FROM Students
+NATURAL JOIN Groups
+WHERE Students.StudentName = :StudentName;
+    # StudentId, StudentName  , GroupId
+    # '1'      , 'Иванов И.И.', '1'    
+
+############################################
+subsection 02. Полную информацию о студентах
+
+comment 02.1. С заданным идентификатором
+              (StudentId, StudentName, GroupName по :StudentId)
+
+set-var :StudentId = 1
+
+print-ra π{StudentId, StudentName, GroupName}(σ{StudentId = :StudentId}(Students ⋈ Groups))
+    # StudentId, StudentName  , GroupName
+    # 1        , 'Иванов И.И.', 'M3435'  
+
+print-sql 
+  SELECT Students.StudentId, Students.StudentName, Groups.GroupName
+FROM Students
+NATURAL JOIN Groups
+WHERE Students.StudentId = :StudentId;
+    # StudentId, StudentName  , GroupName
+    # '1'      , 'Иванов И.И.', 'M3435'  
+
+comment 02.2. С заданным ФИО
+              (StudentId, StudentName, GroupName по :StudentName)
+
+set-var :StudentName = 'Иванов И.И.'
+
+print-ra π{StudentId, StudentName, GroupName}(σ{StudentName = :StudentName}(Students ⋈ Groups))
+    # StudentId, StudentName  , GroupName
+    # 1        , 'Иванов И.И.', 'M3435'  
+
+print-sql 
+  SELECT Students.StudentId, Students.StudentName, Groups.GroupName
+FROM Students
+NATURAL JOIN Groups
+WHERE Students.StudentName = :StudentName;
+    # StudentId, StudentName  , GroupName
+    # '1'      , 'Иванов И.И.', 'M3435'  
+
+comment 02.3. Из заданной группы
+              (StudentId, StudentName, GroupName по :GroupName)
+
+set-var :GroupName = 'M3439'
+
+print-ra π{StudentId, StudentName, GroupName}(σ{GroupName = :GroupName}(Students ⋈ Groups))
+    # StudentId, StudentName  , GroupName
+    # 3        , 'Петров П.П.', 'M3439'  
+    # 4        , 'Сидров С.С.', 'M3439'  
+
+print-sql 
+  SELECT Students.StudentId, Students.StudentName, Groups.GroupName
+FROM Students
+NATURAL JOIN Groups
+WHERE Groups.GroupName = :GroupName;
+    # StudentId, StudentName  , GroupName
+    # '3'      , 'Петров П.П.', 'M3439'  
+    # '4'      , 'Сидров С.С.', 'M3439'  
+
+comment 02.4. C заданного факультета
+              (StudentId, StudentName, GroupName по :FacultyName)
+
+set-var :FacultyName = 'ФИТиП'
+
+print-ra π{StudentId, StudentName, GroupName}(σ{FacultyName = :FacultyName}(Students ⋈ Groups ⋈ Faculties))
+    # StudentId, StudentName       , GroupName
+    # 1        , 'Иванов И.И.'     , 'M3435'  
+    # 2        , 'Петров П.П.'     , 'M3435'  
+    # 3        , 'Петров П.П.'     , 'M3439'  
+    # 4        , 'Сидров С.С.'     , 'M3439'  
+    # 5        , 'Неизвестный Н.Н.', 'M3238'  
+    # 6        , 'Безымянный Б.Б'  , 'M3239'  
+    # 7        , 'Пик Н.Н.'        , 'P3132'  
+
+print-sql 
+  SELECT Students.StudentId, Students.StudentName, Groups.GroupName
+FROM Students
+NATURAL JOIN Groups
+NATURAL JOIN Faculties
+WHERE Faculties.FacultyName = :FacultyName;
+    # StudentId, StudentName       , GroupName
+    # '1'      , 'Иванов И.И.'     , 'M3435'  
+    # '2'      , 'Петров П.П.'     , 'M3435'  
+    # '3'      , 'Петров П.П.'     , 'M3439'  
+    # '4'      , 'Сидров С.С.'     , 'M3439'  
+    # '5'      , 'Неизвестный Н.Н.', 'M3238'  
+    # '6'      , 'Безымянный Б.Б'  , 'M3239'  
+    # '7'      , 'Пик Н.Н.'        , 'P3132'  
+
+comment 02.5. C факультета, заданного деканом
+              (StudentId, StudentName, GroupName по :LecturerName)
+
+set-var :LecturerName = 'Станкевич А.С.'
+
+print-ra π{StudentId, StudentName, GroupName}(σ{LecturerName = :LecturerName}(Students ⋈ Groups ⋈ Faculties ⋈ Lecturers))
+    # StudentId, StudentName       , GroupName
+    # 1        , 'Иванов И.И.'     , 'M3435'  
+    # 2        , 'Петров П.П.'     , 'M3435'  
+    # 3        , 'Петров П.П.'     , 'M3439'  
+    # 4        , 'Сидров С.С.'     , 'M3439'  
+    # 5        , 'Неизвестный Н.Н.', 'M3238'  
+    # 6        , 'Безымянный Б.Б'  , 'M3239'  
+    # 7        , 'Пик Н.Н.'        , 'P3132'  
+
+print-sql 
+  SELECT DISTINCT Students.StudentId, Students.StudentName, Groups.GroupName
+FROM Students
+JOIN Groups ON Students.GroupId = Groups.GroupId
+JOIN Faculties ON Groups.GroupFacultyId = Faculties.FacultyId
+JOIN Lecturers ON Faculties.DeanId = Lecturers.LecturerId
+WHERE Lecturers.LecturerName = :LecturerName;
+    # StudentId, StudentName       , GroupName
+    # '1'      , 'Иванов И.И.'     , 'M3435'  
+    # '2'      , 'Петров П.П.'     , 'M3435'  
+    # '3'      , 'Петров П.П.'     , 'M3439'  
+    # '4'      , 'Сидров С.С.'     , 'M3439'  
+    # '5'      , 'Неизвестный Н.Н.', 'M3238'  
+    # '6'      , 'Безымянный Б.Б'  , 'M3239'  
+
+######################################################################
+subsection 03. Информацию о студентах с заданной оценкой по дисциплине
+
+comment 03.1. С заданным идентификатором
+              (StudentId, StudentName, GroupId по :Mark, :CourseId)
+
+set-var :Mark = 5
+
+set-var :CourseId = 1
+
+print-ra π{StudentId, StudentName, GroupId}(σ{Mark = :Mark ⋀ CourseId = :CourseId}(Students ⋈ Marks))
+    # StudentId, StudentName  , GroupId
+    # 1        , 'Иванов И.И.', 1      
+    # 7        , 'Пик Н.Н.'   , 5      
+
+comment 03.2. С заданным названием
+              (StudentId, StudentName, GroupId по :Mark, :CourseName)
+
+set-var :Mark = 5
+
+set-var :CourseName = 'Базы данных'
+
+print-ra π{StudentId, StudentName, GroupId}(σ{Mark = :Mark ⋀ CourseName = :CourseName}(Students ⋈ Marks ⋈ Courses))
+    # StudentId, StudentName  , GroupId
+    # 1        , 'Иванов И.И.', 1      
+    # 7        , 'Пик Н.Н.'   , 5      
+
+comment 03.3. Которую у него вёл лектор заданный идентификатором
+              (StudentId, StudentName, GroupId по :Mark, :LecturerId)
+
+set-var :Mark = 5
+
+set-var :LecturerId = '1'
+
+print-ra π{StudentId, StudentName, GroupId}(σ{Mark = :Mark ⋀ LecturerId = :LecturerId}(Students ⋈ Marks ⋈ Plan))
+    # StudentId, StudentName, GroupId
+
+comment 03.4. Которую у них вёл лектор, заданный ФИО
+              (StudentId, StudentName, GroupId по :Mark, :LecturerName)
+
+set-var :Mark = 5
+
+set-var :LecturerName = 'Корнеев Г.А.'
+
+print-ra π{StudentId, StudentName, GroupId}(σ{Mark = :Mark ⋀ LecturerName = :LecturerName}(Students ⋈ Marks ⋈ Plan ⋈ Lecturers))
+    # StudentId, StudentName       , GroupId
+    # 5        , 'Неизвестный Н.Н.', 3      
+    # 6        , 'Безымянный Б.Б'  , 4      
+
+comment 03.5. Которую вёл лектор, заданный идентификатором
+              (StudentId, StudentName, GroupId по :Mark, :LecturerId)
+
+set-var :Mark = 5
+
+set-var :LecturerId = '1'
+
+print-ra π{StudentId, StudentName, GroupId}(σ{Mark = :Mark ⋀ LecturerId = :LecturerId}(π{Mark, LecturerId, StudentId}(Plan ⋈ Marks) ⋈ Students))
+    # StudentId, StudentName, GroupId
+
+comment 03.6. Которую вёл лектор, заданный ФИО
+              (StudentId, StudentName, GroupId по :Mark, :LecturerName)
+
+set-var :Mark = 5
+
+set-var :LecturerName = 'Корнеев Г.А.'
+
+print-ra π{StudentId, StudentName, GroupId}(σ{Mark = :Mark ⋀ LecturerName = :LecturerName}(π{Mark, LecturerName, StudentId}(Plan ⋈ Marks ⋈ Lecturers) ⋈ Students))
+    # StudentId, StudentName       , GroupId
+    # 1        , 'Иванов И.И.'     , 1      
+    # 7        , 'Пик Н.Н.'        , 5      
+    # 5        , 'Неизвестный Н.Н.', 3      
+    # 6        , 'Безымянный Б.Б'  , 4      
+
+#####################################################################
+subsection 04. Информацию о студентах не имеющих оценки по дисциплине
+
+comment 04.1. Среди всех студентов
+              (StudentId, StudentName, GroupId по :CourseName)
+
+set-var :CourseName = 'Базы данных'
+
+print-ra π{StudentId, StudentName, GroupId}(Students) ∖ π{StudentId, StudentName, GroupId}(σ{CourseName = :CourseName}(Students ⋈ Courses ⋈ Marks))
+    # StudentId, StudentName       , GroupId
+    # 4        , 'Сидров С.С.'     , 2      
+    # 5        , 'Неизвестный Н.Н.', 3      
+    # 6        , 'Безымянный Б.Б'  , 4      
+
+comment 04.2. Задание удалено
+
+comment 04.3. Среди студентов факультета
+              (StudentId, StudentName, GroupId по :CourseName, :FacultyName)
+
+set-var :CourseName = 'Базы данных'
+
+set-var :FacultyName = 'ФИТиП'
+
+print-ra π{StudentId, StudentName, GroupId}(Students) ∖ π{StudentId, StudentName, GroupId}(σ{CourseName = :CourseName ⋀ FacultyName = :FacultyName}(Students ⋈ Courses ⋈ Marks ⋈ Faculties))
+    # StudentId, StudentName       , GroupId
+    # 4        , 'Сидров С.С.'     , 2      
+    # 5        , 'Неизвестный Н.Н.', 3      
+    # 6        , 'Безымянный Б.Б'  , 4      
+
+comment 04.4. Среди студентов, у которых есть эта дисциплина
+              (StudentId, StudentName, GroupId по :CourseName)
+
+set-var :CourseName = 'Базы данных'
+
+print-ra π{StudentId, StudentName, GroupId}(σ{CourseName = :CourseName}(Courses) ⋈ Plan ⋈ Students) ∖ π{StudentId, StudentName, GroupId}(σ{CourseName = :CourseName}(Students ⋈ Courses ⋈ Marks))
+    # StudentId, StudentName  , GroupId
+    # 4        , 'Сидров С.С.', 2      
+
+############################################################
+subsection 05. Для каждого студента ФИО и названия дисциплин
+
+comment 05.1. Которые у него есть по плану
+              (StudentName, CourseName)
+
+print-ra π{StudentName, CourseName}(Students ⋈ Plan ⋈ Courses)
+    # StudentName       , CourseName             
+    # 'Иванов И.И.'     , 'Базы данных'          
+    # 'Иванов И.И.'     , 'Управление проектами' 
+    # 'Иванов И.И.'     , 'ППО'                  
+    # 'Иванов И.И.'     , 'Теория информации'    
+    # 'Иванов И.И.'     , 'Технологии Java'      
+    # 'Петров П.П.'     , 'Базы данных'          
+    # 'Петров П.П.'     , 'Управление проектами' 
+    # 'Петров П.П.'     , 'ППО'                  
+    # 'Петров П.П.'     , 'Теория информации'    
+    # 'Петров П.П.'     , 'Технологии Java'      
+    # 'Сидров С.С.'     , 'Базы данных'          
+    # 'Сидров С.С.'     , 'ППО'                  
+    # 'Сидров С.С.'     , 'Теория информации'    
+    # 'Сидров С.С.'     , 'Технологии Java'      
+    # 'Неизвестный Н.Н.', 'Технологии Java'      
+    # 'Безымянный Б.Б'  , 'Дискретная математика'
+    # 'Безымянный Б.Б'  , 'Технологии Java'      
+    # 'Пик Н.Н.'        , 'Управление проектами' 
+
+comment 05.2. Есть, но у него нет оценки
+              (StudentName, CourseName)
+
+print-ra π{StudentName, CourseName}(π{StudentId, CourseId, StudentName, CourseName}(Students ⋈ Plan ⋈ Courses) ∖ π{StudentId, CourseId, StudentName, CourseName}(Students ⋈ Marks ⋈ Courses))
+    # StudentName     , CourseName             
+    # 'Иванов И.И.'   , 'Управление проектами' 
+    # 'Иванов И.И.'   , 'ППО'                  
+    # 'Иванов И.И.'   , 'Теория информации'    
+    # 'Иванов И.И.'   , 'Технологии Java'      
+    # 'Петров П.П.'   , 'ППО'                  
+    # 'Петров П.П.'   , 'Теория информации'    
+    # 'Петров П.П.'   , 'Технологии Java'      
+    # 'Сидров С.С.'   , 'Базы данных'          
+    # 'Сидров С.С.'   , 'ППО'                  
+    # 'Сидров С.С.'   , 'Теория информации'    
+    # 'Сидров С.С.'   , 'Технологии Java'      
+    # 'Безымянный Б.Б', 'Дискретная математика'
+
+comment 05.3. Есть, но у него не 4 или 5
+              (StudentName, CourseName)
+
+print-ra π{StudentName, CourseName}(π{StudentId, CourseId, StudentName, CourseName}(Students ⋈ Plan ⋈ Courses) ∖ π{StudentId, CourseId, StudentName, CourseName}(Students ⋈ σ{Mark = 4 ⋁ Mark = 5}(Marks) ⋈ Courses))
+    # StudentName     , CourseName             
+    # 'Иванов И.И.'   , 'Управление проектами' 
+    # 'Иванов И.И.'   , 'ППО'                  
+    # 'Иванов И.И.'   , 'Теория информации'    
+    # 'Иванов И.И.'   , 'Технологии Java'      
+    # 'Петров П.П.'   , 'Управление проектами' 
+    # 'Петров П.П.'   , 'ППО'                  
+    # 'Петров П.П.'   , 'Теория информации'    
+    # 'Петров П.П.'   , 'Технологии Java'      
+    # 'Петров П.П.'   , 'Базы данных'          
+    # 'Сидров С.С.'   , 'Базы данных'          
+    # 'Сидров С.С.'   , 'ППО'                  
+    # 'Сидров С.С.'   , 'Теория информации'    
+    # 'Сидров С.С.'   , 'Технологии Java'      
+    # 'Безымянный Б.Б', 'Дискретная математика'
+
+print-ra π{GroupName, CourseName, LecturerName}(Groups ⋈ Lecturers ⋈ Plan ⋈ Courses)
+    # GroupName, CourseName             , LecturerName    
+    # 'M3435'  , 'Технологии Java'      , 'Корнеев Г.А.'  
+    # 'M3435'  , 'Базы данных'          , 'Будин Н.А.'    
+    # 'M3435'  , 'Управление проектами' , 'Кузнецова Е.М.'
+    # 'M3435'  , 'ППО'                  , 'Киракозов А.Х.'
+    # 'M3435'  , 'Теория информации'    , 'Беляев Е.А.'   
+    # 'M3439'  , 'Базы данных'          , 'Корнеев Г.А.'  
+    # 'M3439'  , 'Технологии Java'      , 'Корнеев Г.А.'  
+    # 'M3439'  , 'ППО'                  , 'Киракозов А.Х.'
+    # 'M3439'  , 'Теория информации'    , 'Трофимюк Г.А.' 
+    # 'M3439'  , 'Теория информации'    , 'Беляев Е.А.'   
+    # 'M3238'  , 'Технологии Java'      , 'Корнеев Г.А.'  
+    # 'M3239'  , 'Технологии Java'      , 'Корнеев Г.А.'  
+    # 'M3239'  , 'Дискретная математика', 'Станкевич А.С.'
+    # 'P3132'  , 'Управление проектами' , 'Кустарев П.В.' 
+
+print-ra π{StudentName, CourseName, GroupName, FacultyName}(Students ⋈ Courses ⋈ Marks ⋈ ρ{FacultyId=GroupFacultyId}(Groups) ⋈ Faculties)
+    # StudentName       , CourseName            , GroupName, FacultyName
+    # 'Иванов И.И.'     , 'Базы данных'         , 'M3435'  , 'ФИТиП'    
+    # 'Петров П.П.'     , 'Базы данных'         , 'M3435'  , 'ФИТиП'    
+    # 'Петров П.П.'     , 'Управление проектами', 'M3435'  , 'ФИТиП'    
+    # 'Петров П.П.'     , 'Базы данных'         , 'M3439'  , 'ФИТиП'    
+    # 'Петров П.П.'     , 'Управление проектами', 'M3439'  , 'ФИТиП'    
+    # 'Петров П.П.'     , 'ППО'                 , 'M3439'  , 'ФИТиП'    
+    # 'Сидров С.С.'     , 'Управление проектами', 'M3439'  , 'ФИТиП'    
+    # 'Неизвестный Н.Н.', 'Технологии Java'     , 'M3238'  , 'ФИТиП'    
+    # 'Безымянный Б.Б'  , 'Технологии Java'     , 'M3239'  , 'ФИТиП'    
+    # 'Пик Н.Н.'        , 'Базы данных'         , 'P3132'  , 'ФПИКТ'    
+    # 'Пик Н.Н.'        , 'Управление проектами', 'P3132'  , 'ФПИКТ'    
+    # 'Пик Н.Н.'        , 'Технологии Java'     , 'P3132'  , 'ФПИКТ'    
+
+print-ra π{LecturerName, FacultyName}(σ{FacultyId = LecturerFacultyId}(Lecturers ⋈ Faculties))
+    # LecturerName    , FacultyName
+    # 'Корнеев Г.А.'  , 'ФИТиП'    
+    # 'Будин Н.А.'    , 'ФИТиП'    
+    # 'Кузнецова Е.М.', 'ФИТиП'    
+    # 'Киракозов А.Х.', 'ФИТиП'    
+    # 'Трофимюк Г.А.' , 'ФИТиП'    
+    # 'Беляев Е.А.'   , 'ФИТиП'    
+    # 'Станкевич А.С.', 'ФИТиП'    
+    # 'Кустарев П.В.' , 'ФПИКТ'    
+
+comment 05.7. Вёл декан
+              (StudentName, CourseName)
+
+print-ra π{StudentName, CourseName}(Students ⋈ Groups ⋈ σ{LecturerId = DeanId}(Plan ⋈ Faculties) ⋈ Courses)
+    # StudentName     , CourseName             
+    # 'Безымянный Б.Б', 'Дискретная математика'
+    # 'Пик Н.Н.'      , 'Управление проектами' 
+
+########################################################
+subsection 06. Идентификаторы студентов по преподавателю
+
+comment 06.1. Имеющих хотя бы одну оценку у преподавателя
+              (StudentId по :LecturerName)
+
+set-var :LecturerName = 'Корнеев Г.А.'
+
+print-ra π{StudentId}(σ{LecturerName = :LecturerName}(Students ⋈ Plan ⋈ Marks ⋈ Lecturers))
+    # StudentId
+    # 3        
+    # 5        
+    # 6        
+
+comment 06.2. Не имеющих ни одной оценки у преподавателя
+              (StudentId по :LecturerName)
+
+set-var :LecturerName = 'Корнеев Г.А.'
+
+print-ra π{StudentId}(Students) ∖ π{StudentId}(σ{LecturerName = :LecturerName}(Students ⋈ Marks ⋈ Plan ⋈ Lecturers))
+    # StudentId
+    # 1        
+    # 2        
+    # 4        
+    # 7        
+
+comment 06.3. Имеющих оценки по всем дисциплинам преподавателя
+              (StudentId по :LecturerName)
+
+set-var :LecturerName = 'Корнеев Г.А.'
+
+print-ra π{StudentId, CourseId}(Marks) ÷ π{CourseId}(σ{LecturerName = :LecturerName}(Lecturers) ⋈ Plan)
+    # StudentId
+    # 7        
+    # 8        
+
+comment 06.4. Имеющих оценки по всем дисциплинам преподавателя,
+              которые он вёл у этого студента
+              (StudentId по :LecturerName)
+
+set-var :LecturerName = 'Корнеев Г.А.'
+
+print-ra π{StudentId}(π{StudentId, CourseId}(Marks) ⋇ π{GroupId, CourseId}(σ{LecturerName = :LecturerName}(Plan ⋈ Lecturers)) ⋈ Students)
+    # StudentId
+    # 5        
+    # 6        
+
+#################################################################################################
+subsection 07. Группы и дисциплины, такие что все студенты группы имеют оценку по этой дисциплине
+
+comment 07.1. Идентификаторы
+              (GroupId, CourseId)
+
+print-ra π{StudentId, CourseId}(Marks) ⋇ π{StudentId, GroupId}(Students)
+    # CourseId, GroupId
+    # 1       , 1      
+    # 1       , 5      
+    # 2       , 2      
+    # 2       , 5      
+    # 7       , 3      
+    # 7       , 4      
+    # 7       , 5      
+
+print-sql 
+  select CourseId, GroupId
+from Marks
+         cross join Students
+    except
+select CourseId, GroupId
+from (select Students.StudentId, CourseId, GroupId
+      from Marks cross join Students
+      except
+      select Students.StudentId, CourseId, GroupId
+      from Marks natural join Students) X;
+    # CourseId, GroupId
+    # '1'     , '1'    
+    # '1'     , '5'    
+    # '2'     , '2'    
+    # '2'     , '5'    
+    # '7'     , '3'    
+    # '7'     , '4'    
+    # '7'     , '5'    
+
+comment 07.2. Названия
+              (GroupName, CourseName)
+
+print-ra π{GroupName, CourseName}(π{StudentId, CourseId}(Marks) ⋇ π{StudentId, GroupId}(Students) ⋈ Groups ⋈ Courses)
+    # GroupName, CourseName            
+    # 'M3435'  , 'Базы данных'         
+    # 'P3132'  , 'Базы данных'         
+    # 'M3439'  , 'Управление проектами'
+    # 'P3132'  , 'Управление проектами'
+    # 'M3238'  , 'Технологии Java'     
+    # 'M3239'  , 'Технологии Java'     
+    # 'P3132'  , 'Технологии Java'     
+
+###################################################
+section Составьте SQL-запросы, позволяющие получать
+###################################################
+
+#############################
+subsection 08. Суммарный балл
+
+comment 08.1. Одного студента
+              (SumMark по :StudentId)
+
+set-var :StudentId = 1
+
+print-sql 
+  select sum(Mark) as SumMark
+from Marks
+where StudentId = :StudentId;
+    # SumMark
+    # 5      
+
+comment 08.2. Каждого студента
+              (StudentName, SumMark)
+
+print-sql 
+  SELECT StudentName, SUM(Mark) AS SumMark
+from Students
+LEFT JOIN Marks ON Students.StudentId = Marks.StudentId
+GROUP BY Students.StudentId, Students.StudentName;
+    # StudentName       , SumMark
+    # 'Иванов И.И.'     , 5      
+    # 'Петров П.П.'     , 7      
+    # 'Петров П.П.'     , 10     
+    # 'Сидров С.С.'     , 5      
+    # 'Неизвестный Н.Н.', 5      
+    # 'Безымянный Б.Б'  , 5      
+    # 'Пик Н.Н.'        , 15     
+
+comment 08.3. Каждой группы
+              (GroupName, SumMark)
+
+print-sql 
+  SELECT GroupName, COALESCE(SUM(Mark), 0) AS SumMark
+FROM Students
+LEFT JOIN Groups ON Groups.GroupId = Students.GroupId
+LEFT JOIN Marks ON Students.StudentId = Marks.StudentId
+GROUP BY Groups.GroupId, Groups.GroupName;
+    # GroupName, SumMark
+    # 'M3435'  , 12     
+    # 'M3439'  , 15     
+    # 'M3238'  , 5      
+    # 'M3239'  , 5      
+    # 'P3132'  , 15     
+
+###########################
+subsection 09. Средний балл
+
+comment 09.1. Одного студента
+              (AvgMark по :StudentId)
+
+set-var :StudentId = 1
+
+print-sql 
+  SELECT AVG(CAST(Mark AS FLOAT)) AS AvgMark
+FROM Marks
+WHERE StudentId = :StudentId;
+    # AvgMark
+    # 5      
+
+comment 09.2. Каждого студента
+              (StudentName, AvgMark)
+
+print-sql 
+  SELECT StudentName, AVG(CAST(Mark AS FLOAT)) AS AvgMark
+from Students
+LEFT JOIN Marks ON Students.StudentId = Marks.StudentId
+GROUP BY Students.StudentId, Students.StudentName;
+    # StudentName       , AvgMark           
+    # 'Иванов И.И.'     , 5                 
+    # 'Петров П.П.'     , 3.5               
+    # 'Петров П.П.'     , 3.3333333333333335
+    # 'Сидров С.С.'     , 5                 
+    # 'Неизвестный Н.Н.', 5                 
+    # 'Безымянный Б.Б'  , 5                 
+    # 'Пик Н.Н.'        , 5                 
+
+comment 09.3. Каждой группы
+              (GroupName, AvgMark)
+
+print-sql 
+  SELECT GroupName, AVG(CAST(Mark AS FLOAT)) AS AvgMark
+FROM Students
+LEFT JOIN Groups ON Groups.GroupId = Students.GroupId
+LEFT JOIN Marks ON Students.StudentId = Marks.StudentId
+GROUP BY Groups.GroupId, Groups.GroupName;
+    # GroupName, AvgMark
+    # 'M3435'  , 4      
+    # 'M3439'  , 3.75   
+    # 'M3238'  , 5      
+    # 'M3239'  , 5      
+    # 'P3132'  , 5      
+
+comment 09.4. Средний балл средних баллов студентов каждой группы
+              (GroupName, AvgAvgMark)
+
+print-sql 
+  SELECT Groups.GroupName, AVG(StudentAvg.AvgMark) AS AvgAvgMark
+FROM (
+    SELECT Students.GroupId, Students.StudentId, AVG(Marks.Mark) AS AvgMark
+    FROM Students
+    LEFT JOIN Marks ON Students.StudentId = Marks.StudentId
+    GROUP BY Students.GroupId, Students.StudentId
+) AS StudentAvg
+LEFT JOIN Groups ON Groups.GroupId = StudentAvg.GroupId
+GROUP BY Groups.GroupId, Groups.GroupName;
+    # GroupName, AvgAvgMark       
+    # 'M3435'  , 4.25             
+    # 'M3439'  , 4.166666666666667
+    # 'M3238'  , 5                
+    # 'M3239'  , 5                
+    # 'P3132'  , 5                
+
+comment 10. Для каждого студента:
+            число дисциплин, которые у него были,
+            число сданных дисциплин и
+            число несданных дисциплин
+            (StudentId, Total, Passed, Failed)
+
+print-sql 
+  SELECT 
+    Students.StudentId, 
+    COALESCE(Total, 0) AS Total, 
+    COALESCE(Passed, 0) AS Passed, 
+    COALESCE(Total, 0) - COALESCE(Passed, 0) AS Failed
+FROM Students
+LEFT JOIN (
+    SELECT StudentId AS TotalStudentId, COUNT(DISTINCT CourseId) AS Total 
+    FROM Plan 
+    NATURAL JOIN Students 
+    GROUP BY StudentId
+) X ON Students.StudentId = X.TotalStudentId
+LEFT JOIN (
+    SELECT 
+        StudentId AS PassedStudentId, 
+        COUNT(DISTINCT CourseId) AS Passed
+    FROM Marks 
+    natural join Students
+    natural join Plan
+    GROUP BY StudentId
+) Y ON Students.StudentId = Y.PassedStudentId;
+    # StudentId, Total, Passed, Failed
+    # '1'      , 5    , 1     , 4     
+    # '2'      , 5    , 2     , 3     
+    # '3'      , 4    , 2     , 2     
+    # '4'      , 4    , 0     , 4     
+    # '5'      , 1    , 1     , 0     
+    # '6'      , 2    , 1     , 1     
+    # '7'      , 1    , 1     , 0   

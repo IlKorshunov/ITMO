@@ -1,0 +1,886 @@
+##############
+section Данные
+##############
+
+data Faculties
+    FacultyId, FacultyName, DeanId
+    1        , 'ФИТиП'    , 8     
+    2        , 'ФПИКТ'    , 9     
+
+data Groups
+    GroupId, GroupName, GroupFacultyId
+    1      , 'M3435'  , 1             
+    2      , 'M3439'  , 1             
+    3      , 'M3238'  , 1             
+    4      , 'M3239'  , 1             
+    5      , 'P3132'  , 2             
+
+data Students
+    StudentId, StudentName       , GroupId
+    1        , 'Иванов И.И.'     , 1      
+    2        , 'Петров П.П.'     , 1      
+    3        , 'Петров П.П.'     , 2      
+    4        , 'Сидров С.С.'     , 2      
+    5        , 'Неизвестный Н.Н.', 3      
+    6        , 'Безымянный Б.Б'  , 4      
+    7        , 'Пик Н.Н.'        , 5      
+
+data Courses
+    CourseId, CourseName             
+    1       , 'Базы данных'          
+    2       , 'Управление проектами' 
+    3       , 'ППО'                  
+    4       , 'Теория информации'    
+    6       , 'Дискретная математика'
+    7       , 'Технологии Java'      
+
+data Lecturers
+    LecturerId, LecturerName    , LecturerFacultyId
+    1         , 'Корнеев Г.А.'  , 1                
+    2         , 'Будин Н.А.'    , 1                
+    3         , 'Кузнецова Е.М.', 1                
+    4         , 'Киракозов А.Х.', 1                
+    6         , 'Трофимюк Г.А.' , 1                
+    7         , 'Беляев Е.А.'   , 1                
+    8         , 'Станкевич А.С.', 1                
+    9         , 'Кустарев П.В.' , 2                
+
+data Plan
+    GroupId, CourseId, LecturerId
+    1      , 1       , 2         
+    2      , 1       , 1         
+    1      , 2       , 3         
+    1      , 3       , 4         
+    2      , 3       , 4         
+    2      , 4       , 6         
+    1      , 4       , 7         
+    2      , 4       , 7         
+    4      , 6       , 8         
+    1      , 7       , 1         
+    2      , 7       , 1         
+    3      , 7       , 1         
+    4      , 7       , 1         
+    5      , 2       , 9         
+
+data Marks
+    StudentId, CourseId, Mark
+    1        , 1       , 5   
+    2        , 1       , 4   
+    3        , 1       , 3   
+    2        , 2       , 3   
+    3        , 2       , 4   
+    4        , 2       , 5   
+    7        , 1       , 5   
+    8        , 1       , 5   
+    7        , 7       , 5   
+    8        , 7       , 5   
+    5        , 7       , 5   
+    6        , 7       , 5   
+    3        , 3       , 3   
+    7        , 2       , 5   
+
+###########################################################
+section Составьте запросы в терминах языков Datalog и SQL
+        для базы данных «Университет», позволяющие получать
+###########################################################
+
+####################################
+subsection 1. Информацию о студентах
+
+comment 1.1. С заданным ФИО
+             (StudentId, StudentName, GroupId по :StudentName)
+
+set-var :StudentName = 'Иванов И.И.'
+
+print-dl 
+    stInfo(stId, stName, stGrId) :-
+        Students(stId, stName, stGrId),
+        Groups(stGrId, _, _),
+        stName = :StudentName.
+    # stId, stName       , stGrId
+    # 1   , 'Иванов И.И.', 1     
+
+print-sql 
+  SELECT s.StudentId, s.StudentName, s.GroupId
+FROM Students s
+JOIN Groups g ON s.GroupId = g.GroupId
+WHERE s.StudentName = :StudentName;
+    # StudentId, StudentName  , GroupId
+    # '1'      , 'Иванов И.И.', '1'    
+
+comment 1.2. Учащихся в заданной группе
+             (StudentId, StudentName, GroupId по :GroupName)
+
+set-var :GroupName = 'M3439'
+
+print-dl 
+    stInfo(stId, stName, stGrId) :-
+        Students(stId, stName, stGrId),
+        Groups(stGrId, GroupName, _),
+        GroupName = :GroupName.
+    # stId, stName       , stGrId
+    # 3   , 'Петров П.П.', 2     
+    # 4   , 'Сидров С.С.', 2     
+
+print-sql 
+  Select s.StudentId, s.StudentName, s.GroupId
+From Students s
+Join Groups g on s.GroupId = g.GroupId
+WHERE g.GroupName = :GroupName
+    # StudentId, StudentName  , GroupId
+    # '3'      , 'Петров П.П.', '2'    
+    # '4'      , 'Сидров С.С.', '2'    
+
+comment 1.3. Учащихся на заданном факультете
+             (StudentId, StudentName, GroupId по :FacultyName)
+
+set-var :FacultyName = 'ФИТиП'
+
+print-dl 
+    stInfo(stId, stName, stGrId) :-
+        Students(stId, stName, stGrId),
+        Groups(stGrId, _, GroupFacultyId),
+        Faculties(GroupFacultyId, FacultyName, _),
+        FacultyName = :FacultyName.
+    # stId, stName            , stGrId
+    # 1   , 'Иванов И.И.'     , 1     
+    # 2   , 'Петров П.П.'     , 1     
+    # 3   , 'Петров П.П.'     , 2     
+    # 4   , 'Сидров С.С.'     , 2     
+    # 5   , 'Неизвестный Н.Н.', 3     
+    # 6   , 'Безымянный Б.Б'  , 4     
+
+print-sql 
+  Select s.StudentId, s.StudentName, s.GroupId
+From Students s
+Join Groups g on s.GroupId = g.GroupId
+Join Faculties f on f.FacultyId = g.GroupFacultyId
+WHERE f.FacultyName = :FacultyName
+    # StudentId, StudentName       , GroupId
+    # '1'      , 'Иванов И.И.'     , '1'    
+    # '2'      , 'Петров П.П.'     , '1'    
+    # '3'      , 'Петров П.П.'     , '2'    
+    # '4'      , 'Сидров С.С.'     , '2'    
+    # '5'      , 'Неизвестный Н.Н.', '3'    
+    # '6'      , 'Безымянный Б.Б'  , '4'    
+
+comment 1.4. C заданной оценкой по дисциплине,
+             заданной идентификатором
+             (StudentId, StudentName, GroupId по :Mark, :CourseId)
+
+set-var :Mark = 5
+
+set-var :CourseId = 1
+
+print-dl 
+    stInfo(stId, stName, stGrId) :-
+        Students(stId, stName, stGrId),
+        Marks(stId, CourseId, Mark),
+        CourseId = :CourseId,
+        Mark = :Mark.
+    # stId, stName       , stGrId
+    # 1   , 'Иванов И.И.', 1     
+    # 7   , 'Пик Н.Н.'   , 5     
+
+print-sql 
+  Select s.StudentId, s.StudentName, s.GroupId
+From Students s
+Join Marks m on m.StudentId = s.StudentId
+where m.CourseId = :CourseId AND m.Mark = :Mark
+    # StudentId, StudentName  , GroupId
+    # '1'      , 'Иванов И.И.', '1'    
+    # '7'      , 'Пик Н.Н.'   , '5'    
+
+comment 1.5. C заданной оценкой по дисциплине,
+             заданной названием
+             (StudentId, StudentName, GroupId по :Mark, :CourseName)
+
+set-var :Mark = 5
+
+set-var :CourseName = 'Базы данных'
+
+print-dl 
+    stInfo(stId, stName, stGrId) :-
+        Students(stId, stName, stGrId),
+        Marks(stId, CourseId, Mark),
+        Courses(CourseId, CourseName),
+        CourseName = :CourseName,
+        Mark = :Mark.
+    # stId, stName       , stGrId
+    # 1   , 'Иванов И.И.', 1     
+    # 7   , 'Пик Н.Н.'   , 5     
+
+print-sql 
+  Select s.StudentId, s.StudentName, s.GroupId
+From Students s
+Join Marks m on m.StudentId = s.StudentId
+Join Courses c on c.CourseId = m.CourseId
+where c.CourseName = :CourseName AND m.Mark = :Mark
+    # StudentId, StudentName  , GroupId
+    # '1'      , 'Иванов И.И.', '1'    
+    # '7'      , 'Пик Н.Н.'   , '5'    
+
+###########################################
+subsection 2. Полную информацию о студентах
+
+comment 2.1. Для всех студентов
+             (StudentId, StudentName, GroupName)
+
+print-dl 
+    stInfo(stId, stName, grName) :-
+        Students(stId, stName, stGrId),
+        Groups(stGrId, grName, _).
+    # stId, stName            , grName 
+    # 1   , 'Иванов И.И.'     , 'M3435'
+    # 2   , 'Петров П.П.'     , 'M3435'
+    # 3   , 'Петров П.П.'     , 'M3439'
+    # 4   , 'Сидров С.С.'     , 'M3439'
+    # 5   , 'Неизвестный Н.Н.', 'M3238'
+    # 6   , 'Безымянный Б.Б'  , 'M3239'
+    # 7   , 'Пик Н.Н.'        , 'P3132'
+
+print-sql 
+  Select s.StudentId, s.StudentName, g.GroupName
+From Students s
+Join Groups g on g.GroupId = s.GroupId
+    # StudentId, StudentName       , GroupName
+    # '1'      , 'Иванов И.И.'     , 'M3435'  
+    # '2'      , 'Петров П.П.'     , 'M3435'  
+    # '3'      , 'Петров П.П.'     , 'M3439'  
+    # '4'      , 'Сидров С.С.'     , 'M3439'  
+    # '5'      , 'Неизвестный Н.Н.', 'M3238'  
+    # '6'      , 'Безымянный Б.Б'  , 'M3239'  
+    # '7'      , 'Пик Н.Н.'        , 'P3132'  
+
+comment 2.2. Учащихся на заданном факультете
+             (StudentId, StudentName, GroupName по :FacultyName)
+
+set-var :FacultyName = 'ФИТиП'
+
+print-dl 
+    stInfo(stId, stName, grName) :-
+        Students(stId, stName, stGrId),
+        Groups(stGrId, grName, GroupFacultyId),
+        Faculties(GroupFacultyId, FacultyName, _),
+        FacultyName = :FacultyName.
+    # stId, stName            , grName 
+    # 1   , 'Иванов И.И.'     , 'M3435'
+    # 2   , 'Петров П.П.'     , 'M3435'
+    # 3   , 'Петров П.П.'     , 'M3439'
+    # 4   , 'Сидров С.С.'     , 'M3439'
+    # 5   , 'Неизвестный Н.Н.', 'M3238'
+    # 6   , 'Безымянный Б.Б'  , 'M3239'
+
+print-sql 
+  Select s.StudentId, s.StudentName, g.GroupName
+From Students s
+Join Groups g on g.GroupId = s.GroupId
+Join Faculties f on f.FacultyId = g.GroupFacultyId
+Where f.FacultyName = :FacultyName;
+    # StudentId, StudentName       , GroupName
+    # '1'      , 'Иванов И.И.'     , 'M3435'  
+    # '2'      , 'Петров П.П.'     , 'M3435'  
+    # '3'      , 'Петров П.П.'     , 'M3439'  
+    # '4'      , 'Сидров С.С.'     , 'M3439'  
+    # '5'      , 'Неизвестный Н.Н.', 'M3238'  
+    # '6'      , 'Безымянный Б.Б'  , 'M3239'  
+
+comment 2.3. C факультета, заданного деканом
+             (StudentId, StudentName, GroupName по :LecturerName)
+
+set-var :LecturerName = 'Станкевич А.С.'
+
+print-dl 
+    stInfo(stId, stName, grName) :-
+        Students(stId, stName, stGrId),
+        Groups(stGrId, grName, GroupFacultyId),
+        Faculties(GroupFacultyId, FacultyName, DeanId),
+        Lecturers(DeanId, LecturerName, GroupFacultyId),
+        LecturerName = :LecturerName.
+    # stId, stName            , grName 
+    # 1   , 'Иванов И.И.'     , 'M3435'
+    # 2   , 'Петров П.П.'     , 'M3435'
+    # 3   , 'Петров П.П.'     , 'M3439'
+    # 4   , 'Сидров С.С.'     , 'M3439'
+    # 5   , 'Неизвестный Н.Н.', 'M3238'
+    # 6   , 'Безымянный Б.Б'  , 'M3239'
+
+print-sql 
+  SELECT s.StudentId, s.StudentName, g.GroupName
+FROM Students s
+JOIN Groups g ON g.GroupId = s.GroupId
+JOIN Faculties f ON f.FacultyId = g.GroupFacultyId
+JOIN Lecturers l ON l.LecturerId = f.DeanId
+WHERE l.LecturerName = :LecturerName;
+    # StudentId, StudentName       , GroupName
+    # '1'      , 'Иванов И.И.'     , 'M3435'  
+    # '2'      , 'Петров П.П.'     , 'M3435'  
+    # '3'      , 'Петров П.П.'     , 'M3439'  
+    # '4'      , 'Сидров С.С.'     , 'M3439'  
+    # '5'      , 'Неизвестный Н.Н.', 'M3238'  
+    # '6'      , 'Безымянный Б.Б'  , 'M3239'  
+
+comment 2.4. Студентов, не имеющих оценки по дисциплине, заданной идентификатором
+             (StudentId, StudentName, GroupName по :CourseId)
+
+set-var :CourseId = 1
+
+print-dl 
+    stHaveMark(stId) :-
+        Marks(stId, CourseId, _),
+        CourseId = :CourseId.
+    stInfo(stId, stName, grName) :-
+        Students(stId, stName, stGrId),
+        Groups(stGrId, grName, _),
+        ¬ stHaveMark(stId).
+    # stId, stName            , grName 
+    # 4   , 'Сидров С.С.'     , 'M3439'
+    # 5   , 'Неизвестный Н.Н.', 'M3238'
+    # 6   , 'Безымянный Б.Б'  , 'M3239'
+
+print-sql 
+  SELECT s.StudentId, s.StudentName, g.GroupName
+FROM Students s
+JOIN Groups g ON g.GroupId = s.GroupId
+WHERE s.StudentId NOT IN (
+    SELECT m.StudentId
+    FROM Marks m
+    WHERE m.CourseId = :CourseId
+);
+    # StudentId, StudentName       , GroupName
+    # '4'      , 'Сидров С.С.'     , 'M3439'  
+    # '5'      , 'Неизвестный Н.Н.', 'M3238'  
+    # '6'      , 'Безымянный Б.Б'  , 'M3239'  
+
+comment 2.5. Студентов, не имеющих оценки по дисциплине, заданной названием
+             (StudentId, StudentName, GroupName по :CourseName)
+
+set-var :CourseName = 'Базы данных'
+
+print-dl 
+    stHaveMark(stId) :-
+        Marks(stId, CourseId, _),
+        Courses(CourseId, CourseName),
+        CourseName = :CourseName.
+    stInfo(stId, stName, grName) :-
+        Students(stId, stName, stGrId),
+        Groups(stGrId, grName, _),
+        ¬ stHaveMark(stId).
+    # stId, stName            , grName 
+    # 4   , 'Сидров С.С.'     , 'M3439'
+    # 5   , 'Неизвестный Н.Н.', 'M3238'
+    # 6   , 'Безымянный Б.Б'  , 'M3239'
+
+print-sql 
+  SELECT s.StudentId, s.StudentName, g.GroupName
+FROM Students s
+JOIN Groups g ON g.GroupId = s.GroupId
+WHERE s.StudentId NOT IN (
+    SELECT m.StudentId
+    FROM Marks m
+    Join Courses c on m.CourseId = c.CourseId
+    WHERE c.CourseName = :CourseName
+);
+    # StudentId, StudentName       , GroupName
+    # '4'      , 'Сидров С.С.'     , 'M3439'  
+    # '5'      , 'Неизвестный Н.Н.', 'M3238'  
+    # '6'      , 'Безымянный Б.Б'  , 'M3239'  
+
+comment 2.6. Студентов, не имеющих оценки по дисциплине,
+             у которых есть эта дисциплина
+             (StudentId, StudentName, GroupName по :CourseId)
+
+set-var :CourseId = 1
+
+print-dl 
+    stHaveMark(stId) :-
+        Marks(stId, CourseId, _),
+        CourseId = :CourseId.
+    stHaveCourse(grId) :-
+        Plan(grId, CourseId, _),
+        CourseId = :CourseId.
+    stInfo(stId, stName, grName) :-
+        Students(stId, stName, stGrId),
+        Groups(stGrId, grName, _),
+        stHaveCourse(stGrId),
+        ¬ stHaveMark(stId).
+    # stId, stName       , grName 
+    # 4   , 'Сидров С.С.', 'M3439'
+
+print-sql 
+  SELECT s.StudentId, s.StudentName, g.GroupName
+FROM Students s
+JOIN Groups g ON g.GroupId = s.GroupId
+JOIN Plan p ON p.GroupId = s.GroupId
+WHERE p.CourseId = :CourseId
+AND s.StudentId NOT IN (
+    SELECT m.StudentId
+    FROM Marks m
+    WHERE m.CourseId = :CourseId
+);
+    # StudentId, StudentName  , GroupName
+    # '4'      , 'Сидров С.С.', 'M3439'  
+
+comment 2.7. Студентов, не имеющих оценки по дисциплине,
+             у которых есть эта дисциплина
+             (StudentId, StudentName, GroupName по :CourseName)
+
+set-var :CourseName = 'Базы данных'
+
+#########################################################################
+subsection 3. Студенты и дисциплины, такие что у студента была дисциплина
+              (по плану или есть оценка)
+
+comment 3.1. Идентификаторы
+             (StudentId, CourseId)
+
+print-dl 
+    stInfo(StudentId, CourseId) :-
+        Students(StudentId, _, stGrId),
+        Plan(stGrId, CourseId, _).
+    stInfo(StudentId, CourseId) :- Marks(StudentId, CourseId, _).
+    # StudentId, CourseId
+    # 1        , 1       
+    # 1        , 2       
+    # 1        , 3       
+    # 1        , 4       
+    # 1        , 7       
+    # 2        , 1       
+    # 2        , 2       
+    # 2        , 3       
+    # 2        , 4       
+    # 2        , 7       
+    # 3        , 1       
+    # 3        , 3       
+    # 3        , 4       
+    # 3        , 7       
+    # 4        , 1       
+    # 4        , 3       
+    # 4        , 4       
+    # 4        , 7       
+    # 5        , 7       
+    # 6        , 6       
+    # 6        , 7       
+    # 7        , 2       
+    # 3        , 2       
+    # 4        , 2       
+    # 7        , 1       
+    # 8        , 1       
+    # 7        , 7       
+    # 8        , 7       
+
+print-sql 
+  SELECT s.StudentId, p.CourseId
+FROM Students s
+JOIN Plan p ON p.GroupId = s.GroupId
+UNION
+SELECT m.StudentId, m.CourseId
+FROM Marks m;
+    # StudentId, CourseId
+    # '1'      , '1'     
+    # '1'      , '2'     
+    # '1'      , '3'     
+    # '1'      , '4'     
+    # '1'      , '7'     
+    # '2'      , '1'     
+    # '2'      , '2'     
+    # '2'      , '3'     
+    # '2'      , '4'     
+    # '2'      , '7'     
+    # '3'      , '1'     
+    # '3'      , '2'     
+    # '3'      , '3'     
+    # '3'      , '4'     
+    # '3'      , '7'     
+    # '4'      , '1'     
+    # '4'      , '2'     
+    # '4'      , '3'     
+    # '4'      , '4'     
+    # '4'      , '7'     
+    # '5'      , '7'     
+    # '6'      , '6'     
+    # '6'      , '7'     
+    # '7'      , '1'     
+    # '7'      , '2'     
+    # '7'      , '7'     
+    # '8'      , '1'     
+    # '8'      , '7'     
+
+comment 3.2. Имя и название
+             (StudentName, CourseName)
+
+print-dl 
+    stInfo(stName, CourseName) :-
+        Students(StudentId, stName, stGrId),
+        Courses(CourseId, CourseName),
+        Plan(stGrId, CourseId, _).
+    stInfo(stName, CourseName) :-
+        Students(StudentId, stName, _),
+        Courses(CourseId, CourseName),
+        Marks(StudentId, CourseId, _).
+    # stName            , CourseName             
+    # 'Иванов И.И.'     , 'Базы данных'          
+    # 'Иванов И.И.'     , 'Управление проектами' 
+    # 'Иванов И.И.'     , 'ППО'                  
+    # 'Иванов И.И.'     , 'Теория информации'    
+    # 'Иванов И.И.'     , 'Технологии Java'      
+    # 'Петров П.П.'     , 'Базы данных'          
+    # 'Петров П.П.'     , 'Управление проектами' 
+    # 'Петров П.П.'     , 'ППО'                  
+    # 'Петров П.П.'     , 'Теория информации'    
+    # 'Петров П.П.'     , 'Технологии Java'      
+    # 'Сидров С.С.'     , 'Базы данных'          
+    # 'Сидров С.С.'     , 'ППО'                  
+    # 'Сидров С.С.'     , 'Теория информации'    
+    # 'Сидров С.С.'     , 'Технологии Java'      
+    # 'Неизвестный Н.Н.', 'Технологии Java'      
+    # 'Безымянный Б.Б'  , 'Дискретная математика'
+    # 'Безымянный Б.Б'  , 'Технологии Java'      
+    # 'Пик Н.Н.'        , 'Управление проектами' 
+    # 'Сидров С.С.'     , 'Управление проектами' 
+    # 'Пик Н.Н.'        , 'Базы данных'          
+    # 'Пик Н.Н.'        , 'Технологии Java'      
+
+print-sql 
+  SELECT s.StudentName, c.CourseName
+FROM Students s
+JOIN Courses c
+JOIN Plan p ON p.GroupId = s.GroupId AND c.CourseId = p.CourseId
+UNION
+SELECT s.StudentName, c.CourseName
+FROM Students s
+JOIN Courses c
+JOIN Marks m ON m.StudentId = s.StudentId AND c.CourseId = m.CourseId
+    # StudentName       , CourseName             
+    # 'Безымянный Б.Б'  , 'Дискретная математика'
+    # 'Безымянный Б.Б'  , 'Технологии Java'      
+    # 'Иванов И.И.'     , 'Базы данных'          
+    # 'Иванов И.И.'     , 'ППО'                  
+    # 'Иванов И.И.'     , 'Теория информации'    
+    # 'Иванов И.И.'     , 'Технологии Java'      
+    # 'Иванов И.И.'     , 'Управление проектами' 
+    # 'Неизвестный Н.Н.', 'Технологии Java'      
+    # 'Петров П.П.'     , 'Базы данных'          
+    # 'Петров П.П.'     , 'ППО'                  
+    # 'Петров П.П.'     , 'Теория информации'    
+    # 'Петров П.П.'     , 'Технологии Java'      
+    # 'Петров П.П.'     , 'Управление проектами' 
+    # 'Пик Н.Н.'        , 'Базы данных'          
+    # 'Пик Н.Н.'        , 'Технологии Java'      
+    # 'Пик Н.Н.'        , 'Управление проектами' 
+    # 'Сидров С.С.'     , 'Базы данных'          
+    # 'Сидров С.С.'     , 'ППО'                  
+    # 'Сидров С.С.'     , 'Теория информации'    
+    # 'Сидров С.С.'     , 'Технологии Java'      
+    # 'Сидров С.С.'     , 'Управление проектами' 
+
+comment 3.3. Имя и название, преподаватель того же факультета
+             (StudentName, CourseName)
+
+comment 3.4. Имя и название, преподаватель другого факультета
+             (StudentName, CourseName)
+
+##################################################
+subsection 4. Студенты и дисциплины, такие что
+              дисциплина есть в его плане,
+              и у студента долг по этой дисциплине
+
+comment 4.1. Долгом считается отсутствие оценки
+             (StudentName, CourseName)
+
+print-dl 
+    HasMark(StudentId, CourseId) :- Marks(StudentId, CourseId, _).
+    StHasDebt(StudentId, StudentName, CourseName) :-
+        Students(StudentId, StudentName, GroupId),
+        Courses(CourseId, CourseName),
+        Plan(GroupId, CourseId, _),
+        ¬ HasMark(StudentId, CourseId).
+    # StudentId, StudentName     , CourseName             
+    # 1        , 'Иванов И.И.'   , 'Управление проектами' 
+    # 1        , 'Иванов И.И.'   , 'ППО'                  
+    # 1        , 'Иванов И.И.'   , 'Теория информации'    
+    # 1        , 'Иванов И.И.'   , 'Технологии Java'      
+    # 2        , 'Петров П.П.'   , 'ППО'                  
+    # 2        , 'Петров П.П.'   , 'Теория информации'    
+    # 2        , 'Петров П.П.'   , 'Технологии Java'      
+    # 3        , 'Петров П.П.'   , 'Теория информации'    
+    # 3        , 'Петров П.П.'   , 'Технологии Java'      
+    # 4        , 'Сидров С.С.'   , 'Базы данных'          
+    # 4        , 'Сидров С.С.'   , 'ППО'                  
+    # 4        , 'Сидров С.С.'   , 'Теория информации'    
+    # 4        , 'Сидров С.С.'   , 'Технологии Java'      
+    # 6        , 'Безымянный Б.Б', 'Дискретная математика'
+
+print-sql 
+  SELECT s.StudentName,
+       c.CourseName
+FROM Students s, Courses c
+WHERE s.StudentId IN (
+    SELECT s2.StudentId
+    FROM Students s2
+    JOIN Plan p ON p.GroupId = s2.GroupId AND p.CourseId = c.CourseId
+)
+AND s.StudentId NOT IN (
+    SELECT m.StudentId
+    FROM Marks m
+    WHERE m.StudentId = s.StudentId AND m.CourseId = c.CourseId
+);
+    # StudentName     , CourseName             
+    # 'Иванов И.И.'   , 'Управление проектами' 
+    # 'Иванов И.И.'   , 'ППО'                  
+    # 'Иванов И.И.'   , 'Теория информации'    
+    # 'Иванов И.И.'   , 'Технологии Java'      
+    # 'Петров П.П.'   , 'ППО'                  
+    # 'Петров П.П.'   , 'Теория информации'    
+    # 'Петров П.П.'   , 'Технологии Java'      
+    # 'Петров П.П.'   , 'Теория информации'    
+    # 'Петров П.П.'   , 'Технологии Java'      
+    # 'Сидров С.С.'   , 'Базы данных'          
+    # 'Сидров С.С.'   , 'ППО'                  
+    # 'Сидров С.С.'   , 'Теория информации'    
+    # 'Сидров С.С.'   , 'Технологии Java'      
+    # 'Безымянный Б.Б', 'Дискретная математика'
+
+comment 4.2. Долгом считается оценка не выше 2
+             (StudentName, CourseName)
+
+print-dl 
+    HasMark(StudentId, CourseId) :-
+        Marks(StudentId, CourseId, Mark),
+        Mark ≤ 2.
+    CourseStudents(StudentId, CourseId) :-
+        Students(StudentId, _, GroupId),
+        Plan(GroupId, CourseId, _).
+    Debtors(StudentName, CourseName) :-
+        Students(StudentId, StudentName, _),
+        Courses(CourseId, CourseName),
+        CourseStudents(StudentId, CourseId),
+        HasMark(StudentId, CourseId).
+    # StudentName, CourseName
+
+comment 4.3. Долгом считается отсутствие оценки или оценка не выше 2
+             (StudentName, CourseName)
+
+print-dl 
+    HasMark(StudentId, CourseId) :-
+        Marks(StudentId, CourseId, Mark),
+        Mark > 2.
+    CourseStudents(StudentId, CourseId) :-
+        Students(StudentId, _, GroupId),
+        Plan(GroupId, CourseId, _).
+    Debtors(StudentId, StudentName, CourseName) :-
+        Students(StudentId, StudentName, _),
+        Courses(CourseId, CourseName),
+        CourseStudents(StudentId, CourseId),
+        ¬ HasMark(StudentId, CourseId).
+    # StudentId, StudentName     , CourseName             
+    # 1        , 'Иванов И.И.'   , 'Управление проектами' 
+    # 1        , 'Иванов И.И.'   , 'ППО'                  
+    # 1        , 'Иванов И.И.'   , 'Теория информации'    
+    # 1        , 'Иванов И.И.'   , 'Технологии Java'      
+    # 2        , 'Петров П.П.'   , 'ППО'                  
+    # 2        , 'Петров П.П.'   , 'Теория информации'    
+    # 2        , 'Петров П.П.'   , 'Технологии Java'      
+    # 3        , 'Петров П.П.'   , 'Теория информации'    
+    # 3        , 'Петров П.П.'   , 'Технологии Java'      
+    # 4        , 'Сидров С.С.'   , 'Базы данных'          
+    # 4        , 'Сидров С.С.'   , 'ППО'                  
+    # 4        , 'Сидров С.С.'   , 'Теория информации'    
+    # 4        , 'Сидров С.С.'   , 'Технологии Java'      
+    # 6        , 'Безымянный Б.Б', 'Дискретная математика'
+
+#######################################################
+subsection 5. Идентификаторы студентов по преподавателю
+
+comment 5.1. Имеющих хотя бы одну оценку у преподавателя
+             (StudentId по :LecturerName)
+
+set-var :LecturerName = 'Станкевич А.С.'
+
+print-dl 
+    stInfo(StudentId) :-
+        Students(StudentId, _, GroupId),
+        Plan(GroupId, CourseId, LecturerId),
+        Marks(StudentId, CourseId, _),
+        Lecturers(LecturerId, :LecturerName, _).
+    # StudentId
+
+print-sql 
+  SELECT s.StudentId
+FROM Students s
+JOIN Plan p ON p.GroupId = s.GroupId
+JOIN Marks m ON m.StudentId = s.StudentId AND m.CourseId = p.CourseId
+JOIN Lecturers l ON l.LecturerId = p.LecturerId
+WHERE l.LecturerName = :LecturerName;
+    # EmptyResult
+
+comment 5.2. Не имеющих ни одной оценки у преподавателя
+             (StudentId по :LecturerName)
+
+set-var :LecturerName = 'Станкевич А.С.'
+
+comment 5.3. Имеющих оценки по всем дисциплинам преподавателя
+             (StudentId по :LecturerName)
+
+set-var :LecturerName = 'Корнеев Г.А.'
+
+print-dl 
+    HasMark(StudentId, CourseId) :- Marks(StudentId, CourseId, _).
+    LecCourses(CourseId) :-
+        Lecturers(LecturerId, LecturerName, _),
+        Plan(_, CourseId, LecturerId),
+        LecturerName = :LecturerName.
+    stHasNotMark(StudentId) :-
+        Students(StudentId, _, _),
+        LecCourses(CourseId),
+        ¬ HasMark(StudentId, CourseId).
+    stInfo(StudentId) :-
+        Students(StudentId, _, _),
+        ¬ stHasNotMark(StudentId).
+    # StudentId
+    # 7        
+
+print-sql 
+  SELECT m.StudentId
+FROM Marks m
+WHERE m.CourseId IN (
+    SELECT p.CourseId
+    FROM Plan p
+    JOIN Lecturers l ON p.LecturerId = l.LecturerId
+    WHERE l.LecturerName = :LecturerName
+)
+GROUP BY m.StudentId
+HAVING COUNT(DISTINCT m.CourseId) = (
+    SELECT COUNT(DISTINCT p2.CourseId)
+    FROM Plan p2
+    JOIN Lecturers l2 ON p2.LecturerId = l2.LecturerId
+    WHERE l2.LecturerName = :LecturerName
+);
+    # StudentId
+    # '7'      
+    # '8'      
+
+comment 5.4. Имеющих оценки по всем дисциплинам преподавателя,
+             которые он вёл у этого студента
+             (StudentId по :LecturerName)
+
+set-var :LecturerName = 'Корнеев Г.А.'
+
+print-dl 
+    HasMark(StudentId, CourseId) :- Marks(StudentId, CourseId, _).
+    LecCourses(CourseId, GroupId) :-
+        Plan(GroupId, CourseId, LecturerId),
+        Lecturers(LecturerId, :LecturerName, _).
+    stHasNotMark(StudentId) :-
+        Students(StudentId, _, GroupId),
+        LecCourses(CourseId, GroupId),
+        ¬ HasMark(StudentId, CourseId).
+    stTeacherTaught(StudentId) :-
+        Students(StudentId, _, GroupId),
+        LecCourses(CourseId, GroupId).
+    stInfo(StudentId) :-
+        stTeacherTaught(StudentId),
+        ¬ stHasNotMark(StudentId).
+    # StudentId
+    # 5        
+    # 6        
+
+print-sql 
+  SELECT s.StudentId
+FROM Students s
+WHERE EXISTS (
+    SELECT 1
+    FROM Plan p
+    JOIN Lecturers l ON p.LecturerId = l.LecturerId
+    WHERE l.LecturerName = :LecturerName
+      AND p.GroupId = s.GroupId
+)
+AND NOT EXISTS (
+    SELECT 1
+    FROM Plan p
+    JOIN Lecturers l ON p.LecturerId = l.LecturerId
+    WHERE l.LecturerName = :LecturerName
+      AND p.GroupId = s.GroupId
+      AND NOT EXISTS (
+          SELECT 1
+          FROM Marks m
+          WHERE m.StudentId = s.StudentId
+            AND m.CourseId = p.CourseId
+      )
+);
+    # StudentId
+    # '5'      
+    # '6'      
+
+##########################################################
+subsection 6. Группы и дисциплины, такие что
+              все студенты группы имеют оценку по предмету
+
+comment 6.1. Идентификаторы
+             (GroupId, CourseId)
+
+print-dl 
+    HasMark(StudentId, CourseId) :- Marks(StudentId, CourseId, _).
+    AnyStHasntMark(GroupId, CourseId) :-
+        Students(StudentId, _, GroupId),
+        Courses(CourseId, _),
+        ¬ HasMark(StudentId, CourseId).
+    AllStHasMark(GroupId, CourseId) :-
+        Groups(GroupId, _, _),
+        Courses(CourseId, _),
+        ¬ AnyStHasntMark(GroupId, CourseId).
+    # GroupId, CourseId
+    # 1      , 1       
+    # 2      , 2       
+    # 3      , 7       
+    # 4      , 7       
+    # 5      , 1       
+    # 5      , 2       
+    # 5      , 7       
+
+print-sql 
+  SELECT g.GroupId, c.CourseId
+FROM Groups g
+CROSS JOIN Courses c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Students s
+    WHERE s.GroupId = g.GroupId
+      AND NOT EXISTS (
+          SELECT 1
+          FROM Marks m
+          WHERE m.StudentId = s.StudentId
+            AND m.CourseId = c.CourseId
+      )
+);
+    # GroupId, CourseId
+    # '1'    , '1'     
+    # '2'    , '2'     
+    # '3'    , '7'     
+    # '4'    , '7'     
+    # '5'    , '1'     
+    # '5'    , '2'     
+    # '5'    , '7'     
+
+comment 6.2. Названия
+             (GroupName, CourseName)
+
+print-dl 
+    HasMark(StudentId, CourseId) :- Marks(StudentId, CourseId, _).
+    AnyStHasntMark(GroupId, CourseId) :-
+        Students(StudentId, _, GroupId),
+        Groups(GroupId, _, _),
+        Courses(CourseId, _),
+        ¬ HasMark(StudentId, CourseId).
+    AllStHasMark(GroupName, CourseName) :-
+        Groups(GroupId, GroupName, _),
+        Courses(CourseId, CourseName),
+        ¬ AnyStHasntMark(GroupId, CourseId).
+    # GroupName, CourseName            
+    # 'M3435'  , 'Базы данных'         
+    # 'M3439'  , 'Управление проектами'
+    # 'M3238'  , 'Технологии Java'     
+    # 'M3239'  , 'Технологии Java'     
+    # 'P3132'  , 'Базы данных'         
+    # 'P3132'  , 'Управление проектами'
+    # 'P3132'  , 'Технологии Java'     

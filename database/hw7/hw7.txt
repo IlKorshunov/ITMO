@@ -1,0 +1,559 @@
+##############
+section Данные
+##############
+
+data Faculties
+    FacultyId, FacultyName, DeanId
+    1        , 'ФИТиП'    , 8     
+    2        , 'ФПИКТ'    , 9     
+
+data Groups
+    GroupId, GroupName, GroupFacultyId
+    1      , 'M3435'  , 1             
+    2      , 'M3439'  , 1             
+    3      , 'M3238'  , 1             
+    4      , 'M3239'  , 1             
+    5      , 'P3132'  , 2             
+
+data Students
+    StudentId, StudentName       , GroupId
+    1        , 'Иванов И.И.'     , 1      
+    2        , 'Петров П.П.'     , 1      
+    3        , 'Петров П.П.'     , 2      
+    4        , 'Сидров С.С.'     , 2      
+    5        , 'Неизвестный Н.Н.', 3      
+    6        , 'Безымянный Б.Б'  , 4      
+    7        , 'Пик Н.Н.'        , 5      
+
+data Courses
+    CourseId, CourseName             
+    1       , 'Базы данных'          
+    2       , 'Управление проектами' 
+    3       , 'ППО'                  
+    4       , 'Теория информации'    
+    6       , 'Дискретная математика'
+    7       , 'Технологии Java'      
+
+data Lecturers
+    LecturerId, LecturerName    , LecturerFacultyId
+    1         , 'Корнеев Г.А.'  , 1                
+    2         , 'Будин Н.А.'    , 1                
+    3         , 'Кузнецова Е.М.', 1                
+    4         , 'Киракозов А.Х.', 1                
+    6         , 'Трофимюк Г.А.' , 1                
+    7         , 'Беляев Е.А.'   , 1                
+    8         , 'Станкевич А.С.', 1                
+    9         , 'Кустарев П.В.' , 2                
+
+data Plan
+    GroupId, CourseId, LecturerId
+    1      , 1       , 2         
+    2      , 1       , 1         
+    1      , 2       , 3         
+    1      , 3       , 4         
+    2      , 3       , 4         
+    2      , 4       , 6         
+    1      , 4       , 7         
+    2      , 4       , 7         
+    4      , 6       , 8         
+    1      , 7       , 1         
+    2      , 7       , 1         
+    3      , 7       , 1         
+    4      , 7       , 1         
+    5      , 2       , 9         
+
+data Marks
+    StudentId, CourseId, Mark
+    1        , 1       , 5   
+    2        , 1       , 4   
+    3        , 1       , 3   
+    2        , 2       , 3   
+    3        , 2       , 4   
+    4        , 2       , 5   
+    7        , 1       , 5   
+    8        , 1       , 5   
+    7        , 7       , 5   
+    8        , 7       , 5   
+    5        , 7       , 5   
+    6        , 7       , 5   
+    3        , 3       , 3   
+
+####################################################
+section Реализуйте указанные запросы, представления,
+        проверки и триггеры на языке SQL.
+####################################################
+
+###################################################
+subsection 1. Напишите запросы, удаляющие студентов
+
+comment 1.1. Учащихся в группе, заданной идентификатором
+             (GroupId)
+
+set-var :GroupId = 1
+
+delete
+from Students
+where GroupId = :GroupId;
+
+comment 1.2. Учащихся в группе, заданной названием
+             (GroupName)
+
+set-var :GroupName = 'M3439'
+
+delete
+from Students
+where GroupId in (select GroupId
+                  from Groups
+                  where GroupName = :GroupName);
+
+comment 1.3. Учащихся на факультете
+             (FacultyName)
+
+set-var :FacultyName = 'ФИТиП'
+
+delete from Students
+WHERE GroupId IN (
+    select GroupId
+    from Groups
+    WHERE GroupFacultyId IN (
+         select FacultyId
+         from Faculties
+         WHERE FacultyName = :FacultyName
+    )
+);
+
+
+comment 1.4. Без оценок
+
+delete
+from Students
+where StudentId not in (select StudentId
+                        from Marks);
+
+comment 1.5. Имеющих 3 и более оценки
+
+delete from Students
+where StudentId in (select StudentId
+                    from Marks
+                    group by StudentId
+                    having count(*) >= 3);
+
+comment 1.6. Имеющих 3 и менее оценки
+
+delete from Students
+where (
+    select COUNT(*)
+    from Marks
+    WHERE Marks.StudentId = Students.StudentId
+) <= 3;
+
+
+###########################################################################################################
+subsection 2. Напишите запросы, удаляющие должников (здесь и далее, долг определяется по отсутствию оценки)
+
+comment 2.1. Студентов, c долгами
+
+print-sql
+delete from Students
+WHERE StudentId IN (
+      select Students.StudentId
+      from Students
+      join Plan
+	  left join Marks
+	   	ON Students.StudentId = Marks.StudentId
+		AND Plan.CourseId = Marks.CourseId
+      WHERE Marks.Mark IS null
+);
+
+
+comment 2.2. Студентов, имеющих 2 и более долга
+
+print-sql
+delete from Students
+WHERE StudentId IN (
+      select Students.StudentId
+      from Students
+      join Plan
+	  left join Marks
+	   	ON Students.StudentId = Marks.StudentId
+		AND Plan.CourseId = Marks.CourseId
+      WHERE Marks.Mark IS null
+      group by Students.StudentId
+      Having count(*) >= 2
+);
+
+comment 2.3. Студентов, имеющих 2 и более долга, учащихся на факультете
+             (FacultyName)
+
+set-var :FacultyName = 'ФИТиП'
+
+comment 2.4. Студентов, имеющих не более 3 долгов
+
+############################################################
+subsection 3. Напишите запросы, обновляющие данные студентов
+
+comment 3.1. Изменение имени студента
+             (StudentId, StudentName)
+
+set-var :StudentId = 1
+
+set-var :StudentName = 'Иванов И.И.'
+
+print-sql
+update Students
+set StudentName = :StudentName
+where StudentId = :StudentId
+
+comment 3.2. Перевод студента из группы в группу по индентификаторам
+             (StudentId, GroupId, fromGroupId)
+
+set-var :StudentId = 1
+
+set-var :GroupId = 1
+
+set-var :fromGroupId = 1
+
+print-sql
+UPDATE Students
+SET GroupId = :GroupId
+WHERE StudentId = :StudentId
+  AND GroupId = :fromGroupId;
+
+
+comment 3.3. Перевод всех студентов из группы в группу по идентификаторам
+             (GroupId, fromGroupId)
+
+set-var :GroupId = 1
+
+set-var :fromGroupId = 1
+
+UPDATE Students
+SET GroupId = :GroupId
+WHERE GroupId = :fromGroupId;
+
+
+comment 3.4. Изменение имени всех студентов группы
+             (GroupName, StudentName)
+
+set-var :GroupName = 'M3439'
+
+set-var :StudentName = 'Иванов И.И.'
+
+UPDATE Students
+SET StudentName = :StudentName
+WHERE GroupId IN (
+    select GroupId
+    from Groups
+    WHERE GroupName = :GroupName
+);
+
+
+comment 3.5. Перевод всех студентов из группы в группу по названиям
+             (GroupName, fromGroupName)
+
+set-var :GroupName = 'M3439'
+
+set-var :fromGroupName = 'M3435'
+
+print-sql
+UPDATE Students
+SET GroupId = (
+    select GroupId from Groups WHERE GroupName = :GroupName
+)
+WHERE GroupId = (
+    select GroupId from Groups WHERE GroupName = :fromGroupName
+)
+
+comment 3.6. Перевод всех студентов из группы в группу,
+             только если целевая группа существует
+             (GroupName, fromGroupName)
+
+set-var :GroupName = 'M3452'
+
+set-var :fromGroupName = 'M3435'
+
+print-sql 
+select * from Students
+
+print-sql
+UPDATE Students
+SET GroupId = (
+    select GroupId from Groups WHERE GroupName = :GroupName
+)
+WHERE GroupId = (
+    select GroupId from Groups WHERE GroupName = :fromGroupName
+)
+And exists (
+    select 1
+    from Groups
+    Where GroupName = :GroupName
+)
+
+print-sql 
+select * from Students
+
+####################################################################
+subsection 4. Напишите запросы, подсчитывающие статистику по оценкам
+
+comment 4.1. Число оценок студента
+             (столбец Students.Marks)
+             (StudentId)
+
+set-var :StudentId = 1
+
+print-sql
+ALTER TABLE Students ADD COLUMN marks INTEGER;
+update Students
+set marks = (select count(Marks.Mark)
+             from Marks
+             where Students.StudentId = Marks.StudentId)
+where Students.StudentId = :StudentId;
+
+comment 4.2. Число оценок каждого студента
+             (столбец Students.Marks)
+
+print-sql
+# ALTER TABLE Students ADD COLUMN marks INTEGER;
+update Students
+set marks = (select count(Marks.Mark)
+             from Marks
+             where Marks.StudentId = Students.StudentId);
+
+comment 4.3. Число оценок каждого студента факультета
+             (столбец Students.Marks)
+             (FacultyName)
+
+set-var :FacultyName = 'ФИТиП'
+
+print-sql
+UPDATE Students
+SET marks = (
+    select COUNT(Marks.Mark)
+    from Marks
+    WHERE Marks.StudentId = Students.StudentId
+)
+WHERE GroupId IN (
+    select GroupId
+    from Groups g
+    join Faculties f ON g.GroupFacultyId = f.FacultyId
+    WHERE f.FacultyName = :FacultyName
+);
+
+
+
+comment 4.4. Пересчет числа оценок каждого студента,
+             с учётом новых оценок из таблицы NewMarks,
+             структура которой  такая же как у таблицы Marks
+             (столбец Students.Marks)
+
+######################################################################
+subsection 5. Напишите запросы, подсчитывающие статистику по студентам
+
+comment 5.1. Число сданных дисциплин каждого студента
+             (столбец Students.Marks)
+
+comment 5.2. Число долгов студента
+             (столбец Students.Debts)
+             (StudentId)
+
+
+print-sql
+ALTER TABLE Students ADD COLUMN Debts INTEGER;
+UPDATE Students AS s
+SET Debts = (
+    Select Count (Distinct p.CourseId)
+    From Plan p
+    left join Marks m on
+    m.StudentId = s.StudentId and m.CourseId = p.CourseId
+    where p.GroupId = s.GroupId and m.Mark is Null
+)
+WHERE S.StudentId = :StudentId;
+
+print-sql 
+Select * from Students
+
+comment 5.3. Число долгов каждого студента
+             (столбец Students.Debts)
+
+print-sql
+UPDATE Students AS s
+SET Debts = (
+    SELECT COUNT(DISTINCT p.CourseId)
+    FROM Plan p
+    LEFT JOIN Marks m
+      ON m.StudentId = s.StudentId
+     AND m.CourseId = p.CourseId
+    WHERE p.GroupId = s.GroupId
+      AND m.Mark IS NULL
+);
+
+
+comment 5.4. Число долгов каждого студента группы (столбец Students.Debts)
+             (GroupName)
+
+set-var :GroupName = 'M3439'
+
+print-sql
+UPDATE Students AS s
+SET Debts = (
+    SELECT COUNT(DISTINCT p.CourseId)
+    FROM Plan p
+    LEFT JOIN Marks m
+      ON m.StudentId = s.StudentId
+     AND m.CourseId = p.CourseId
+    WHERE p.GroupId = s.GroupId
+      AND m.Mark IS NULL
+)
+where s.GroupId in (Select GroupId from Groups where
+GroupName = :GroupName)
+
+comment 5.5. Число долгов каждого студента у деканов (столбец Students.Debts)
+             (GroupName)
+
+set-var :GroupName = 'M3439'
+
+comment 5.6. Число оценок и долгов каждого студента
+             (столбцы Students.Marks, Students.Debts)
+
+print-sql
+ALTER TABLE Students ADD COLUMN Marks INTEGER;
+UPDATE Students AS s
+SET Debts = (
+    SELECT COUNT(DISTINCT p.CourseId)
+    FROM Plan p
+    LEFT JOIN Marks m
+      ON m.StudentId = s.StudentId
+     AND m.CourseId = p.CourseId
+    WHERE p.GroupId = s.GroupId
+      AND m.Mark IS NULL
+), Marks = (Select Count(*) from Marks where Marks.StudentId = S.StudentId)
+
+print-sql
+Select * From Students
+###########################################################
+subsection 6. Напишите запросы, обновляющие оценки,
+              с учетом данных из таблицы NewMarks,
+              имеющей такую же структуру, как таблица Marks
+
+comment 6.1. Проставляющий новую оценку только если ранее оценки не было
+
+print-sql
+Insert into Marks(StudentId, CourseId, Mark)
+SELECT nm.StudentId, nm.CourseId, nm.Mark
+FROM NewMarks nm
+left join Marks m on m.StudentId = nm.StudentId and m.CourseId = nm.CourseId
+where m.Mark is Null
+
+comment 6.2. Проставляющий новую оценку только если ранее оценка была
+
+print-sql
+UPDATE Marks AS m
+SET Mark = (
+    SELECT nm.Mark
+    FROM NewMarks AS nm
+    WHERE nm.StudentId = m.StudentId
+      AND nm.CourseId = m.CourseId
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM NewMarks AS nm
+    WHERE nm.StudentId = m.StudentId
+      AND nm.CourseId = m.CourseId
+);
+
+comment 6.3. Проставляющий максимум из старой и новой оценки
+             только если ранее оценка была
+
+comment 6.4. Проставляющий максимум из старой и новой оценки
+             (если ранее оценки не было, то новую оценку)
+
+######################################
+subsection 7. Работа с представлениями
+
+comment 7.1. Создайте представление StudentMarks в котором
+             для каждого студента указано число оценок
+             (StudentId, Marks)
+
+print-sql
+CREATE VIEW StudentMarks AS
+Select s.StudentId, COALESCE(COUNT(m.Mark), 0) AS Marks
+from Students s
+Left Join Marks m on s.StudentId = m.StudentId
+group by s.StudentId
+
+comment 7.2. Создайте представление AllMarks в котором
+             для каждого студента указано число оценок,
+             включая оценки из таблицы NewMarks
+             (StudentId, Marks)
+
+print-sql
+CREATE VIEW AllMarks AS
+SELECT s.StudentId, COALESCE(old.oldCount, 0) + COALESCE(new.newCount, 0) AS Marks
+FROM Students s
+LEFT JOIN (
+    SELECT StudentId, COUNT(Marks.Mark) AS oldCount
+    FROM Marks
+    GROUP BY StudentId
+) old ON s.StudentId = old.StudentId
+LEFT JOIN (
+    SELECT StudentId, COUNT(NewMarks.Mark) AS newCount
+    FROM NewMarks
+    GROUP BY StudentId
+) new ON s.StudentId = new.StudentId;
+
+comment 7.3. Создайте представление Debts в котором для каждого
+             студента, имеющего долги указано их число
+             (StudentId, Debts)
+
+CREATE VIEW Debts(StudentId, Debts) AS
+SELECT Students.StudentId, COUNT(DISTINCT Plan.CourseId) AS Debts
+FROM Students
+     NATURAL JOIN Plan
+     LEFT JOIN Marks
+         ON Students.StudentId = Marks.StudentId
+         AND Plan.CourseId = Marks.CourseId
+WHERE Marks.Mark IS null
+GROUP BY Students.StudentId;
+
+comment 7.4. Создайте представление StudentDebts в котором
+             для каждого студента указано число долгов
+             (StudentId, Debts)
+
+CREATE VIEW StudentDebts AS
+SELECT s.StudentId,
+       COALESCE(
+         (SELECT COUNT(DISTINCT p.CourseId)
+          FROM Plan p
+          LEFT JOIN Marks m 
+            ON m.StudentId = s.StudentId
+           AND m.CourseId = p.CourseId
+          WHERE p.GroupId = s.GroupId 
+            AND m.Mark IS NULL),
+         0
+       ) AS Debts
+FROM Students s;
+
+
+#############################################################
+subsection 8. Целостность данных.
+              .
+              Обратите внимание, что задания из этого раздела
+              надо посылать в PCMS, но они будут проверяться
+              только вручную после окончания сдачи.
+              То есть в PCMS вы получите + за любое решение.
+              .
+              В комментарии перед каждым запросом укажите
+              название и версию использованной СУБД.
+
+comment 8.1. Добавьте проверку того, что у студентов есть оценки
+             только по дисциплинам из их плана (NoExtraMarks)
+             (StudentId, CourseId)
+
+comment 8.2. Добавьте проверку того, что все студенты каждой группы
+             имеют оценку по одному и тому же набору дисциплин (SameMarks).
+             (StudentId)
+
+comment 8.3. Создайте триггер PreserveMarks,
+             не позволяющий уменьшить оценку студента по дисциплине.
+             При попытке такого изменения оценка изменяться не должна.
+             (StudentId)
