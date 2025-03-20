@@ -1,0 +1,126 @@
+name: C++ CI
+
+on:
+  pull_request
+
+jobs:
+  formatting-check:
+    name: Formatting check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Check line breaks
+        run: |
+          sudo apt-get install -y dos2unix
+          pushd $GITHUB_WORKSPACE
+          ci-extra/check-lines.sh
+          popd
+      - name: Run clang-format style check
+        # TODO use clang-format from a container
+        uses: jidicula/clang-format-action@v4.13.0
+        with:
+          clang-format-version: '18'
+          check-path: '.'
+
+  test:
+    needs: formatting-check
+    name: "Test (${{ matrix.toolchain.name }}, ${{ matrix.build_type }})"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        toolchain:
+          - { name: Linux/GCC,   os: ubuntu-22.04, compiler: gcc-14 }
+          - { name: Linux/Clang, os: ubuntu-22.04, compiler: clang-18 }
+          - { name: macOS,       os: macos-13,     compiler: appleclang-18 }
+          - { name: macOS M1,    os: macos-14,     compiler: appleclang-18 }
+          - { name: Windows,     os: windows-2022, compiler: msvc-2022 }
+        build_type:
+          - Release
+          - Debug
+          - RelWithDebInfo
+          - Sanitized
+          - SanitizedDebug
+          # - ThreadSanitized
+        exclude:
+          # Valgrind is only supported by Linux container
+          - toolchain: { name: macOS }
+            build_type: RelWithDebInfo
+          - toolchain: { name: macOS M1 }
+            build_type: RelWithDebInfo
+          - toolchain: { name: Windows }
+            build_type: RelWithDebInfo
+          # TSAN is only supported by GCC and Clang
+          - toolchain: { name: Windows }
+            build_type: ThreadSanitized
+
+    runs-on: ${{ matrix.toolchain.os }}
+
+    container:
+      image:
+        ${{
+        contains(matrix.toolchain.os, 'ubuntu') &&
+        format('ghcr.io/cpp-kt/ubuntu:{0}', matrix.toolchain.compiler) ||
+        null
+        }}
+      options:
+        --security-opt seccomp=unconfined
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Cpp
+        if: ${{ !contains(matrix.toolchain.os, 'ubuntu') }}
+        uses: aminya/setup-cpp@v1
+        with:
+          compiler: ${{ matrix.toolchain.compiler }}
+          vcvarsall: ${{ contains(matrix.toolchain.os, 'windows') }}
+          ninja: true
+          cmake: true
+          vcpkg: true
+        env:
+          VCPKG_DISABLE_METRICS: 1
+
+      - name: Update tests
+        run: |
+          chown $(id -u):$(id -g) .
+          git config --global user.name "John Doe"
+          git config --global user.email johndoe@example.com
+          source ci-extra/set-upstream.sh
+          git remote add upstream "https://github.com/$UPSTREAM_REPO.git"
+          git fetch upstream master
+          if git merge-base --is-ancestor upstream/master @; then
+            echo 'Tests are already up-to-date.'
+            echo 'TESTS_UPDATED=0' >> $GITHUB_ENV
+          else
+            echo 'Updating tests...'
+            git rebase upstream/master
+            echo 'Tests updated.'
+            echo 'TESTS_UPDATED=1' >> $GITHUB_ENV
+          fi
+
+      - name: Build
+        run: |
+          ci-extra/build.sh ${{ matrix.build_type }}
+        env:
+          CMAKE_TOOLCHAIN_FILE:
+            "${{ contains(matrix.toolchain.os, 'ubuntu') && '/opt' || '~' }}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+
+      - name: Run tests
+        run: |
+          if [[ $TESTS_UPDATED -eq 1 ]]; then
+            echo -e '\e[0;33mWARNING: Running a newer version of the tests than you have pushed.\e[0m'
+          fi
+          ci-extra/test.sh ${{ matrix.build_type }}
+
+      - name: Run tests with valgrind
+        if: ${{ matrix.build_type == 'RelWithDebInfo' }}
+        run: ci-extra/test-valgrind.sh ${{ matrix.build_type }}

@@ -1,0 +1,61 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "Release",
+      "description": "Default Release build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      },
+      "binaryDir": "cmake-build-${presetName}"
+    },
+    {
+      "name": "Debug",
+      "description": "Debug build without sanitizers",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      },
+      "binaryDir": "cmake-build-${presetName}"
+    },
+    {
+      "name": "RelWithDebInfo",
+      "description": "Release with debug info",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      },
+      "binaryDir": "cmake-build-${presetName}"
+    },
+    {
+      "name": "Sanitized",
+      "description": "RelWithDebInfo build with undefined and address sanitizers enabled",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "USE_SANITIZERS": "ON"
+      },
+      "binaryDir": "cmake-build-${presetName}"
+    },
+    {
+      "name": "SanitizedDebug",
+      "description": "Debug build with undefined and address sanitizers enabled",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "USE_SANITIZERS": "ON"
+      },
+      "binaryDir": "cmake-build-${presetName}"
+    },
+    {
+      "name": "ThreadSanitized",
+      "description": "RelWithDebInfo build with thread sanitizer enabled",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "USE_THREAD_SANITIZER": "ON"
+      },
+      "binaryDir": "cmake-build-${presetName}"
+    }
+  ]
+}
