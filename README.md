@@ -1,2 +1,2 @@
 # ITMO
-my homework at ITMO University
+my homeworks at ITMO University
