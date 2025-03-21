@@ -1,0 +1,51 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 14,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "default"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "base",
+            "configurePreset": "default",
+            "filter": {
+                "include": {
+                    "name": "^BaseTest\\."
+                }
+            }
+        },
+        {
+            "name": "encoding",
+            "configurePreset": "default",
+            "filter": {
+                "include": {
+                    "name": "^EncodingTest\\."
+                }
+            }
+        },
+        {
+            "name": "file",
+            "configurePreset": "default",
+            "filter": {
+                "include": {
+                    "name": "^FileTest\\."
+                }
+            }
+        },
+        {
+            "name": "link",
+            "configurePreset": "default",
+            "filter": {
+                "include": {
+                    "name": "^LinkTest\\."
+                }
+            }
+        }
+    ]
+}

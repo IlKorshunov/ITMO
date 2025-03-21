@@ -1,0 +1,172 @@
+name: "networkfs"
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+jobs:
+  basic:
+    runs-on: [self-hosted, os-linux]
+    timeout-minutes: 1
+    name: "Basic checks"
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+      - name: "Check that branch has name 'networkfs'"
+        run: |
+          test "${GITHUB_HEAD_REF##*/}" = "networkfs"
+      - name: "Lint source code"
+        run: |
+          clang-format --dry-run -Werror *.c *.h 2>clang-format.log || status=$?
+          if [[ -n $status ]]; then
+            cat clang-format.log |
+              grep 'error:' |
+              perl -pe 's/^((.*?):(.*?):(.*?):.*)$/::error file=\2,line=\3,col=\4::\1/g'
+            exit $status
+          fi
+      - name: "Check description"
+        run: |
+          hours=$(echo "$GITHUB_PR" | sed -n 3p | tr -d '[:space:]')
+          if [[ "$hours" == +([[:digit:]]) ]]; then
+            echo "Hours spent: $hours"
+          else
+            echo "::error Please fill in hours spent into pull request description"
+            exit 1
+          fi
+        env:
+          GITHUB_PR: ${{ github.event.pull_request.body }}
+      - name: "Upload logs"
+        uses: actions/upload-artifact@v3
+        with:
+          name: clang-format.log
+          path: clang-format.log
+        if: ${{ failure() }}
+  build:
+    needs: basic
+    runs-on: [self-hosted, os-linux]
+    timeout-minutes: 10
+    name: "Build module"
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+      - name: "Build"
+        run: |
+          mkdir build
+          cd build
+          cmake -DKERNELHEADERS_DIR=/usr/src/linux-headers-6.2.0-31-generic ..
+          make networkfs networkfs_test
+      - name: "Create disk image"
+        run: |
+          cd build
+          ../.github/prepare_disk.sh
+      - name: "Save artifact"
+        uses: actions/upload-artifact@v3
+        with:
+          name: networkfs
+          path: |
+            build/networkfs.img
+  tests:
+    needs: build
+    runs-on: [self-hosted, os-linux]
+    timeout-minutes: 20
+    name: "Required tests"
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+      - name: "Fetch module"
+        uses: actions/download-artifact@v3
+        with:
+          name: networkfs
+      - name: "Launch tests"
+        shell: 'script -q -e -c "bash {0}"'
+        run: |
+          echo "::group::Booting Virtual Machine"
+          qemu-system-x86_64 -kernel /opt/vmlinuz-6.2.0-31-generic -hda /opt/ubuntu.img -hdb networkfs.img -append "apparmor=0 root=/dev/sda console=ttyS0 gtest_args=\"--gtest_filter=BaseTest.*\"" -nographic -serial mon:stdio -smp 2 -m 512M | tee qemu.log
+          ! fgrep '[  FAILED  ]' qemu.log > /dev/null
+      - name: "Upload logs"
+        uses: actions/upload-artifact@v3
+        with:
+          name: qemu.log
+          path: qemu.log
+        if: ${{ failure() }}
+  bonus-encoding:
+    needs: [build, tests]
+    runs-on: [self-hosted, os-linux]
+    timeout-minutes: 20
+    continue-on-error: true
+    name: "Bonus: encoding"
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+      - name: "Fetch module"
+        uses: actions/download-artifact@v3
+        with:
+          name: networkfs
+      - name: "Launch tests"
+        run: |
+          echo "::group::Booting Virtual Machine"
+          qemu-system-x86_64 -kernel /opt/vmlinuz-6.2.0-31-generic -hda /opt/ubuntu.img -hdb networkfs.img -append "apparmor=0 root=/dev/sda console=ttyS0 gtest_args=\"--gtest_filter=EncodingTest.*\"" -nographic -serial mon:stdio -smp 2 -m 512M | tee qemu.log
+          ! fgrep '[  FAILED  ]' qemu.log > /dev/null
+      - name: "Upload logs"
+        uses: actions/upload-artifact@v3
+        with:
+          name: qemu-encoding.log
+          path: qemu.log
+        if: ${{ failure() }}
+  bonus-file:
+    needs: [build, tests]
+    runs-on: [self-hosted, os-linux]
+    timeout-minutes: 20
+    continue-on-error: true
+    name: "Bonus: file"
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+      - name: "Fetch module"
+        uses: actions/download-artifact@v3
+        with:
+          name: networkfs
+      - name: "Launch tests"
+        run: |
+          echo "::group::Booting Virtual Machine"
+          qemu-system-x86_64 -kernel /opt/vmlinuz-6.2.0-31-generic -hda /opt/ubuntu.img -hdb networkfs.img -append "apparmor=0 root=/dev/sda console=ttyS0 gtest_args=\"--gtest_filter=FileTest.*\"" -nographic -serial mon:stdio -smp 2 -m 512M | tee qemu.log
+          ! fgrep '[  FAILED  ]' qemu.log > /dev/null
+      - name: "Upload logs"
+        uses: actions/upload-artifact@v3
+        with:
+          name: qemu-file.log
+          path: qemu.log
+        if: ${{ failure() }}
+  bonus-link:
+    needs: [build, tests]
+    runs-on: [self-hosted, os-linux]
+    timeout-minutes: 20
+    continue-on-error: true
+    name: "Bonus: link"
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+      - name: "Fetch module"
+        uses: actions/download-artifact@v3
+        with:
+          name: networkfs
+      - name: "Launch tests"
+        run: |
+          echo "::group::Booting Virtual Machine"
+          qemu-system-x86_64 -kernel /opt/vmlinuz-6.2.0-31-generic -hda /opt/ubuntu.img -hdb networkfs.img -append "apparmor=0 root=/dev/sda console=ttyS0 gtest_args=\"--gtest_filter=LinkTest.*\"" -nographic -serial mon:stdio -smp 2 -m 512M | tee qemu.log
+          ! fgrep '[  FAILED  ]' qemu.log > /dev/null
+      - name: "Upload logs"
+        uses: actions/upload-artifact@v3
+        with:
+          name: qemu-link.log
+          path: qemu.log
+        if: ${{ failure() }}
+  cleanup:
+    needs: [build, tests, bonus-encoding, bonus-file, bonus-link]
+    runs-on: [self-hosted, os-linux]
+    if: always()
+    name: "Clean artifacts"
+    steps:
+      - uses: geekyeggo/delete-artifact@v2
+        with:
+          name: networkfs
