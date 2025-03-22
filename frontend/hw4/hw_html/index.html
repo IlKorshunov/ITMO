@@ -634,7 +634,7 @@
     <section class="Content" id="screen2">
       <div class="info-about" tabindex="0">
         <div class="introducing">
-          Привет!<br />
+          Здравствуйте!<br />
           Меня зовут Коршунов Илья<br />
           Рад рассказать Вам о себе!<br />
         </div>
@@ -726,15 +726,6 @@
 
         <div class="education-table">
           <div class="education-description">
-            <div class="education-block">
-              <div class="education-block-info">
-                <div class="university-text">Лицей №239</div>
-                <div class="university-text-description">
-                  Школьное образование
-                </div>
-              </div>
-              <div class="university-year">2019 - 2022</div>
-            </div>
 
             <div class="education-block">
               <div class="education-block-info">
@@ -748,15 +739,6 @@
           </div>
 
           <div class="education-description">
-            <div class="education-block">
-              <div class="education-block-info">
-                <div class="university-text">Лицей №239</div>
-                <div class="university-text-description">
-                  Школьное образование
-                </div>
-              </div>
-              <div class="university-year">2019 - 2022</div>
-            </div>
 
             <div class="education-block">
               <div class="education-block-info">
@@ -777,10 +759,10 @@
         <div class="work-title">Значимые работы</div>
         <div class="work-menu">
           <button id="job1" class="work-button" onclick="changeText(this)">
-            Java
+            Классификация линейными методами
           </button>
           <button id="job2" class="work-button" onclick="changeText(this)">
-            Android приложение
+            Биометрическая классификация
           </button>
           <button id="job3" class="work-button" onclick="changeText(this)">
             Консольная утилита
@@ -790,12 +772,13 @@
         <div class="work-description">
           <div class="work-block-text">
             <div class="work-place-work">
-              <div id="jobTitle" class="work-place-work-job">Java</div>
+              <div id="jobTitle" class="work-place-work-job">Классификация линейными методами</div>
               <div id="jobPlace" class="work-place-work-place">ИТМО</div>
             </div>
             <div id="jobDescription" class="work-text">
-              Домашние задания по курсу Java (ссылки пока что не будет)
-            </div>
+              Классификация данных с помощью линейных методов и решающих дереьев.<br>
+              <a href="https://github.com/IlKorshunov/ITMO/blob/main/ml/itmo/linear/linear.ipynb" target="_blank">Посмотреть решение</a>
+            </div>            
           </div>
           <img class="Image" alt="картинка для красоты" aria-hidden="true" style="
                 width: 554px;
@@ -805,6 +788,7 @@
                 margin-left: auto;
               " />
         </div>
+        
       </div>
     </section>
 
@@ -885,7 +869,7 @@
           </a>
         </div>
         <div class="copyright" style="color: var(--main-color)">
-          &copy; 2023
+          &copy; 2025
         </div>
       </div>
     </footer>
@@ -894,25 +878,28 @@
 
 <script>
   window.onload = function () {
-    const want = confirm(
-      "Хотите использовать версию для людей с ограниченными возможностями?"
-    );
+    // const want = confirm(
+    //   "Хотите использовать версию для людей с ограниченными возможностями?"
+    // );
 
-    if (want) {
-      document.documentElement.style.setProperty(
-        "--main-bg-color",
-        "rgba(54, 62, 69, 1)"
-      );
-      document.documentElement.style.setProperty(
-        "--main-text-color",
-        "#ffffff"
-      );
-      document.querySelectorAll(".delete-button").forEach((button) => {
-        button.style.opacity = 1;
-      });
+    // if (want) {
+    //   document.documentElement.style.setProperty(
+    //     "--main-bg-color",
+    //     "rgba(54, 62, 69, 1)"
+    //   );
+    //   document.documentElement.style.setProperty(
+    //     "--main-text-color",
+    //     "#ffffff"
+    //   );
+    //   document.querySelectorAll(".delete-button").forEach((button) => {
+    //     button.style.opacity = 1;
+    //   });
 
-    } else {
-      document.documentElement.style.setProperty(
+    // } else {
+
+    // }
+
+    document.documentElement.style.setProperty(
         "--main-bg-color",
         "gray"
       );
@@ -920,14 +907,13 @@
         "--main-text-color",
         "yellow"
       );
-    }
   };
 
 
   flag = false;
   function showAlertOnce(link) {
     if (!flag) {
-      alert("Для перехода на GitHub нажмите Enter");
+      // alert("Для перехода на GitHub нажмите Enter");
       flag = true;
     }
   }
@@ -997,9 +983,10 @@
   document.addEventListener("DOMContentLoaded", function () {
     const skills = [
       ["Java", 60],
-      ["Python", 45],
-      ["Go", 30],
-      ["C++", 10],
+      ["Python", 55],
+      ["C++", 30],
+      ["SQL", 30],
+      ["Go", 20],
       ["HTML+CSS", 15],
       ["Javascript", 20],
       ["Haskell", 5],
@@ -1022,16 +1009,19 @@
     const description = document.getElementById("jobDescription");
 
     switch (job) {
-      case "Java":
-        task.textContent = "Java";
+      case "Классификация линейными методами":
+        task.textContent = "Классификация линейными методами";
         place.textContent = "ИТМО";
         description.innerHTML =
-          "Домашние задания по курсу Java <br> (ссылки пока что не будет)";
+        "Классификация данных с помощью линейных методов и решающих дереьев. <br>" +
+        "<a href='https://github.com/IlKorshunov/ITMO/blob/main/ml/itmo/linear/linear.ipynb' target='_blank'>Посмотреть решение</a>";
         break;
-      case "Android приложение":
-        task.textContent = "Android приложение";
-        place.textContent = "ВК";
-        description.textContent = "Мессенджер";
+        case "Биометрическая классификация":
+        task.textContent = "Биометрическая классификация";
+        place.textContent = "ШАД";
+        description.innerHTML = 
+          "Обучение модели верификации биометрических данных с помощью архитектуры ECAPA-TDNN. <br>" + 
+          "<a href='https://github.com/IlKorshunov/ITMO/blob/main/ml/shad/speech_course/hw2/homework.ipynb' target='_blank'>Посмотреть решение</a>";
         break;
       case "Консольная утилита":
         task.textContent = "Консольная утилита";
@@ -1042,7 +1032,8 @@
           "- Количество строк<br>" +
           "- Количество коммитов<br>" +
           "- Количество файлов<br><br>" +
-          "Все статистики считаются для состояния репозитория на момент конкретного коммита.";
+          "Все статистики считаются для состояния репозитория на момент конкретного коммита. <br>" +
+          "<a href='https://github.com/IlKorshunov/ITMO/tree/main/go/gitfame' target='_blank'>Посмотреть решение</a>";
         break;
     }
   }
