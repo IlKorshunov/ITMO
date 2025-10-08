@@ -1,0 +1,15 @@
+name: CI/CD
+run-name: Testing ${{ github.repository }} by @${{ github.actor }}
+
+on:
+  create:
+  repository_dispatch: 
+  workflow_dispatch:
+
+jobs:
+  buildtest:
+    with:
+      student_url:         ${{ github.repository }}
+      student_ref:         ${{ github.sha }}
+    uses: skkv-mp/ct-gpu-s25-private-tools/.github/workflows/prefsum_opencl.yml@main
+    secrets: inherit

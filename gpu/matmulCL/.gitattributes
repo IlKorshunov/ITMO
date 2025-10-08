@@ -1,0 +1,4 @@
+*.pnm binary
+*.pgm binary
+*.ppm binary
+*.png binary
