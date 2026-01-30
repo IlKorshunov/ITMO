@@ -1,0 +1,94 @@
+{
+  "turns": [
+    {
+      "turn_id": 1,
+      "timestamp": "2026-01-30T23:33:32.595676",
+      "agent_visible_message": "Здравствуйте Дмитрий! Я – Interviewer, ведущий это техническое интервью. Вы готовы начать?",
+      "user_message": "",
+      "internal_thoughts": ""
+    },
+    {
+      "turn_id": 2,
+      "timestamp": "2026-01-30T23:33:46.978080",
+      "agent_visible_message": "Здравствуйте, Дмитрий! Спасибо за то, что нашли время для беседы.\n\nМеня интересует Ваш опыт работы в качестве Product Manager. Расскажите, пожалуйста, о наиболее значимых проектах, над которыми Вы работали и какой был результат?\n\nПосле этого мы можем поговорить подробнее об одной из задач этого проекта.",
+      "user_message": "Привет! Меня зовут Дима. Вообще я начинал как музыкант, играл на гитаре, но потом понял, что IT — это моё. Моя бабушка всегда говорила, что я талантливый. Я люблю продукты, которые меняют мир, как Стив Джобс, понимаете? Ну и вот, я решил стать PM",
+      "internal_thoughts": ""
+    },
+    {
+      "turn_id": 3,
+      "timestamp": "2026-01-30T23:34:25.817943",
+      "agent_visible_message": "Извините, но вы Currently Off-Topic. Давайте вернемся к вопросу о вашем опыте работы в качестве Product Manager. Расскажите мне более подробно о проектах, над которыми вы работали и каких результатов удалось достичь?",
+      "user_message": "О, это отличный вопрос. Напомнило мне случай в 2018 году, мы тогда поехали на тимбилдинг в Турцию. Было жарко. И вот наш аналитик Петя, отличный парень, кстати, у него двое детей, говорит мне: 'Дима, посмотри на цифры'. Я вообще цифры люблю.  Это как когда ты возвращаешься в любимый ресторан. Кстати, я люблю итальянскую кухню. Она как сыр моцарелла — связывает воедино. Кстати, вы любите ананасы в пицце? Я считаю, что это преступление против Италии. А вы",
+      "internal_thoughts": "[Observer]: Оценка: 3/10 (poor). [OFF-TOPIC] Уход от темы. Вопрос кандидата: 'Вы любите ананасы в пицце?'. Ошибки: невозврат к теме проекта и опыта работы как PM. Рекомендация: Уточнить, каким образом опыт кандидата в IT связан с его ролью Product Manager.. [Interviewer]: Отвечу на вопрос (сложность 2/5). Сначала ответ на вопрос. Уточнить, каким образом опыт кандидата в IT связан с его ролью Product Manager.."
+    },
+    {
+      "turn_id": 4,
+      "timestamp": "2026-01-30T23:34:36.704955",
+      "agent_visible_message": "Извините, но вы всё ещё не ответили на мой вопрос о проектах и достижениях как Product Manager. Давайте вернёмся к моей просьбе рассказать об этом более подробно?",
+      "user_message": "Да-да, конечно. Краткость — сестра таланта, как говорится. Чехов знал толк. Так вот, про следующий вопрос. Это как марафон. Я бежал полумарафон в прошлом году, колени болели жутко. Нужны правильные кроссовки, гель с углеводами и сила воли. Когда ты на 15-м километре, хочется лечь и умереть. Но ты видишь финиш, видишь медальку...",
+      "internal_thoughts": "[Observer]: Оценка: 3/10 (poor). [OFF-TOPIC] Уход от темы. Ошибки: Не отвечает на вопрос интервьюера о проектах и достижениях как Product Manager. Рекомендация: Упростить вопросы, чтобы кандидат понял суть вопроса. [Interviewer]: Верну к теме (сложность 1/5). Упростить вопросы, чтобы кандидат понял суть вопроса."
+    },
+    {
+      "turn_id": 5,
+      "timestamp": "2026-01-30T23:35:22.019540",
+      "agent_visible_message": "Извините, но вы всё ещё не ответили на мой вопрос о проектах и достижениях как Product Manager. Давайте вернёмся к моей просьбе рассказать об этом более подробно?",
+      "user_message": "Знаете, жизнь — это череда ремонтов. Вы когда-нибудь клеили обои? Это же проверка отношений на прочность! Мы с женой чуть не развелись, когда выбирали цвет для спальни. Она хотела \"пыльную розу\", а я — \"бежевый туман\". Важно уметь договариваться, дышать глубже, смотреть на горизонт.  Я не работал PM никогда. В итоге мы покрасили всё в белый. Просто белый. Скучно, зато спокойно. А у вас какой цвет стен дома? ...Важно уметь договариваться. Agile помогает нам двигаться короткими итерациями и быстро менять планы, если заказчику (или жене) разонравился цвет. В итоге мы покрасили всё в белый...",
+      "internal_thoughts": "[Observer]: Оценка: 3/10 (poor). [OFF-TOPIC] Уход от темы. Ошибки: кандидат признался, что не работал PM никогда. Рекомендация: Упростить вопросы и дать кандидату возможность рассказать о любых проектах, над которыми он работал независимо от его роли.. [Interviewer]: Верну к теме (сложность 1/5). Упростить вопросы и дать кандидату возможность рассказать о любых проектах, над которыми он работал независимо от его роли.."
+    }
+  ],
+  "final_feedback": {
+    "decision": {
+      "grade": "Junior",
+      "hiring_recommendation": "No Hire",
+      "confidence_score": 100
+    },
+    "technical_review": {
+      "confirmed_skills": [
+        {
+          "topic": "Communication",
+          "evidence": "Candidate showed ability to communicate ideas, though not relevant to PM role.",
+          "score": 5
+        }
+      ],
+      "knowledge_gaps": [
+        {
+          "topic": "Product Manager Experience",
+          "user_answer": "Candidate admitted they never worked as a Product Manager.",
+          "correct_answer": "Demonstrate experience in managing products or projects.",
+          "importance": "high"
+        },
+        {
+          "topic": "Project Achievements",
+          "user_answer": "Candidate did not provide any achievements from previous projects.",
+          "correct_answer": "Describe specific projects, goals achieved, and lessons learned.",
+          "importance": "high"
+        }
+      ]
+    },
+    "soft_skills": {
+      "clarity": 3,
+      "honesty": 10,
+      "engagement": 5,
+      "notes": "Candidate was engaging but struggled to stay on topic. They were honest about their lack of experience as a Product Manager."
+    },
+    "roadmap": [
+      {
+        "topic": "Product Management Fundamentals",
+        "priority": "high",
+        "resources": [
+          "https://www.coursera.org/learn/product-management"
+        ],
+        "description": "Candidate should start with basic product management courses to understand the role and responsibilities."
+      },
+      {
+        "topic": "Project Management Experience",
+        "priority": "medium",
+        "resources": [
+          "https://www.mindtools.com/pages/article/newTED_06.htm"
+        ],
+        "description": "Candidate could gain experience by managing small projects or volunteering for project roles in current or future jobs."
+      }
+    ],
+    "summary": "The candidate was engaging and honest but struggled to stay on topic. They admitted they never worked as a Product Manager, which is a significant concern for the role. They would benefit from gaining more relevant experience and understanding the fundamentals of product management."
+  }
+}

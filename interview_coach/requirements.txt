@@ -1,0 +1,21 @@
+# Core dependencies
+python-dotenv>=1.0.0
+requests>=2.31.0
+
+# LLM Providers
+huggingface-hub>=0.20.0
+
+# LangChain (основной фреймворк для работы с LLM)
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-community>=0.3.0
+langchain-huggingface>=0.1.0
+
+# Pydantic для структурированных выходов
+pydantic>=2.0.0
+
+# Development
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+ruff>=0.1.0
+jupyter>=1.0.0

@@ -1,0 +1,101 @@
+{
+  "turns": [
+    {
+      "turn_id": 1,
+      "timestamp": "2026-01-30T23:21:22.105031",
+      "agent_visible_message": "Приветствую вас, Сергей! Меня зовут [Имя], и я буду проводить ваше сегодняшнее техническое интервью на позицию Backend Developer в качестве интервьюера. Вы готовы приступить к интервью?",
+      "user_message": "",
+      "internal_thoughts": ""
+    },
+    {
+      "turn_id": 2,
+      "timestamp": "2026-01-30T23:21:33.874838",
+      "agent_visible_message": "Приветствую, Сергей! Спасибо что согласились на интервью. Давайте поговорим о вашем опыте в Enterprise. Расскажите мне о том времени, когда вы работали над самой крупной или сложной системой в банке или госсекторе? Как вы решали архитектурные задачи и что использовали для масштабирования системы?",
+      "user_message": "Вечер добрый. Я Сергей. В разработке с 2005 года, занимаюсь высоконагруженными банковскими системами",
+      "internal_thoughts": ""
+    },
+    {
+      "turn_id": 3,
+      "timestamp": "2026-01-30T23:22:13.431777",
+      "agent_visible_message": "Интервьюер: Сергей, вы упомянули, что не используете облачные технологии и Docker-контейнеры в своих проектах. Could you please explain why you prefer not to use these modern tools for deployment and automation? I'm interested in understanding your rationale behind this decision.",
+      "user_message": "Я не доверяю всем этим облакам и Docker-контейнерам. Это лишние слои абстракции, где всё тормозит. Я всегда деплою руками: захожу по SSH на сервер, копирую файлы, перезапускаю процесс. Только так я уверен, что всё работает. Автоматизация — это путь к ошибкам, которые вы не заметит",
+      "internal_thoughts": "[Observer]: Оценка: 5/10 (poor). Ошибки: отрицание использования облачных технологий и Docker-контейнеров без обоснования, утверждение, что автоматизация ведет к ошибкам. Рекомендация: Уточнить причины отказа кандидата от современных инструментов деплоя и автоматизации. Также можно задать вопрос о том, как он справляется с масштабированием без использования контейнеров.. [Interviewer]: Уточню (сложность 3/5). Уточнить причины отказа кандидата от современных инструментов деплоя и автоматизации. Также можно задать вопрос о том, как он справляется с масштабированием без использования контейнеров.."
+    },
+    {
+      "turn_id": 4,
+      "timestamp": "2026-01-30T23:22:45.363058",
+      "agent_visible_message": "Интервьюер: Сергей, спасибо за ваши комментарии о предпочтительности ручного деплоя над автоматизацией и облачными технологиями. Я понимаю важность надежности в банковских системах. Однако хотелось бы узнать подробнее, почему вы считаете свой метод более надежным по сравнению с современными инструментами автоматизации? Какой опыт или исследования сформировали ваше мнение на этот счет?",
+      "user_message": "вучит складно в теории, но на практике мой метод работает 20 лет без сбоев. Ну да ладно, допустим, у вас другие порядки. Какой следующий вопрос?",
+      "internal_thoughts": "[Observer]: Оценка: 5/10 (poor). Вопрос кандидата: 'Какой следующий вопрос?'. Ошибки: Кандидат не продемонстрировал понимание преимуществ автоматизации и облачных технологий. Рекомендация: Уточнить у кандидата, почему он считает свой метод более надежным, чем современные инструменты автоматизации.. [Interviewer]: Отвечу на вопрос (сложность 3/5). Сначала ответ на вопрос. Уточнить у кандидата, почему он считает свой метод более надежным, чем современные инструменты автоматизации.."
+    }
+  ],
+  "final_feedback": {
+    "decision": {
+      "grade": "Junior",
+      "hiring_recommendation": "No Hire",
+      "confidence_score": 100
+    },
+    "technical_review": {
+      "confirmed_skills": [
+        {
+          "topic": "Experience in enterprise systems",
+          "evidence": "20 years of experience in bank and government sector",
+          "score": 8
+        }
+      ],
+      "knowledge_gaps": [
+        {
+          "topic": "Cloud technologies",
+          "user_answer": "I don't trust clouds...",
+          "correct_answer": "Cloud technologies provide scalability, reliability, and cost efficiency.",
+          "importance": "high"
+        },
+        {
+          "topic": "Docker containers",
+          "user_answer": "...and Docker containers are just extra layers of abstraction.",
+          "correct_answer": "Docker containers enable easy deployment, scaling, and isolation of applications.",
+          "importance": "medium"
+        },
+        {
+          "topic": "Automation",
+          "user_answer": "Automation leads to errors...",
+          "correct_answer": "Automation helps reduce human error and increases efficiency.",
+          "importance": "high"
+        }
+      ]
+    },
+    "soft_skills": {
+      "clarity": 3,
+      "honesty": 7,
+      "engagement": 5,
+      "notes": "Candidate was not open to discussing the benefits of modern tools. He seemed dismissive of them."
+    },
+    "roadmap": [
+      {
+        "topic": "Understanding cloud technologies",
+        "priority": "high",
+        "resources": [
+          "https://aws.amazon.com/what-is-cloud-computing/"
+        ],
+        "description": "Learn about IaaS, PaaS, and serverless architectures."
+      },
+      {
+        "topic": "Docker containers",
+        "priority": "medium",
+        "resources": [
+          "https://www.digitalocean.com/community/tutorials/getting-started-with-docker"
+        ],
+        "description": "Understand how to use Docker for application isolation and deployment."
+      },
+      {
+        "topic": "Automation tools",
+        "priority": "high",
+        "resources": [
+          "https://www.atlassian.com/agile/software-development/automation-testing"
+        ],
+        "description": "Learn about CI/CD pipelines and automation testing frameworks."
+      }
+    ],
+    "summary": "Candidate has significant experience in enterprise systems but lacks understanding of modern tools like cloud technologies, Docker containers, and automation. He was not open to discussing the benefits of these tools."
+  }
+}

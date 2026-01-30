@@ -1,0 +1,8 @@
+name=Виктор
+position=Solution Architect
+grade=Lead / Experte
+experience=Заявлено 15 лет опыта, проектировал системы для банков
+
+provider=local
+local_url=http://localhost:11434/v1
+local_model=mistral-nemo
