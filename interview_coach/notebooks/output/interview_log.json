@@ -1,0 +1,123 @@
+{
+  "turns": [
+    {
+      "turn_id": 1,
+      "timestamp": "2026-01-31T00:25:08.806775",
+      "agent_visible_message": "Здравствуйте Иван, меня зовут Интервьюер и я буду проводить с вами сегодня техническое интервью на позицию Backend Developer в качестве Junior Developera. Вы готовы начать?",
+      "user_message": "",
+      "internal_thoughts": ""
+    },
+    {
+      "turn_id": 2,
+      "timestamp": "2026-01-31T00:25:15.179399",
+      "agent_visible_message": "Интервьюер: Спасибо, Иван. Давайте начнем интервью. Расскажите мне о проектах, над которыми вы работали на Python и Django за последние полгода?",
+      "user_message": "Здравствуйте! Спасибо за возможность пройти собеседование на позицию Backend Developer. Я Иван Иванов, мне 25 лет, я живу в Москве и у меня есть опыт работы Python и Django в течение последнего года. Я очень благодарен за возможность пообщаться с вами сегодня и готов ответить на все вопросы, которые вы имеете ко мне.",
+      "internal_thoughts": "[Observer]: Оценка: 7/10 (good). Верно: Упомянул язык программирования Python и фреймворк Django., Выразил благодарность за возможность пройти собеседование.. Рекомендация: Задать вопрос о проектах, над которыми работал кандидат на Python и Django.. [Interviewer]: Уточню (сложность 3/5). Задать вопрос о проектах, над которыми работал кандидат на Python и Django.."
+    },
+    {
+      "turn_id": 3,
+      "timestamp": "2026-01-31T00:25:23.619298",
+      "agent_visible_message": "Интервьюер: Спасибо за ваше представление, Иван. Давайте поговорим о более сложных сценариях использования Django в ваших проектах. Расскажите мне об одной из проблем, с которой вы столкнулись и как вы её решали?",
+      "user_message": "За последний год я работал над проектом по созданию веб-приложения для управления задачами в команде. Это приложение позволяло создавать задачи, назначать исполнителей, устанавливать сроки и отслеживать прогресс выполнения. Я использовал Django как фреймворк для создания этого приложения, а также работал с такими технологиями как HTML, CSS и JavaScript для создания пользовательского интерфейса.\n\nТакже я работал над проектом по созданию API для мобильного приложения. Это приложение позволяло пользователям заказывать еду из ресторанов через свой смартфон. Я использовал Django Rest Framework для создания API, а также работал с технологиями как Python и PostgreSQL для хранения данных.\n\nВ обеих этих проектах я участвовал в всех этапах разработки, от планирования до внедрения. Я также участвовал в тестировании и отладке кода перед его развертыванием. Эти проекты были отличным опытом работы с Python и Django и помогли мне улучшить мои навыки как backend разработчика.",
+      "internal_thoughts": "[Observer]: Оценка: 7/10 (good). Верно: Кандидат упомянул проекты, над которыми работал в течение последнего года, Он описал использование Django и других технологий в этих проектах. Рекомендация: Усложнить вопросы, так как кандидат показал хорошее понимание тем. [Interviewer]: Уточню (сложность 5/5). Усложнить вопросы, так как кандидат показал хорошее понимание тем."
+    },
+    {
+      "turn_id": 4,
+      "timestamp": "2026-01-31T00:25:34.232352",
+      "agent_visible_message": "Интервьюер: Спасибо за подробное описание проектов, Иван. Теперь давайте поговорим о тестировании и отладке ваших реализаций. Как вы тестировали и отлаживали свою систему уведомлений в проекте по управлению задачами?",
+      "user_message": "Один из сложных сценариев, с которыми я сталкивался при работе над проектом по управлению задачами в команде, был связан с необходимостью реализовать систему уведомлений о сроках выполнения задач. Нужно было отправлять уведомления по электронной почте пользователям, когда задачи приближались к сроку завершения.\n\nЯ решил эту проблему с помощью Django Celery для заданий в фоновом режиме и Django Email Sending для отправки писем на почту. Я создал таск в Celery, который запускался каждый час, проверял все задачи, у которых срок выполнения был меньше суток, и отправлял уведомление по электронной почте всем пользователям, назначенным на эти задачи.\n\nТакже я добавил опцию для администраторов проекта отключать или включать уведомления для каждого пользователя в панели управления. Это давало им возможность управлять тем, как часто они хотят получать уведомления о задачах, над которыми они работают.\n\nВ результате этой реализации мы получили système уведомлений, который работал эффективно и не мешал основной работе приложения, так как задачи выполнялись в фоновом режиме.",
+      "internal_thoughts": "[Observer]: Оценка: 7/10 (good). Верно: Иван описал конкретный сценарий, с которым он столкнулся при работе над проектом по управлению задачами в команде, Он использовал Django Celery для заданий в фоновом режиме и Django Email Sending для отправки писем на почту. Рекомендация: Задать вопрос о том, как Иван тестировал и отлаживал свою реализацию системы уведомлений. [Interviewer]: Уточню (сложность 5/5). Задать вопрос о том, как Иван тестировал и отлаживал свою реализацию системы уведомлений."
+    },
+    {
+      "turn_id": 5,
+      "timestamp": "2026-01-31T00:25:43.847006",
+      "agent_visible_message": "Интервьюер: Иван, вы упомянули использование pytest для тестирования Django проектов. Расскажите мне о более сложных сценариях использования pytest и PyCharm в ваших проектах? Как вы справлялись с ними?",
+      "user_message": "В процессе разработки системы уведомлений я сразу же написал тестовый случай для проверки правильности отправки писем. Использовал я pytest, который отлично вписывается в Django проект.\n\nКаждый раз когда я добавлял или менял функционал уведомлений, я запускал тесты чтобы удостовериться что все работает как надо.\n\nТакже я использовал отладчик в PyCharm для отслеживания и исправления ошибок. Это было очень полезно при настройке Celery тасков и работы с почтой, где могли быть проблемы с настройками конфига или другими неочевидными багами.\n\nЧтобы удостовериться что все работает правильно в производственной среде, я запустил тестовую задачу, которая отправляла письма реальным адресам. Это помогло мне убедиться что почтовый сервис настроен верно и письма доходят до получателей.\n\nВ общем, я считаю что сочетание unit-тестов с отладкой в PyCharm является отличным способом тестирования и исправления ошибок в Django проектах.",
+      "internal_thoughts": "[Observer]: Оценка: 8/10 (good). Верно: Кандидат упомянул использование pytest для тестирования Django проектов, Кандидат использовал отладчик в PyCharm для исправления ошибок. Рекомендация: Задать вопрос о том, как кандидат справлялся с более сложными сценариями использования pytest и PyCharm в своих проектах.. [Interviewer]: Уточню (сложность 5/5). Задать вопрос о том, как кандидат справлялся с более сложными сценариями использования pytest и PyCharm в своих проектах.."
+    }
+  ],
+  "final_feedback": {
+    "decision": {
+      "grade": "Junior",
+      "hiring_recommendation": "Hire",
+      "confidence_score": 85
+    },
+    "technical_review": {
+      "confirmed_skills": [
+        {
+          "topic": "Python programming",
+          "evidence": "Used Python in both projects.",
+          "score": 9
+        },
+        {
+          "topic": "Django framework",
+          "evidence": "Used Django in both projects.",
+          "score": 8
+        },
+        {
+          "topic": "Django Celery for background tasks",
+          "evidence": "Used it in task management project.",
+          "score": 7
+        },
+        {
+          "topic": "Django Email Sending",
+          "evidence": "Used it in task management project.",
+          "score": 7
+        },
+        {
+          "topic": "Pytest for testing Django projects",
+          "evidence": "Mentioned using pytest in the interview.",
+          "score": 6
+        }
+      ],
+      "knowledge_gaps": [
+        {
+          "topic": "Django REST Framework",
+          "user_answer": "Used it in food ordering project but didn't mention details.",
+          "correct_answer": "Should have mentioned how he used authentication, serialization and viewsets.",
+          "importance": "medium"
+        },
+        {
+          "topic": "PostgreSQL database management",
+          "user_answer": "Mentioned using PostgreSQL but didn't provide details.",
+          "correct_answer": "Should have explained how he managed migrations, queries and optimization.",
+          "importance": "low"
+        }
+      ]
+    },
+    "soft_skills": {
+      "clarity": 7,
+      "honesty": 8,
+      "engagement": 8,
+      "notes": "Candidate was engaged throughout the interview. He spoke clearly but sometimes hesitated before answering."
+    },
+    "roadmap": [
+      {
+        "topic": "Django REST Framework",
+        "priority": "medium",
+        "resources": [
+          "https://www.django-rest-framework.org/"
+        ],
+        "description": "Candidate should deepen his understanding of Django REST Framework, especially authentication and viewsets."
+      },
+      {
+        "topic": "PostgreSQL optimization",
+        "priority": "low",
+        "resources": [
+          "https://www.postgresql.org/docs/",
+          "https://www.percona.com/blog/2019/07/30/how-to-optimize-postgresql-performance/"
+        ],
+        "description": "Candidate should learn about optimizing PostgreSQL queries and managing large databases."
+      },
+      {
+        "topic": "Unit testing with pytest",
+        "priority": "low",
+        "resources": [
+          "https://docs.pytest.org/en/latest/"
+        ],
+        "description": "Candidate should practice writing more complex tests using pytest, including test fixtures and parametrization."
+      }
+    ],
+    "summary": "The candidate demonstrated a good understanding of Python and Django. He has experience working on projects that use these technologies. However, he needs to improve his ability to discuss the details of his work and how he overcame challenges."
+  }
+}
