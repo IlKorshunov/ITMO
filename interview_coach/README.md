@@ -1,5 +1,7 @@
 # Multi-Agent Interview Coach
 
+> **Примечание:** При записи видео возникли технические сложности. Полная демонстрация функционала доступна в Jupyter notebook: `notebooks/demo.ipynb`
+
 Система из нескольких AI-агентов для проведения технических интервью.
 
 ## Агенты
@@ -39,6 +41,8 @@ LLM_PROVIDER=huggingface_api
 HF_API_TOKEN=hf_your_token_here
 HF_MODEL=Qwen/Qwen2.5-7B-Instruct
 ```
+
+К сожалению, 
 
 ## Запуск
 
