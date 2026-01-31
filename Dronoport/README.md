@@ -55,7 +55,7 @@ python main.py
 | Double Q-Learning | Две Q-таблицы|
 | SARSA | On-policy TD(0) |
 | Expected SARSA | Ожидание по всем действиям |
-| UCB | Многорукий бандит |
+| UCB | Q-Learn с UCB |
 | Prospect Theory | Поведенческая модель (λ=2.35) |
 
 ## Результаты
