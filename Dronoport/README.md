@@ -28,7 +28,7 @@ Dronoport/
 ├── config/
 │   └── config.py
 ├── demo/
-│   ├── 01_main_analysis.ipynb
+│   ├── demo.ipynb
 │   └── lambda.ipynb
 ├── results/
 ├── main.py
