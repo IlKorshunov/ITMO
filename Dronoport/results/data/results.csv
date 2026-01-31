@@ -1,0 +1,7 @@
+agent,success_rate,mean_steps,mean_charge,mean_reward
+Q-Learning (Rational),0.25,120.00,0.6407,-144.28
+Prospect Theory (Behavioral),0.00,,0.9748,-144.04
+SARSA (On-Policy),1.50,88.50,0.7337,-142.15
+Double Q-Learning,0.00,,0.6517,-144.52
+UCB Exploration,85.50,46.67,0.9169,15.94
+Expected SARSA,0.00,,0.6041,-144.66
